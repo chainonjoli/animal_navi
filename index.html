@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個性心理学 動物キャラナビ｜あなたと推しの相性診断</title>
+  <meta name="description" content="生年月日から60種類の動物キャラクターを診断！推しとの相性もわかる個性心理学サイト。アイドルオタクのための推し活ツール。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- ✨ パーティクル背景 -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🌟</span>
+        <span class="logo-text">動物キャラナビ</span>
+      </div>
+      <nav class="header-nav">
+        <a href="#diagnosis" class="nav-link">診断する</a>
+        <a href="#oshi" class="nav-link">推し診断</a>
+        <a href="#animals" class="nav-link">12キャラ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🎤 推し活×個性心理学</div>
+      <h1 class="hero-title">
+        あなたと推しの<br>
+        <span class="gradient-text">本当の相性</span>がわかる
+      </h1>
+      <p class="hero-subtitle">
+        生年月日から60種類の動物キャラを診断。<br>
+        推しとの相性スコアもチェックできる！
+      </p>
+      <div class="hero-animals">
+        <span class="hero-animal floating" style="--delay:0s">🐺</span>
+        <span class="hero-animal floating" style="--delay:0.3s">🦁</span>
+        <span class="hero-animal floating" style="--delay:0.6s">🐯</span>
+        <span class="hero-animal floating" style="--delay:0.9s">🦄</span>
+        <span class="hero-animal floating" style="--delay:1.2s">🐨</span>
+        <span class="hero-animal floating" style="--delay:1.5s">🦌</span>
+      </div>
+      <a href="#diagnosis" class="hero-btn">
+        <span>🔮 今すぐ診断する</span>
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <span>scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ---- 自分の診断 ---- -->
+  <section class="section diagnosis-section" id="diagnosis">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">STEP 01</div>
+        <h2 class="section-title">あなたのキャラを診断</h2>
+        <p class="section-desc">生年月日を入力してね</p>
+      </div>
+
+      <div class="diagnosis-card glass-card">
+        <div class="form-group">
+          <label class="form-label">📅 生年月日</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="myYear" class="date-input" placeholder="1995" min="1926" max="2010">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myMonth" class="date-input" placeholder="4" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myDay" class="date-input" placeholder="1" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="diagnose-btn" id="myDiagnoseBtn" onclick="runMyDiagnosis()">
+          <span class="btn-icon">✨</span>
+          <span>診断する</span>
+        </button>
+      </div>
+
+      <!-- 結果カード -->
+      <div class="result-area" id="myResult" style="display:none;">
+        <div class="result-card" id="myResultCard">
+          <div class="result-header">
+            <div class="char-number" id="myCharNumber"></div>
+            <div class="char-group-badge" id="myGroupBadge"></div>
+          </div>
+          <div class="char-animal-icon" id="myAnimalIcon"></div>
+          <div class="char-name" id="myCharName"></div>
+          <div class="char-animal-name" id="myAnimalName"></div>
+          <div class="char-spell" id="myCharSpell"></div>
+          <div class="char-keyword" id="myKeyword"></div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💫</span>
+              <div class="detail-content">
+                <div class="detail-label">性格</div>
+                <div class="detail-text" id="myPersonality"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💕</span>
+              <div class="detail-content">
+                <div class="detail-label">恋愛傾向</div>
+                <div class="detail-text" id="myLove"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💰</span>
+              <div class="detail-content">
+                <div class="detail-label">マネー感覚</div>
+                <div class="detail-text" id="myMoney"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">⭐</span>
+              <div class="detail-content">
+                <div class="detail-label">天職</div>
+                <div class="detail-text" id="myVocation"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🍀</span>
+              <div class="detail-content">
+                <div class="detail-label">開運ポイント</div>
+                <div class="detail-text" id="myLucky"></div>
+              </div>
+            </div>
+          </div>
+          <button class="share-btn" onclick="shareResult('my')">
+            <span>📤 この結果をシェア</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 推し診断 ---- -->
+  <section class="section oshi-section" id="oshi">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge pink">STEP 02</div>
+        <h2 class="section-title">推しのキャラ & 相性チェック</h2>
+        <p class="section-desc">推しの生年月日を入れてみて！</p>
+      </div>
+
+      <div class="diagnosis-card glass-card pink-card">
+        <div class="form-group">
+          <label class="form-label">💖 推しの名前（任意）</label>
+          <input type="text" id="oshiName" class="text-input" placeholder="例：廉くん">
+        </div>
+        <div class="form-group">
+          <label class="form-label">📅 推しの生年月日</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="oshiYear" class="date-input" placeholder="1999" min="1926" max="2010">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiMonth" class="date-input" placeholder="1" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiDay" class="date-input" placeholder="23" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="diagnose-btn pink-btn" onclick="runOshiDiagnosis()">
+          <span class="btn-icon">💖</span>
+          <span>推しを診断 & 相性チェック</span>
+        </button>
+      </div>
+
+      <!-- 推し結果 -->
+      <div class="result-area" id="oshiResult" style="display:none;">
+        <!-- 推しキャラ -->
+        <div class="result-card oshi-result-card" id="oshiResultCard">
+          <div class="oshi-label" id="oshiNameLabel">推しのキャラ</div>
+          <div class="result-header">
+            <div class="char-number" id="oshiCharNumber"></div>
+            <div class="char-group-badge" id="oshiGroupBadge"></div>
+          </div>
+          <div class="char-animal-icon" id="oshiAnimalIcon"></div>
+          <div class="char-name" id="oshiCharName"></div>
+          <div class="char-animal-name" id="oshiAnimalName"></div>
+          <div class="char-keyword" id="oshiKeyword"></div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💫</span>
+              <div class="detail-content">
+                <div class="detail-label">性格</div>
+                <div class="detail-text" id="oshiPersonality"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💕</span>
+              <div class="detail-content">
+                <div class="detail-label">好きな言葉</div>
+                <div class="detail-text" id="oshiCatchphrase"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 相性カード -->
+        <div class="compatibility-card" id="compatCard" style="display:none;">
+          <h3 class="compat-title">💫 あなたと推しの相性</h3>
+          <div class="compat-groups">
+            <div class="compat-group-item" id="myGroupItem"></div>
+            <div class="compat-vs">VS</div>
+            <div class="compat-group-item" id="oshiGroupItem"></div>
+          </div>
+          <div class="compat-score-area">
+            <div class="compat-score" id="compatScore"></div>
+            <div class="compat-label" id="compatLabel"></div>
+          </div>
+          <div class="compat-desc" id="compatDesc"></div>
+          <div class="compat-tip">
+            <strong>🎯 攻略のヒント：</strong>
+            <span id="compatTip"></span>
+          </div>
+          <button class="share-btn" onclick="shareResult('oshi')">
+            <span>📤 相性結果をシェア</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 12キャラ一覧 ---- -->
+  <section class="section animals-section" id="animals">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge purple">12 ANIMALS</div>
+        <h2 class="section-title">12の動物キャラクター</h2>
+        <p class="section-desc">3つのグループに分かれているよ</p>
+      </div>
+
+      <!-- グループフィルター -->
+      <div class="group-filter">
+        <button class="filter-btn active" onclick="filterAnimals('all')" id="filterAll">すべて</button>
+        <button class="filter-btn moon" onclick="filterAnimals('MOON')" id="filterMoon">🌙 月グループ</button>
+        <button class="filter-btn earth" onclick="filterAnimals('EARTH')" id="filterEarth">🌍 地球グループ</button>
+        <button class="filter-btn sun" onclick="filterAnimals('SUN')" id="filterSun">☀️ 太陽グループ</button>
+      </div>
+
+      <div class="animals-grid" id="animalsGrid">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span>🌟</span> 動物キャラナビ
+      </div>
+      <p class="footer-note">
+        個性心理学（動物キャラナビ）に基づいた診断サイトです。<br>
+        診断結果はエンターテインメントとしてお楽しみください。
+      </p>
+      <p class="footer-copy">© 2025 動物キャラナビ</p>
+    </div>
+  </footer>
+
+  <!-- スクリプト -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

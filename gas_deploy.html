@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個性心理学 動物キャラナビ｜あなたと推しの相性診断</title>
+  <meta name="description" content="生年月日から60種類の動物キャラクターを診断！推しとの相性もわかる個性心理学サイト。アイドルオタクのための推し活ツール。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   個性心理学 動物キャラナビ スタイルシート
+   テーマ: 推し活 × プレミアム・ガラスモーフィズム (Rich & Active Aesthetics)
+   ============================================================ */
+
+:root {
+  /* カラーパレット */
+  --bg-primary: #0b0f19;
+  --bg-secondary: #131a2e;
+  --text-primary: #f3f4f6;
+  --text-muted: #9ca3af;
+  
+  --primary: #ec4899;
+  --primary-glow: rgba(236, 72, 153, 0.4);
+  --primary-gradient: linear-gradient(135deg, #ec4899, #f43f5e, #d946ef);
+  
+  --secondary: #a78bfa;
+  --secondary-gradient: linear-gradient(135deg, #a78bfa, #8b5cf6, #6366f1);
+  
+  --gold: #fbbf24;
+  --gold-gradient: linear-gradient(135deg, #f59e0b, #fbbf24, #fef08a);
+  
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-glow: rgba(255, 255, 255, 0.02);
+  --glass-pink-bg: rgba(236, 72, 153, 0.05);
+  --glass-pink-border: rgba(236, 72, 153, 0.2);
+
+  --font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 全体リセットと基本設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ✨ 背景アニメーション & パーティクル */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
+}
+
+.particles::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+/* コンテナ */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ヘッダー */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-icon {
+  -webkit-text-fill-color: initial;
+}
+
+.header-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-gradient);
+  transition: var(--transition-smooth);
+  transform: translateX(-50%);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ヒーローセクション */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 0 24px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: 9999px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.1);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(236, 72, 153, 0.2);
+}
+
+.hero-subtitle {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-animals {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.hero-animal {
+  font-size: clamp(2rem, 5vw, 3rem);
+  display: inline-block;
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.08); }
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 18px 40px;
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.hero-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
+}
+
+.hero-btn:hover::before {
+  left: 100%;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--text-muted), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-arrow::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff;
+  animation: scrollDown 2s infinite ease-in-out;
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  80%, 100% { transform: translateY(100%); }
+}
+
+/* セクション共通 */
+.section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 9999px;
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.section-badge.pink {
+  background: rgba(236, 72, 153, 0.1);
+  border-color: rgba(236, 72, 153, 0.3);
+  color: var(--primary);
+}
+
+.section-badge.purple {
+  background: rgba(167, 139, 250, 0.1);
+  border-color: rgba(167, 139, 250, 0.3);
+  color: var(--secondary);
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 900;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff, #9ca3af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* ガラスモーフィズムカード */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 650px;
+  margin: 0 auto 40px auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+.pink-card {
+  background: var(--glass-pink-bg);
+  border-color: var(--glass-pink-border);
+}
+
+.pink-card:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 35px rgba(236, 72, 153, 0.05);
+}
+
+/* フォーム要素 */
+.form-group {
+  margin-bottom: 30px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.date-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.date-field {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0 16px;
+  transition: var(--transition-smooth);
+}
+
+.date-field:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+}
+
+.date-input, .text-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 16px 0;
+  outline: none;
+}
+
+.text-input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: var(--transition-smooth);
+}
+
+.text-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+}
+
+/* Chrome, Safari, Edge, Opera のスピンボタンを非表示にする */
+.date-input::-webkit-outer-spin-button,
+.date-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox のスピンボタンを非表示にする */
+.date-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.date-unit {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+/* 診断ボタン */
+.diagnose-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px;
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+}
+
+.diagnose-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
+}
+
+.diagnose-btn.pink-btn {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+}
+
+.diagnose-btn.pink-btn:hover {
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
+}
+
+/* 結果表示エリア */
+.result-area {
+  margin-top: 40px;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Threadsのまとめ画像をインスパイアした結果カード */
+.result-card {
+  background: #fbf7f0; /* Threads画像のような暖かみのあるプレミアムな白ベージュ */
+  color: #3e2723;      /* ディープブラウン */
+  border-radius: 28px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4), 0 0 0 12px rgba(251, 247, 240, 0.05);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #efebe9;
+  text-align: center;
+}
+
+/* 装飾的な背景 */
+.result-card::before {
+  content: "★ ★ ★";
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d7ccc8;
+  font-size: 0.8rem;
+  letter-spacing: 0.5em;
+}
+
+.oshi-result-card {
+  margin-bottom: 24px;
+}
+
+.oshi-label {
+  display: inline-block;
+  background: #f48fb1;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(244, 143, 177, 0.3);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.char-number {
+  background: #3e2723;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 8px;
+}
+
+.char-group-badge {
+  background: #d7ccc8;
+  color: #3e2723;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid #bcaaa4;
+}
+
+.char-animal-icon {
+  font-size: 5rem;
+  margin: 10px 0;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1));
+  animation: heartBeat 2s infinite ease-in-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.char-name {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #3e2723;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.char-animal-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #795548;
+  margin-bottom: 8px;
+}
+
+.char-spell {
+  display: inline-block;
+  background: #efebe9;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  color: #8d6e63;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.char-keyword {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #d84315;
+  background: #fbe9e7;
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px dashed #ffab91;
+  display: inline-block;
+}
+
+.char-details {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 1px dashed #d7ccc8;
+  padding-top: 24px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.detail-icon {
+  font-size: 1.35rem;
+  background: #efebe9;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #8d6e63;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-text {
+  font-size: 0.95rem;
+  color: #4e342e;
+  font-weight: 500;
+}
+
+/* 相性カード */
+.compatibility-card {
+  background: linear-gradient(180deg, #fffcf9 0%, #fff5eb 100%);
+  color: #3e2723;
+  border-radius: 28px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 30px auto 0 auto;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  border: 2px solid #ffe0b2;
+}
+
+.compat-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #e65100;
+  margin-bottom: 24px;
+}
+
+.compat-groups {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.compat-group-item {
+  background: #efebe9;
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1px solid #d7ccc8;
+}
+
+.compat-vs {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #ff8f00;
+  background: #fff3e0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid #ffe0b2;
+}
+
+.compat-score-area {
+  margin-bottom: 24px;
+}
+
+.compat-score {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #e65100;
+  line-height: 1;
+}
+
+.compat-label {
+  display: inline-block;
+  background: #e65100;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.2);
+}
+
+.compat-desc {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #5d4037;
+}
+
+.compat-tip {
+  background: #fff8e1;
+  border-left: 4px solid #ffb300;
+  padding: 16px 20px;
+  border-radius: 0 12px 12px 0;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #5d4037;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.compat-tip strong {
+  display: block;
+  color: #b78103;
+  margin-bottom: 4px;
+}
+
+/* シェアボタン */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #3e2723;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  margin-top: 10px;
+  box-shadow: 0 6px 20px rgba(62, 39, 35, 0.25);
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  background: #4e342e;
+  box-shadow: 0 10px 25px rgba(62, 39, 35, 0.4);
+}
+
+/* ---- 12キャラ一覧セクション ---- */
+.group-filter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: #fff;
+  color: #0b0f19;
+  border-color: #fff;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-btn.moon.active {
+  background: var(--secondary-gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(167, 139, 250, 0.3);
+}
+
+.filter-btn.earth.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+.filter-btn.sun.active {
+  background: var(--gold-gradient);
+  color: #3e2723;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
+}
+
+/* キャラグリッド */
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.animal-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.animal-card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 6px;
+  background: var(--border-color, var(--glass-border));
+}
+
+.animal-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-color, rgba(255, 255, 255, 0.2));
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.card-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  transition: var(--transition-smooth);
+}
+
+.animal-card:hover .card-emoji {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.card-group {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* フッター */
+.site-footer {
+  border-top: 1px solid var(--glass-border);
+  padding: 60px 0;
+  text-align: center;
+  background: rgba(11, 15, 25, 0.9);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-logo {
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.footer-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.25);
+}
+
+/* モバイルレスポンシブ */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  
+  .hero {
+    padding-top: 140px;
+  }
+  
+  .date-inputs {
+    gap: 8px;
+  }
+  
+  .date-field {
+    padding: 0 10px;
+  }
+  
+  .date-input {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+  
+  .glass-card {
+    padding: 24px;
+  }
+  
+  .result-card, .compatibility-card {
+    padding: 24px 16px;
+  }
+  
+  .compat-groups {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .compat-vs {
+    transform: rotate(90deg);
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ✨ パーティクル背景 -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🌟</span>
+        <span class="logo-text">動物キャラナビ</span>
+      </div>
+      <nav class="header-nav">
+        <a href="#diagnosis" class="nav-link">診断する</a>
+        <a href="#oshi" class="nav-link">推し診断</a>
+        <a href="#animals" class="nav-link">12キャラ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ヒーローセクション -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🎤 推し活×個性心理学</div>
+      <h1 class="hero-title">
+        あなたと推しの<br>
+        <span class="gradient-text">本当の相性</span>がわかる
+      </h1>
+      <p class="hero-subtitle">
+        生年月日から60種類の動物キャラを診断。<br>
+        推しとの相性スコアもチェックできる！
+      </p>
+      <div class="hero-animals">
+        <span class="hero-animal floating" style="--delay:0s">🐺</span>
+        <span class="hero-animal floating" style="--delay:0.3s">🦁</span>
+        <span class="hero-animal floating" style="--delay:0.6s">🐯</span>
+        <span class="hero-animal floating" style="--delay:0.9s">🦄</span>
+        <span class="hero-animal floating" style="--delay:1.2s">🐨</span>
+        <span class="hero-animal floating" style="--delay:1.5s">🦌</span>
+      </div>
+      <a href="#diagnosis" class="hero-btn">
+        <span>🔮 今すぐ診断する</span>
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <span>scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ---- 自分の診断 ---- -->
+  <section class="section diagnosis-section" id="diagnosis">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">STEP 01</div>
+        <h2 class="section-title">あなたのキャラを診断</h2>
+        <p class="section-desc">生年月日を入力してね</p>
+      </div>
+
+      <div class="diagnosis-card glass-card">
+        <div class="form-group">
+          <label class="form-label">📅 生年月日</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="myYear" class="date-input" placeholder="1995" min="1926" max="2010">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myMonth" class="date-input" placeholder="4" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myDay" class="date-input" placeholder="1" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="diagnose-btn" id="myDiagnoseBtn" onclick="runMyDiagnosis()">
+          <span class="btn-icon">✨</span>
+          <span>診断する</span>
+        </button>
+      </div>
+
+      <!-- 結果カード -->
+      <div class="result-area" id="myResult" style="display:none;">
+        <div class="result-card" id="myResultCard">
+          <div class="result-header">
+            <div class="char-number" id="myCharNumber"></div>
+            <div class="char-group-badge" id="myGroupBadge"></div>
+          </div>
+          <div class="char-animal-icon" id="myAnimalIcon"></div>
+          <div class="char-name" id="myCharName"></div>
+          <div class="char-animal-name" id="myAnimalName"></div>
+          <div class="char-spell" id="myCharSpell"></div>
+          <div class="char-keyword" id="myKeyword"></div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💫</span>
+              <div class="detail-content">
+                <div class="detail-label">性格</div>
+                <div class="detail-text" id="myPersonality"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💕</span>
+              <div class="detail-content">
+                <div class="detail-label">恋愛傾向</div>
+                <div class="detail-text" id="myLove"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💰</span>
+              <div class="detail-content">
+                <div class="detail-label">マネー感覚</div>
+                <div class="detail-text" id="myMoney"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">⭐</span>
+              <div class="detail-content">
+                <div class="detail-label">天職</div>
+                <div class="detail-text" id="myVocation"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🍀</span>
+              <div class="detail-content">
+                <div class="detail-label">開運ポイント</div>
+                <div class="detail-text" id="myLucky"></div>
+              </div>
+            </div>
+          </div>
+          <button class="share-btn" onclick="shareResult('my')">
+            <span>📤 この結果をシェア</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 推し診断 ---- -->
+  <section class="section oshi-section" id="oshi">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge pink">STEP 02</div>
+        <h2 class="section-title">推しのキャラ & 相性チェック</h2>
+        <p class="section-desc">推しの生年月日を入れてみて！</p>
+      </div>
+
+      <div class="diagnosis-card glass-card pink-card">
+        <div class="form-group">
+          <label class="form-label">💖 推しの名前（任意）</label>
+          <input type="text" id="oshiName" class="text-input" placeholder="例：廉くん">
+        </div>
+        <div class="form-group">
+          <label class="form-label">📅 推しの生年月日</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="oshiYear" class="date-input" placeholder="1999" min="1926" max="2010">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiMonth" class="date-input" placeholder="1" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiDay" class="date-input" placeholder="23" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="diagnose-btn pink-btn" onclick="runOshiDiagnosis()">
+          <span class="btn-icon">💖</span>
+          <span>推しを診断 & 相性チェック</span>
+        </button>
+      </div>
+
+      <!-- 推し結果 -->
+      <div class="result-area" id="oshiResult" style="display:none;">
+        <!-- 推しキャラ -->
+        <div class="result-card oshi-result-card" id="oshiResultCard">
+          <div class="oshi-label" id="oshiNameLabel">推しのキャラ</div>
+          <div class="result-header">
+            <div class="char-number" id="oshiCharNumber"></div>
+            <div class="char-group-badge" id="oshiGroupBadge"></div>
+          </div>
+          <div class="char-animal-icon" id="oshiAnimalIcon"></div>
+          <div class="char-name" id="oshiCharName"></div>
+          <div class="char-animal-name" id="oshiAnimalName"></div>
+          <div class="char-keyword" id="oshiKeyword"></div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💫</span>
+              <div class="detail-content">
+                <div class="detail-label">性格</div>
+                <div class="detail-text" id="oshiPersonality"></div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💕</span>
+              <div class="detail-content">
+                <div class="detail-label">好きな言葉</div>
+                <div class="detail-text" id="oshiCatchphrase"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 相性カード -->
+        <div class="compatibility-card" id="compatCard" style="display:none;">
+          <h3 class="compat-title">💫 あなたと推しの相性</h3>
+          <div class="compat-groups">
+            <div class="compat-group-item" id="myGroupItem"></div>
+            <div class="compat-vs">VS</div>
+            <div class="compat-group-item" id="oshiGroupItem"></div>
+          </div>
+          <div class="compat-score-area">
+            <div class="compat-score" id="compatScore"></div>
+            <div class="compat-label" id="compatLabel"></div>
+          </div>
+          <div class="compat-desc" id="compatDesc"></div>
+          <div class="compat-tip">
+            <strong>🎯 攻略のヒント：</strong>
+            <span id="compatTip"></span>
+          </div>
+          <button class="share-btn" onclick="shareResult('oshi')">
+            <span>📤 相性結果をシェア</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 12キャラ一覧 ---- -->
+  <section class="section animals-section" id="animals">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge purple">12 ANIMALS</div>
+        <h2 class="section-title">12の動物キャラクター</h2>
+        <p class="section-desc">3つのグループに分かれているよ</p>
+      </div>
+
+      <!-- グループフィルター -->
+      <div class="group-filter">
+        <button class="filter-btn active" onclick="filterAnimals('all')" id="filterAll">すべて</button>
+        <button class="filter-btn moon" onclick="filterAnimals('MOON')" id="filterMoon">🌙 月グループ</button>
+        <button class="filter-btn earth" onclick="filterAnimals('EARTH')" id="filterEarth">🌍 地球グループ</button>
+        <button class="filter-btn sun" onclick="filterAnimals('SUN')" id="filterSun">☀️ 太陽グループ</button>
+      </div>
+
+      <div class="animals-grid" id="animalsGrid">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span>🌟</span> 動物キャラナビ
+      </div>
+      <p class="footer-note">
+        個性心理学（動物キャラナビ）に基づいた診断サイトです。<br>
+        診断結果はエンターテインメントとしてお楽しみください。
+      </p>
+      <p class="footer-copy">© 2025 動物キャラナビ</p>
+    </div>
+  </footer>
+
+  <script>
+// ============================================================
+// 個性心理学 動物キャラナビ データ
+// 十二運星に基づいた正確なキャラクター定義
+// ============================================================
+
+const GROUPS = {
+  MOON: {
+    id: 'MOON', name: '月グループ', emoji: '🌙',
+    color: '#a78bfa', gradient: 'linear-gradient(135deg, #7c3aed, #ec4899)',
+    description: '「誰と」を大切にする、心の絆を重んじるチーム。',
+    members: ['こじか', 'たぬき', '黒ひょう', 'ひつじ'],
+  },
+  EARTH: {
+    id: 'EARTH', name: '地球グループ', emoji: '🌍',
+    color: '#34d399', gradient: 'linear-gradient(135deg, #059669, #10b981)',
+    description: '「何を」重視する、実力と実績のしっかり者チーム。',
+    members: ['猿', '虎', '子守熊', '狼'],
+  },
+  SUN: {
+    id: 'SUN', name: '太陽グループ', emoji: '☀️',
+    color: '#fbbf24', gradient: 'linear-gradient(135deg, #d97706, #f59e0b)',
+    description: '「どこで」にこだわる、直感と感性の天才チーム。',
+    members: ['チータ', 'ライオン', 'ゾウ', 'ペガサス'],
+  }
+};
+
+const CHARACTER_TABLE = [
+  { n:1,  animal:'チータ',  group:'SUN',   name:'長距離ランナーのチータ', spell:'草花', jui:'沐浴' },
+  { n:2,  animal:'たぬき',  group:'MOON',  name:'社交家のたぬき',         spell:'大樹', jui:'衰' },
+  { n:3,  animal:'猿',      group:'EARTH', name:'落ち着きのない猿',        spell:'太陽', jui:'長生' },
+  { n:4,  animal:'子守熊',  group:'EARTH', name:'フットワークの軽い子守熊',spell:'ろうそく', jui:'病' },
+  { n:5,  animal:'黒ひょう',group:'MOON',  name:'面倒見のいい黒ひょう',    spell:'山',   jui:'冠帯' },
+  { n:6,  animal:'虎',      group:'EARTH', name:'愛情あふれる虎',          spell:'大地', jui:'帝旺' },
+  { n:7,  animal:'チータ',  group:'SUN',   name:'全力疾走するチータ',       spell:'金属', jui:'沐浴' },
+  { n:8,  animal:'たぬき',  group:'MOON',  name:'磨き上げられたたぬき',     spell:'宝石', jui:'衰' },
+  { n:9,  animal:'猿',      group:'EARTH', name:'大きな志をもった猿',        spell:'海',   jui:'長生' },
+  { n:10, animal:'子守熊',  group:'EARTH', name:'母性豊かな子守熊',          spell:'雨露', jui:'病' },
+  { n:11, animal:'こじか',  group:'MOON',  name:'正直なこじか',              spell:'草花', jui:'養' },
+  { n:12, animal:'ゾウ',    group:'SUN',   name:'人気者のゾウ',              spell:'大樹', jui:'死' },
+  { n:13, animal:'狼',      group:'EARTH', name:'ネアカの狼',                spell:'太陽', jui:'胎' },
+  { n:14, animal:'ひつじ',  group:'MOON',  name:'協調性のないひつじ',        spell:'ろうそく', jui:'墓' },
+  { n:15, animal:'猿',      group:'EARTH', name:'どっしりとした猿',          spell:'山',   jui:'長生' },
+  { n:16, animal:'子守熊',  group:'EARTH', name:'コアラのなかの子守熊',      spell:'大地', jui:'病' },
+  { n:17, animal:'こじか',  group:'MOON',  name:'強い意志をもったこじか',    spell:'金属', jui:'養' },
+  { n:18, animal:'ゾウ',    group:'SUN',   name:'デリケートなゾウ',          spell:'宝石', jui:'死' },
+  { n:19, animal:'狼',      group:'EARTH', name:'放浪の狼',                  spell:'海',   jui:'胎' },
+  { n:20, animal:'ひつじ',  group:'MOON',  name:'物静かなひつじ',            spell:'雨露', jui:'墓' },
+  { n:21, animal:'ペガサス',group:'SUN',   name:'落ち着きのあるペガサス',    spell:'草花', jui:'絶' },
+  { n:22, animal:'ペガサス',group:'SUN',   name:'強靱な翼をもつペガサス',    spell:'大樹', jui:'絶' },
+  { n:23, animal:'ひつじ',  group:'MOON',  name:'無邪気なひつじ',            spell:'太陽', jui:'墓' },
+  { n:24, animal:'狼',      group:'EARTH', name:'クリエイティブな狼',        spell:'ろうそく', jui:'胎' },
+  { n:25, animal:'狼',      group:'EARTH', name:'穏やかな狼',                spell:'山',   jui:'胎' },
+  { n:26, animal:'ひつじ',  group:'MOON',  name:'粘り強いひつじ',            spell:'大地', jui:'墓' },
+  { n:27, animal:'ペガサス',group:'SUN',   name:'波乱に満ちたペガサス',      spell:'金属', jui:'絶' },
+  { n:28, animal:'ペガサス',group:'SUN',   name:'優雅なペガサス',            spell:'宝石', jui:'絶' },
+  { n:29, animal:'ひつじ',  group:'MOON',  name:'チャレンジ精神の旺盛なひつじ', spell:'海', jui:'墓' },
+  { n:30, animal:'狼',      group:'EARTH', name:'順応性のある狼',            spell:'雨露', jui:'胎' },
+  { n:31, animal:'ゾウ',    group:'SUN',   name:'リーダーとなるゾウ',        spell:'草花', jui:'死' },
+  { n:32, animal:'こじか',  group:'MOON',  name:'しっかり者のこじか',        spell:'大樹', jui:'養' },
+  { n:33, animal:'子守熊',  group:'EARTH', name:'活動的な子守熊',            spell:'太陽', jui:'病' },
+  { n:34, animal:'猿',      group:'EARTH', name:'気分屋の猿',                spell:'ろうそく', jui:'長生' },
+  { n:35, animal:'ひつじ',  group:'MOON',  name:'頼られると嬉しいひつじ',    spell:'山',   jui:'墓' },
+  { n:36, animal:'狼',      group:'EARTH', name:'好感のもたれる狼',          spell:'大地', jui:'胎' },
+  { n:37, animal:'ゾウ',    group:'SUN',   name:'まっしぐらに突き進むゾウ',  spell:'金属', jui:'死' },
+  { n:38, animal:'こじか',  group:'MOON',  name:'華やかなこじか',            spell:'宝石', jui:'養' },
+  { n:39, animal:'子守熊',  group:'EARTH', name:'夢とロマンの子守熊',        spell:'海',   jui:'病' },
+  { n:40, animal:'猿',      group:'EARTH', name:'尽くす猿',                  spell:'雨露', jui:'長生' },
+  { n:41, animal:'たぬき',  group:'MOON',  name:'大器晩成のたぬき',          spell:'草花', jui:'衰' },
+  { n:42, animal:'チータ',  group:'SUN',   name:'足腰の強いチータ',          spell:'大樹', jui:'沐浴' },
+  { n:43, animal:'虎',      group:'EARTH', name:'動きまわる虎',              spell:'太陽', jui:'帝旺' },
+  { n:44, animal:'黒ひょう',group:'MOON',  name:'情熱的な黒ひょう',          spell:'ろうそく', jui:'冠帯' },
+  { n:45, animal:'子守熊',  group:'EARTH', name:'サービス精神旺盛な子守熊',  spell:'山',   jui:'病' },
+  { n:46, animal:'猿',      group:'EARTH', name:'守りの猿',                  spell:'大地', jui:'長生' },
+  { n:47, animal:'たぬき',  group:'MOON',  name:'人間味あふれるたぬき',      spell:'金属', jui:'衰' },
+  { n:48, animal:'チータ',  group:'SUN',   name:'品格のあるチータ',          spell:'宝石', jui:'沐浴' },
+  { n:49, animal:'虎',      group:'EARTH', name:'ゆったりとした悠然の虎',    spell:'海',   jui:'帝旺' },
+  { n:50, animal:'黒ひょう',group:'MOON',  name:'落ち込みの激しい黒ひょう',  spell:'雨露', jui:'冠帯' },
+  { n:51, animal:'ライオン',group:'SUN',   name:'我が道を行くライオン',       spell:'草花', jui:'建禄' },
+  { n:52, animal:'ライオン',group:'SUN',   name:'統率力のあるライオン',       spell:'大樹', jui:'建禄' },
+  { n:53, animal:'黒ひょう',group:'MOON',  name:'感情豊かな黒ひょう',         spell:'太陽', jui:'冠帯' },
+  { n:54, animal:'虎',      group:'EARTH', name:'楽天的な虎',                spell:'ろうそく', jui:'帝旺' },
+  { n:55, animal:'虎',      group:'EARTH', name:'パワフルな虎',              spell:'山',   jui:'帝旺' },
+  { n:56, animal:'黒ひょう',group:'MOON',  name:'気取らない黒ひょう',        spell:'大地', jui:'冠帯' },
+  { n:57, animal:'ライオン',group:'SUN',   name:'感情的なライオン',           spell:'金属', jui:'建禄' },
+  { n:58, animal:'ライオン',group:'SUN',   name:'傷つきやすいライオン',       spell:'宝石', jui:'建禄' },
+  { n:59, animal:'黒ひょう',group:'MOON',  name:'束縛を嫌う黒ひょう',        spell:'海',   jui:'冠帯' },
+  { n:60, animal:'虎',      group:'EARTH', name:'慈悲深い虎',                spell:'雨露', jui:'帝旺' },
+];
+
+const ANIMAL_PROFILES = {
+  '狼': {
+    emoji: '🐺', color: '#6c7a89', bgColor: '#ecf0f1', group: 'EARTH',
+    keyword: '人は人、自分は自分',
+    catchphrase: 'やっぱり変わってるね',
+    personality: '独特の感性と職人気質。マイペースで天真爛漫な個人主義者。計画通りに進めることを好み、じっくり考えて行動する。',
+    love: '自分のペースを乱さない相手が◎。最初は壁があるが、一度心を開くと深い絆を結ぶ。',
+    money: '「ドカンと使うが無駄遣いなし」な職人タイプ。',
+    vocation: 'クリエイター・プログラマー・専門職・コンサルタント',
+    lucky: '好きなことにトコトン打ち込む',
+    subTypes: [13,19,24,25,30,36],
+  },
+  'こじか': {
+    emoji: '🦌', color: '#e8a87c', bgColor: '#fef9c3', group: 'MOON',
+    keyword: '「和」が大事',
+    catchphrase: 'どんなときも味方だよ',
+    personality: '好奇心旺盛で天然なところがあるが、警戒心も強い。感情や感覚に正直で好き嫌いがハッキリ。子供や動物に好かれる。',
+    love: '素直に気持ちを伝えるピュアな恋愛スタイル。押しに弱い一面も。',
+    money: 'お金の計算も人任せ気味。金銭管理は少し甘め。',
+    vocation: '保育士・心理カウンセラー・ペット関連・教師',
+    lucky: '本物に接する（美術品・自然・その道の達人）',
+    subTypes: [11,17,32,38],
+  },
+  '猿': {
+    emoji: '🐒', color: '#c0392b', bgColor: '#fde8e8', group: 'EARTH',
+    keyword: '人生楽しんだ者勝ち',
+    catchphrase: '一緒にいると楽しい',
+    personality: '愛嬌たっぷりの人気者。なんでもゲーム感覚で楽しみ、勝敗にこだわる。褒められたいから頑張るタイプ。',
+    love: 'おだてに乗りやすい。「かわいいね」「スゴいね」が効果抜群！',
+    money: '小銭大好き。割り勘は10円単位で几帳面。',
+    vocation: 'サービス業・ゲームクリエイター・芸人・パティシエ',
+    lucky: '瞑想。ひとりで静かに内観する時間が運気UP',
+    subTypes: [3,9,15,34,40,46],
+  },
+  'チータ': {
+    emoji: '🐆', color: '#d4ac0d', bgColor: '#fef3c7', group: 'SUN',
+    keyword: '生涯を通して華麗なハンター',
+    catchphrase: 'キミならきっと成功する',
+    personality: '成功願望が強く競争心も強い。何事も果敢に挑戦するが諦めも早い。切り替えが速く過去を引きずらない。',
+    love: '「成功」が世界でいちばん好きな言葉。「キミならきっと成功する」が最高のプロポーズ。',
+    money: '前向きな浪費家。衝動買いの達人だが後悔しない。',
+    vocation: '芸能界・政治家・スポーツ選手・開業医・外交官',
+    lucky: '恋愛成就。恋がうまくいくと万事うまくいく',
+    subTypes: [1,7,42,48],
+  },
+  '黒ひょう': {
+    emoji: '🐈‍⬛', color: '#2c3e50', bgColor: '#e8eaf6', group: 'MOON',
+    keyword: 'スマートでおしゃれな自信家',
+    catchphrase: 'センスいいね',
+    personality: 'メンツやプライドを重んじる。おしゃれで美意識が高い。正義感が強く不正を許さない。',
+    love: '「センスいいね」が最高の褒め言葉。努力は人に見せないクールな一面も。',
+    money: '気がついたら「ない！」タイプ。お金は使ってこそ輝く。',
+    vocation: 'アナウンサー・ファッションデザイナー・マスコミ・デザイナー',
+    lucky: '人生の師を見つける。良き師との出会いで人生が変わる',
+    subTypes: [5,44,50,53,56,59],
+  },
+  'ライオン': {
+    emoji: '🦁', color: '#935116', bgColor: '#fff7ed', group: 'SUN',
+    keyword: 'オンリーワンよりナンバーワン',
+    catchphrase: '特別な人だもん',
+    personality: '徹底的にこだわる完璧主義者。責任感が強く、自分の味方は最後まで守る。王様扱いに弱い。',
+    love: '「特別な人だもん」が最高の言葉。漠然と愛してくれる人を求める。',
+    money: '「釣りはいらない」な大物感。節約も貯蓄もさらっとこなす。',
+    vocation: '大手企業・国家公務員・警察官・上場企業・医師',
+    lucky: '感性に響いたものを惜しみなく人に伝える',
+    subTypes: [51,52,57,58],
+  },
+  '虎': {
+    emoji: '🐯', color: '#e67e22', bgColor: '#fff3e0', group: 'EARTH',
+    keyword: '有言実行',
+    catchphrase: 'キミにしか相談できない',
+    personality: '自由・平等・博愛主義。面倒見がよく、親分肌。仕事とプライベートをきっちり分ける。',
+    love: '頼られると親分肌・姉御肌が爆発！「キミにしか相談できない」が一番刺さる。',
+    money: 'マネーの虎。抜群の金銭感覚の持ち主。',
+    vocation: '実業家・企業経営・会計士・プロスポーツ選手',
+    lucky: '逆境がバネになる。逃げず、ひるまず、迎え撃って吉！',
+    subTypes: [6,43,49,54,55,60],
+  },
+  'たぬき': {
+    emoji: '🦝', color: '#795548', bgColor: '#efebe9', group: 'MOON',
+    keyword: '笑顔は敵をつくらない',
+    catchphrase: '一緒にいるとほっとする',
+    personality: 'どんな相手とも上手く合わせられる。いつも笑顔で場を和ませ、敵を作りにくい。',
+    love: '「一緒にいるとほっとする」が一番のプロポーズ。じわじわ愛が深まるタイプ。',
+    money: '財運があるのでお金はまわる。蓄える才能あり。',
+    vocation: '司会者・アナウンサー・教師・コンサルタント',
+    lucky: '人と会う。老若男女問わず交流すると運気UP',
+    subTypes: [2,8,41,47],
+  },
+  '子守熊': {
+    emoji: '🐨', color: '#7f8c8d', bgColor: '#f0f4f8', group: 'EARTH',
+    keyword: '最後に勝つのは自分',
+    catchphrase: '夢は叶うよ',
+    personality: 'サービス精神旺盛で人が喜ぶ顔を見るのが好き。損得勘定に長け、倹約家で無駄が嫌い。',
+    love: '先制攻撃が一番効果的。すぐに結論を出さないのでじっくり待って。',
+    money: '経済観念抜群で財テクも得意。コツコツ型。',
+    vocation: 'ミュージシャン・作曲家・声優・アロマセラピスト',
+    lucky: '音楽や映画、美術に接していると才能が開花',
+    subTypes: [4,10,16,33,39,45],
+  },
+  'ゾウ': {
+    emoji: '🐘', color: '#5b9bd5', bgColor: '#e3f2fd', group: 'SUN',
+    keyword: '根性だったら負けません',
+    catchphrase: 'よく頑張ったね',
+    personality: '努力家だが努力している姿は見せない。その道のプロ・職人を目指す。キレたら最も怖い。',
+    love: '正面から堂々と攻めましょう。見てくれている人がいるとしみじみ嬉しい。',
+    money: '一攫千金のギャンブラー精神。大きな数字に強い。',
+    vocation: '国家公務員・政治家・警察官・医師・パイロット',
+    lucky: '精神世界に触れる。努力や根性とは違う世界をのぞいてみる',
+    subTypes: [12,18,31,37],
+  },
+  'ひつじ': {
+    emoji: '🐑', color: '#d63384', bgColor: '#fce4ec', group: 'MOON',
+    keyword: '仲よきことは美しきかな',
+    catchphrase: 'みんなも行くよ',
+    personality: '「みんな仲良く」がテーマ。寂しがり屋で一人ぼっちが嫌い。ものを集めるのが好きな情報収集家。',
+    love: '「みんなも行くよ」が背中を押す魔法の言葉。フレンドリーな対応が基本。',
+    money: '小銭より紙幣が好き。蓄財の達人。',
+    vocation: '内科医・心理学者・カウンセラー',
+    lucky: '先祖への感謝。お墓参りを大切にすると加護が強まる',
+    subTypes: [14,20,23,26,29,35],
+  },
+  'ペガサス': {
+    emoji: '🦄', color: '#e91e8c', bgColor: '#fce4ec', group: 'SUN',
+    keyword: '自由奔放',
+    catchphrase: 'あなたの感性はスゴイ',
+    personality: '感情の落差が激しい気分屋。天才肌で長所はすごいが後は平凡。外国人的な感性を持つ。',
+    love: '「あなたの感性はスゴイ」が刺さる。具体的に何がスゴイかは言わなくてよい。',
+    money: '財布にも羽が生えている。でもなぜかまわってくる。',
+    vocation: '宇宙飛行士・CGクリエイター・アニメーター・パイロット',
+    lucky: '多忙に過ごす。忙しく飛び回ることで才能が開花',
+    subTypes: [21,22,27,28],
+  },
+};
+
+const COMPATIBILITY = {
+  same:    { score: 100, label: '最高の仲間✨', desc: '同じ価値観でベストパートナー！' },
+  beats:   { score: 80,  label: 'あなたが勝ち🏆', desc: 'あなたが引っ張るリーダー的存在' },
+  losesTo: { score: 85,  label: 'ついていきたい💫', desc: '相手から学べることが多い憧れの人' },
+};
+
+function getGroupCompatibility(myGroup, theirGroup) {
+  if (myGroup === theirGroup) return COMPATIBILITY.same;
+  const groupJanken = { MOON: 'EARTH', EARTH: 'SUN', SUN: 'MOON' };
+  if (groupJanken[myGroup] === theirGroup) return COMPATIBILITY.beats;
+  return COMPATIBILITY.losesTo;
+}
+
+function getCharacterNumber(year, month, day) {
+  const base = new Date(1926, 0, 1);
+  const target = new Date(year, month - 1, day);
+  const diffMs = target.getTime() - base.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const idx0 = ((26 + diffDays) % 60 + 60) % 60;
+  return idx0 + 1;
+}
+
+function diagnose(year, month, day) {
+  const charNum = getCharacterNumber(year, month, day);
+  const charData = CHARACTER_TABLE[charNum - 1];
+  const profile = ANIMAL_PROFILES[charData.animal];
+  return {
+    number: charNum,
+    ...charData,
+    profile,
+    group: GROUPS[charData.group],
+  };
+}
+
+// ---------------------------------------------------
+let myDiagnosisResult = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderAnimalsGrid();
+  setupParticles();
+});
+
+function setupParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+  for (let i = 0; i < 20; i++) {
+    const particle = document.createElement('div');
+    particle.style.position = 'absolute';
+    particle.style.width = Math.random() * 6 + 4 + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.background = Math.random() > 0.5 ? 'rgba(236, 72, 153, 0.3)' : 'rgba(167, 139, 250, 0.3)';
+    particle.style.borderRadius = '50%';
+    particle.style.top = Math.random() * 100 + 'vh';
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.animation = `floating ${Math.random() * 5 + 5}s infinite ease-in-out`;
+    particle.style.animationDelay = Math.random() * 3 + 's';
+    container.appendChild(particle);
+  }
+}
+
+function runMyDiagnosis() {
+  const year = parseInt(document.getElementById('myYear').value);
+  const month = parseInt(document.getElementById('myMonth').value);
+  const day = parseInt(document.getElementById('myDay').value);
+  if (!validateDate(year, month, day)) {
+    alert('正しい生年月日を入力してください（1926年〜2010年）');
+    return;
+  }
+  myDiagnosisResult = diagnose(year, month, day);
+  showMyResult(myDiagnosisResult);
+  setTimeout(() => {
+    document.getElementById('myResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function showMyResult(res) {
+  document.getElementById('myResult').style.display = 'block';
+  document.getElementById('myCharNumber').innerText = `No.${res.number}`;
+  document.getElementById('myGroupBadge').innerText = `${res.group.emoji} ${res.group.name}`;
+  document.getElementById('myAnimalIcon').innerText = res.profile.emoji;
+  document.getElementById('myCharName').innerText = res.name;
+  document.getElementById('myAnimalName').innerText = `${res.animal}タイプ`;
+  document.getElementById('myCharSpell').innerText = `魔力属性: ${res.spell} 🌟`;
+  document.getElementById('myKeyword').innerText = `✨ 「${res.profile.keyword}」`;
+  document.getElementById('myPersonality').innerText = res.profile.personality;
+  document.getElementById('myLove').innerText = res.profile.love;
+  document.getElementById('myMoney').innerText = res.profile.money;
+  document.getElementById('myVocation').innerText = res.profile.vocation;
+  document.getElementById('myLucky').innerText = res.profile.lucky;
+  const card = document.getElementById('myResultCard');
+  card.style.borderColor = res.group.color;
+  card.style.boxShadow = `0 30px 70px rgba(0, 0, 0, 0.4), 0 0 30px ${res.group.color}33`;
+}
+
+function runOshiDiagnosis() {
+  if (!myDiagnosisResult) {
+    alert('まずは上の「STEP 01」でご自身のキャラを診断してください！');
+    document.getElementById('diagnosis').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  const oshiName = document.getElementById('oshiName').value.trim() || '推し';
+  const year = parseInt(document.getElementById('oshiYear').value);
+  const month = parseInt(document.getElementById('oshiMonth').value);
+  const day = parseInt(document.getElementById('oshiDay').value);
+  if (!validateDate(year, month, day)) {
+    alert('推しの正しい生年月日を入力してください（1926年〜2010年）');
+    return;
+  }
+  const oshiRes = diagnose(year, month, day);
+  showOshiResult(oshiRes, oshiName);
+  calculateAndShowCompatibility(myDiagnosisResult, oshiRes, oshiName);
+  setTimeout(() => {
+    document.getElementById('oshiResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function showOshiResult(res, oshiName) {
+  document.getElementById('oshiResult').style.display = 'block';
+  document.getElementById('oshiNameLabel').innerText = `💖 ${oshiName} のキャラ`;
+  document.getElementById('oshiCharNumber').innerText = `No.${res.number}`;
+  document.getElementById('oshiGroupBadge').innerText = `${res.group.emoji} ${res.group.name}`;
+  document.getElementById('oshiAnimalIcon').innerText = res.profile.emoji;
+  document.getElementById('oshiCharName').innerText = res.name;
+  document.getElementById('oshiAnimalName').innerText = `${res.animal}タイプ`;
+  document.getElementById('oshiKeyword').innerText = `✨ 「${res.profile.keyword}」`;
+  document.getElementById('oshiPersonality').innerText = res.profile.personality;
+  document.getElementById('oshiCatchphrase').innerText = `「${res.profile.catchphrase}」と言ってあげると大喜び！`;
+  const card = document.getElementById('oshiResultCard');
+  card.style.borderColor = res.group.color;
+}
+
+function calculateAndShowCompatibility(my, oshi, oshiName) {
+  document.getElementById('compatCard').style.display = 'block';
+  const compat = getGroupCompatibility(my.group.id, oshi.group.id);
+  let finalScore = compat.score;
+  if (my.group.id !== oshi.group.id) {
+    const seed = (my.number * oshi.number) % 15;
+    finalScore = compat.score === 80 ? 80 + seed : 85 + (seed % 10);
+  }
+  document.getElementById('myGroupItem').innerHTML = `${my.group.emoji} あなた<br><small>(${my.group.name})</small>`;
+  document.getElementById('oshiGroupItem').innerHTML = `${oshi.group.emoji} ${oshiName}<br><small>(${oshi.group.name})</small>`;
+  document.getElementById('compatScore').innerText = `${finalScore}点`;
+  document.getElementById('compatLabel').innerText = compat.label;
+  
+  let desc = `あなた(${my.group.name})と${oshiName}さん(${oshi.group.name})は、`;
+  if (my.group.id === oshi.group.id) {
+    desc += `価値観がピッタリ同じ「最高のソウルメイト」！言葉がなくても通じ合える、最強に心地よい関係です✨`;
+  } else if (compat.score === 80) {
+    desc += `あなたが${oshiName}さんを自然とリードする関係。あなたの頼もしい姿に、${oshiName}さんは大きな安心感を抱くはずです🏆`;
+  } else {
+    desc += `あなたが${oshiName}さんの圧倒的な世界観や感性に惹かれる関係。刺激的で、いつでもあなたにトキメキを与えてくれる憧れの人です💫`;
+  }
+  document.getElementById('compatDesc').innerText = desc;
+
+  let tip = `${oshiName}さんは【${oshi.animal}】タイプ。`;
+  tip += `プライドをくすぐる「${oshi.profile.catchphrase}」という褒め言葉が効果絶大です！`;
+  tip += `また、${oshiName}さんは${oshi.profile.personality.substring(0, 45)}...という特徴があるので、そこを優しくフォローしてあげると急接近できますよ🎯`;
+  document.getElementById('compatTip').innerText = tip;
+}
+
+function renderAnimalsGrid(filterGroup = 'all') {
+  const grid = document.getElementById('animalsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  for (const [animalName, p] of Object.entries(ANIMAL_PROFILES)) {
+    if (filterGroup !== 'all' && p.group !== filterGroup) continue;
+    const groupObj = GROUPS[p.group];
+    const card = document.createElement('div');
+    card.className = 'animal-card';
+    card.style.setProperty('--border-color', groupObj.color);
+    card.innerHTML = `
+      <span class="card-emoji">${p.emoji}</span>
+      <h3 class="card-title">${animalName}</h3>
+      <span class="card-group" style="background:${groupObj.color}22; color:${groupObj.color}">${groupObj.emoji} ${groupObj.name}</span>
+      <p class="card-desc">${p.personality.substring(0, 50)}...</p>
+    `;
+    card.addEventListener('click', () => {
+      alert(`【${animalName}の取扱説明書】\n\n◆ 特徴:\n${p.personality}\n\n◆ 恋愛運:\n${p.love}\n\n◆ 喜ぶ魔法の言葉:\n「${p.catchphrase}」`);
+    });
+    grid.appendChild(card);
+  }
+}
+
+function filterAnimals(group) {
+  const buttons = ['all', 'Moon', 'Earth', 'Sun'];
+  buttons.forEach(b => {
+    const btn = document.getElementById(`filter${b}`);
+    if (btn) btn.classList.remove('active');
+  });
+  const activeBtn = document.getElementById(`filter${group.charAt(0) + group.slice(1).toLowerCase()}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  renderAnimalsGrid(group);
+}
+
+function validateDate(y, m, d) {
+  if (isNaN(y) || isNaN(m) || isNaN(d)) return false;
+  if (y < 1920 || y > 2026) return false;
+  if (m < 1 || m > 12) return false;
+  if (d < 1 || d > 31) return false;
+  const date = new Date(y, m - 1, d);
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
+}
+
+function shareResult(type) {
+  let shareText = '';
+  if (type === 'my') {
+    if (!myDiagnosisResult) return;
+    shareText = `【動物キャラナビ診断】\n私の個性心理学キャラは『No.${myDiagnosisResult.number} ${myDiagnosisResult.name}』でした！✨\n属性: ${myDiagnosisResult.group.name} 🌙\nキーワード: 「${myDiagnosisResult.profile.keyword}」\n#動物キャラナビ #個性心理学 #推し活相性診断\n`;
+  } else {
+    const oshiName = document.getElementById('oshiName').value.trim() || '推し';
+    const compatScore = document.getElementById('compatScore').innerText;
+    const compatLabel = document.getElementById('compatLabel').innerText;
+    shareText = `【推し活×個性心理学】\n私と${oshiName}さんの相性診断結果は…『${compatScore} (${compatLabel})』でした！💖\nお互いのキャラ:\n私: ${myDiagnosisResult.name}\n${oshiName}さん: ${document.getElementById('oshiCharName').innerText}\n#動物キャラナビ #推し活相性診断 #個性心理学\n`;
+  }
+  navigator.clipboard.writeText(shareText).then(() => {
+    alert('診断結果をクリップボードにコピーしました！\nThreadsやXに貼り付けてシェアしてね 🚀');
+  }).catch(err => {
+    console.error('Copy failed: ', err);
+    prompt('結果をコピーしてシェアしてください：', shareText);
+  });
+}
+  </script>
+</body>
+</html>
