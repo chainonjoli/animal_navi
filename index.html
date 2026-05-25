@@ -134,13 +134,7 @@
             <div class="feature-desc">空気感・役割バランス・感情相性の3軸で、推しとの関係性を可視化。</div>
           </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-step">03</div>
-          <div>
-            <div class="feature-title">👥 グループの関係性を考察</div>
-            <div class="feature-desc">グループ内の月太陽地球バランスや役割から、「なぜこの関係性が尊いのか」を言語化。</div>
-          </div>
-        </div>
+
       </div>
     </section>
 
@@ -245,9 +239,7 @@
             <span>💖 推しとの相性を見る</span>
             <span>→</span>
           </button>
-          <button class="btn-secondary" onclick="navigateTo('group')">
-            <span>👥 グループ考察へ</span>
-          </button>
+
         </div>
       </div>
     </div>
@@ -408,9 +400,6 @@
 
         <!-- Navigation -->
         <div class="btn-group mt-lg">
-          <button class="btn-secondary" onclick="navigateTo('group')">
-            <span>👥 グループ考察へ</span>
-          </button>
           <button class="btn-primary" onclick="navigateTo('gpts')">
             <span>💬 公式LINEでさらに考察</span>
             <span>→</span>
@@ -423,127 +412,7 @@
     </footer>
   </div>
 
-  <!-- ============================================================
-       PAGE: GROUP ANALYSIS
-       ============================================================ -->
-  <div class="page" id="page-group">
-    <div class="container">
-      <div class="col-header">
-        <span class="col-num">05</span>
-        <div class="col-divider"></div>
-        <span class="col-label">GROUP</span>
-      </div>
 
-      <h2 class="section-title">推し<span class="marker-highlight">グループ考察</span></h2>
-      <p class="section-desc" style="margin-bottom: 2rem;">グループ名とメンバーの生年月日を入力してください。</p>
-
-      <!-- Group Form -->
-      <div class="glass-card" id="groupForm" style="margin-bottom: 2rem;">
-        <div class="form-group">
-          <label class="form-label">🏷️ グループ名（任意）</label>
-          <input type="text" id="groupName" class="text-input" placeholder="例：Number_i">
-        </div>
-
-        <!-- Presets -->
-        <div class="presets-section">
-          <div class="presets-label">📋 プリセットから選ぶ</div>
-          <div class="preset-chips" id="presetChips"></div>
-        </div>
-
-        <!-- Member List -->
-        <div class="form-group" style="margin-top: 1.5rem;">
-          <label class="form-label">👤 メンバー登録 (最大10人)</label>
-          <div class="member-list" id="memberList"></div>
-          <button class="btn-add-member" id="btnAddMember" onclick="addMemberRow()">
-            <span>＋ メンバーを追加</span>
-          </button>
-        </div>
-
-        <button class="btn-primary" onclick="runGroupAnalysis()">
-          <span>グループを分析する</span>
-          <span>→</span>
-        </button>
-      </div>
-
-      <!-- Group Result -->
-      <div class="group-result hidden" id="groupResult">
-        <!-- Balance Pie Chart -->
-        <div class="infographic-card">
-          <div class="infographic-title">BALANCE</div>
-          <div class="infographic-heading" id="groupResultTitle" style="font-family: var(--font-serif);">月太陽地球バランス</div>
-          <div class="pie-chart-wrap">
-            <canvas id="pieChart" width="440" height="440"></canvas>
-          </div>
-          <div class="pie-legend">
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:#D9A6A1"></div>
-              <span>月 <span id="moonCountLabel">0</span>人</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:#A8B2A1"></div>
-              <span>地球 <span id="earthCountLabel">0</span>人</span>
-            </div>
-            <div class="pie-legend-item">
-              <div class="pie-legend-dot" style="background:#C8B9A0"></div>
-              <span>太陽 <span id="sunCountLabel">0</span>人</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Member Cards -->
-        <div class="infographic-card">
-          <div class="infographic-title">MEMBERS</div>
-          <div class="infographic-heading" style="font-family: var(--font-serif);">メンバー一覧</div>
-          <div class="member-cards" id="memberCards"></div>
-        </div>
-
-        <!-- Focus Analysis -->
-        <div class="infographic-card">
-          <div class="infographic-title">RELATIONSHIP FOCUS</div>
-          <div class="infographic-heading" style="font-family: var(--font-serif);">関係性の核</div>
-          <div class="focus-grid" id="focusGrid">
-            <div class="focus-item">
-              <div class="focus-tag axis" style="background: rgba(168, 178, 161, 0.15) !important; color: var(--text-dark) !important; border: 1px solid rgba(168, 178, 161, 0.3) !important;">🛡️ グループの絶対的支柱（軸）</div>
-              <div class="focus-member" id="focusAxisMember">--</div>
-              <div class="focus-desc" id="focusAxisDesc">--</div>
-            </div>
-            <div class="focus-item">
-              <div class="focus-tag changer" style="background: rgba(217, 166, 161, 0.15) !important; color: var(--text-dark) !important; border: 1px solid rgba(217, 166, 161, 0.3) !important;">🌪️ 空気を変える起爆剤・癒やし</div>
-              <div class="focus-member" id="focusChangerMember">--</div>
-              <div class="focus-desc" id="focusChangerDesc">--</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Role Analysis -->
-        <div class="infographic-card">
-          <div class="infographic-title">ROLE ANALYSIS</div>
-          <div class="infographic-heading" style="font-family: var(--font-serif);">役割分析</div>
-          <div class="role-grid" id="roleGrid"></div>
-        </div>
-
-        <!-- Why This Group Is Precious -->
-        <div class="infographic-card">
-          <div class="precious-section">
-            <div class="precious-title">✨ なぜこのグループは尊いのか</div>
-            <div class="precious-text" id="preciousText"></div>
-          </div>
-        </div>
-
-        <!-- Navigation -->
-        <div class="btn-group">
-          <button class="btn-primary" onclick="navigateTo('gpts')">
-            <span>💬 公式LINEでさらに深く考察</span>
-            <span>→</span>
-          </button>
-          <button class="share-btn" onclick="shareGroupResult()" style="width:100%; justify-content:center;">📤 考察結果をコピーする</button>
-        </div>
-      </div>
-    </div>
-    <footer class="site-footer">
-      <p class="footer-copy">© 2024 推し感情アーカイブ</p>
-    </footer>
-  </div>
 
   <!-- ============================================================
        PAGE: LINE（公式LINE誘導）
@@ -644,10 +513,7 @@
       <span class="nav-icon">💖</span>
       <span>推し相性</span>
     </button>
-    <button class="nav-item" data-page="group" onclick="navigateTo('group')">
-      <span class="nav-icon">👥</span>
-      <span>グループ</span>
-    </button>
+
     <button class="nav-item" data-page="gpts" onclick="navigateTo('gpts')">
       <span class="nav-icon">💬</span>
       <span>秘密の部屋</span>
@@ -657,7 +523,7 @@
   <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/oshi.js"></script>
-  <script src="js/group.js"></script>
+
   <script src="js/main.js"></script>
 </body>
 </html>

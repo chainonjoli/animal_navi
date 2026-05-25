@@ -11,7 +11,6 @@ window.oshiDiagnosisResult = null;
 document.addEventListener('DOMContentLoaded', () => {
   setupParticles();
   setupScrollReveal();
-  initGroupPage();
   handleHashRoute();
   window.addEventListener('hashchange', handleHashRoute);
 });
@@ -23,7 +22,7 @@ function navigateTo(pageId) {
 
 function handleHashRoute() {
   const hash = window.location.hash.replace('#', '') || 'top';
-  const validPages = ['top', 'diagnosis', 'oshi', 'group', 'gpts'];
+  const validPages = ['top', 'diagnosis', 'oshi', 'gpts'];
   const targetPage = validPages.includes(hash) ? hash : 'top';
 
   // ページ表示切り替え
