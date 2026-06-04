@@ -3,1269 +3,1335 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>個性心理学 動物キャラナビ｜あなたと推しの相性診断</title>
-  <meta name="description" content="生年月日から60種類の動物キャラクターを診断！推しとの相性もわかる個性心理学サイト。アイドルオタクのための推し活ツール。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>推しナビAI — 12のアニマル気質で占う「推し」との相性診断</title>
+  <!-- プレミアム外部CSSリンク（ローカル開発用） -->
   <style>
 /* ============================================================
-   個性心理学 動物キャラナビ スタイルシート
-   テーマ: 推し活 × プレミアム・ガラスモーフィズム (Rich & Active Aesthetics)
-   ============================================================ */
+ * 推しナビAI (OshiNavi AI)
+ * 超プレミアム・オーロラガラスUIデザインシステム (main.css)
+ * ============================================================ */
+
+/* Google Fonts から最高峰のタイポグラフィフォントをインポート */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* カラーパレット */
-  --bg-primary: #0b0f19;
-  --bg-secondary: #131a2e;
-  --text-primary: #f3f4f6;
-  --text-muted: #9ca3af;
+  /* 爽やかで透明感のある「オーロラガラス」ハイエンドカラーパレット */
+  --bg-sidebar: rgba(255, 255, 255, 0.65); /* 爽やかな白すりガラス */
+  --bg-main: #f8fafc;          /* 非常に明るいクールスレート */
+  --bg-card: rgba(255, 255, 255, 0.85); /* 半透明フローティングカード */
+  --border-fine: rgba(15, 23, 42, 0.06); /* 空気のように繊細な境界線 */
+  --border-dark: rgba(15, 23, 42, 0.08);
   
-  --primary: #ec4899;
-  --primary-glow: rgba(236, 72, 153, 0.4);
-  --primary-gradient: linear-gradient(135deg, #ec4899, #f43f5e, #d946ef);
+  --primary: #8b5cf6;          /* エモくて神秘的なアメジストパープル */
+  --primary-hover: #7c3aed;
+  --primary-light: rgba(139, 92, 246, 0.08);
+  --secondary: #06b6d4;        /* 爽やかでクリアなシアンブルー */
+  --accent: #ec4899;           /* 愛らしさを引き立てるサクラピンク */
+  --warning: #f59e0b;          /* ギャップ警告のためのソフトアンバー */
   
-  --secondary: #a78bfa;
-  --secondary-gradient: linear-gradient(135deg, #a78bfa, #8b5cf6, #6366f1);
+  --text-main: #0f172a;        /* 濃いスレート (高いコントラスト) */
+  --text-muted: #64748b;       /* 補助スレートグレー */
+  --text-sidebar: #1e293b;     /* 明るいサイドバー用の濃色スレート */
+  --text-sidebar-muted: #64748b;
+  --text-inverse: #ffffff;
   
-  --gold: #fbbf24;
-  --gold-gradient: linear-gradient(135deg, #f59e0b, #fbbf24, #fef08a);
+  /* 芸術的なグラデーション */
+  --grad-primary: linear-gradient(135deg, #8b5cf6, #ec4899);
+  --grad-logo: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899);
+  --grad-user: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --grad-premium: linear-gradient(135deg, #ff007f, #8b5cf6, #00f0ff);
   
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-glow: rgba(255, 255, 255, 0.02);
-  --glass-pink-bg: rgba(236, 72, 153, 0.05);
-  --glass-pink-border: rgba(236, 72, 153, 0.2);
-
-  --font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* 空気のように柔らかな多層レイヤードシャドウ (Linear風) */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 2px 4px -1px rgba(15, 23, 42, 0.02);
+  --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --shadow-floating: 0 20px 40px -15px rgba(139, 92, 246, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.04);
+  
+  --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* 全体リセットと基本設定 */
+/* 全体初期化 */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
   position: relative;
 }
 
-/* ✨ 背景アニメーション & パーティクル */
-.particles {
+/* 背景を彩る極上のオーロラ光（ピンク・シアン・パープル） */
+.bg-glow-1, .bg-glow-2 {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  filter: blur(180px);
+  z-index: -1;
+  opacity: 0.22;
+}
+.bg-glow-1 {
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(255,255,255,0) 70%);
+  top: -20%;
+  left: 10%;
+}
+.bg-glow-2 {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(255,255,255,0) 70%);
+  bottom: -20%;
+  right: 5%;
+}
+
+/* ============================================================
+ * 📱 レイアウト構成
+ * ============================================================ */
+
+/* 爽やかな白すりガラス調・サイドバー */
+.sidebar {
+  width: 290px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-fine);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  z-index: 10;
+  box-shadow: 4px 0 30px rgba(139, 92, 246, 0.03);
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border-fine);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 20px;
+  display: inline-block;
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.logo-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: var(--grad-logo);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* メンバーリスト項目 (エモいミニマルスタイル) */
+.section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-sidebar-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-left: 8px;
+}
+
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+  color: var(--text-sidebar);
+}
+
+.member-item:hover {
+  background-color: rgba(139, 92, 246, 0.04);
+  border-color: rgba(139, 92, 246, 0.02);
+}
+
+.member-item.active {
+  background-color: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.15);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.04);
+}
+
+.member-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-sidebar);
+}
+
+.member-meta {
+  font-size: 11px;
+  color: var(--text-sidebar-muted);
+  display: flex;
+  gap: 6px;
+}
+
+/* アクションボタン */
+.add-member-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px dashed rgba(139, 92, 246, 0.25);
+  background: transparent;
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.add-member-btn:hover {
+  background: rgba(139, 92, 246, 0.05);
+  border-color: var(--primary);
+}
+
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-fine);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-fine);
+  background: #ffffff;
+  color: var(--text-sidebar);
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+}
+
+}
+
+/* ============================================================
+ * 💬 メインチャットエリア (浮遊カード調ガラスモルフィズム)
+ * ============================================================ */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background-color: var(--bg-main);
+}
+
+/* 極細ボーダーの美しいヘッダー */
+.chat-header {
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border-fine);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 5;
+}
+
+.active-member-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.active-member-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.active-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.active-badges {
+  display: flex;
+  gap: 6px;
+}
+
+/* ミニマルで繊細なプレミアムタグ */
+.badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-essential {
+  background-color: rgba(79, 70, 229, 0.05);
+  color: var(--primary);
+  border: 1px solid rgba(79, 70, 229, 0.12);
+}
+
+.badge-surface {
+  background-color: rgba(14, 165, 233, 0.05);
+  color: #0369a1;
+  border: 1px solid rgba(14, 165, 233, 0.12);
+}
+
+.chat-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selector-ai {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border-fine);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 11.5px;
+  outline: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.selector-ai:hover {
+  border-color: rgba(15, 23, 42, 0.15);
+}
+
+/* チャットメッセージ表示エリア */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--bg-main);
+}
+
+/* クイック診断・ウェルカム画面の超美麗化 (フローティングパネル調) */
+.welcome-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 520px;
+  margin: 0 auto;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.welcome-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-fine);
+  border-radius: 18px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-floating);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.welcome-icon {
+  font-size: 40px;
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  background: rgba(79, 70, 229, 0.05);
+  border: 1px solid rgba(79, 70, 229, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 8px;
+}
+
+.welcome-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.welcome-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* クイック一時診断フォームエリア (すりガラス調) */
+.quick-diag-area {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-fine);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.quick-diag-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-fine);
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+}
+
+.quick-diag-title .shield-icon {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+/* メッセージ吹き出しの極上デザイン */
+.message-row {
+  display: flex;
+  gap: 14px;
+  max-width: 80%;
+}
+
+.message-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-row.ai {
+  align-self: flex-start;
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border: 1px solid var(--border-fine);
+  background-color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.message-row.user .message-avatar {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.message-row.ai .message-avatar {
+  background: #ffffff;
+  color: var(--text-main);
+}
+
+.message-bubble {
+  padding: 14px 20px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  box-shadow: var(--shadow-md);
+  letter-spacing: 0.1px;
+}
+
+.message-row.user .message-bubble {
+  background: var(--grad-user);
+  color: var(--text-inverse);
+  border-top-right-radius: 2px;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15);
+}
+
+.message-row.ai .message-bubble {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid var(--border-fine);
+  border-top-left-radius: 2px;
+}
+
+/* AI回答のMarkdown装飾 (ビジネスレポート調) */
+.message-bubble h3 {
+  font-size: 13.5px;
+  font-weight: 800;
+  margin: 18px 0 8px 0;
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+  padding-left: 8px;
+  letter-spacing: -0.2px;
+}
+
+.message-bubble h3:first-child {
+  margin-top: 0;
+}
+
+.message-bubble p {
+  margin-bottom: 8px;
+}
+.message-bubble ul {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+.message-bubble li {
+  margin-bottom: 4px;
+}
+.message-bubble blockquote {
+  background: var(--bg-main);
+  border-left: 3px solid var(--secondary);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 6px;
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 13px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* チャット入力フォーム (Framer風フローティング) */
+.chat-input-area {
+  padding: 20px 32px 32px 32px;
+  background-color: var(--bg-main);
+}
+
+.input-container {
+  display: flex;
+  background: #ffffff;
+  border: 1px solid var(--border-fine);
+  border-radius: 14px;
+  padding: 6px 8px 6px 18px;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-smooth);
+}
+
+.input-container:focus-within {
+  border-color: rgba(79, 70, 229, 0.4);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08), var(--shadow-lg);
+}
+
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  padding: 10px 0;
+  outline: none;
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--primary);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2);
+}
+
+.send-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.send-btn:disabled {
+  background: var(--bg-main);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================================
+ * ⚙️ 設定 / モーダルウインドウ (Linear風超高級パネル)
+ * ============================================================ */
+.modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 40%);
-}
-
-.particles::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.3;
-}
-
-/* コンテナ */
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 1;
-}
-
-/* ヘッダー */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  background: rgba(9, 13, 22, 0.35); /* シックな遮蔽 */
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
-  background: rgba(11, 15, 25, 0.7);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--glass-border);
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
 }
 
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px;
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #ffffff;
+  border: 1px solid var(--border-fine);
+  border-radius: 16px;
+  width: 460px;
+  max-width: 90%;
+  box-shadow: 0 30px 60px -15px rgba(9, 13, 22, 0.25), 0 0 0 1px rgba(9, 13, 22, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96);
+  transition: var(--transition-smooth);
+}
+
+.modal.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-fine);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fafbfc;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 900;
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.modal-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
 }
 
-.logo-icon {
-  -webkit-text-fill-color: initial;
-}
-
-.header-nav {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: var(--transition-smooth);
-  position: relative;
-  padding: 4px 0;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: var(--primary-gradient);
-  transition: var(--transition-smooth);
-  transform: translateX(-50%);
-}
-
-.nav-link:hover {
-  color: var(--text-primary);
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* ヒーローセクション */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 100px;
-  padding-bottom: 60px;
-  position: relative;
-  z-index: 1;
-}
-
-.hero-content {
-  max-width: 800px;
-  padding: 0 24px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 16px;
-  background: rgba(236, 72, 153, 0.1);
-  border: 1px solid rgba(236, 72, 153, 0.3);
-  border-radius: 9999px;
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 24px;
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.1);
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
-}
-
-.gradient-text {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 40px rgba(236, 72, 153, 0.2);
-}
-
-.hero-subtitle {
-  color: var(--text-muted);
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  margin-bottom: 40px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-animals {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 48px;
-}
-
-.hero-animal {
-  font-size: clamp(2rem, 5vw, 3rem);
-  display: inline-block;
-}
-
-.floating {
-  animation: floating 3s ease-in-out infinite;
-  animation-delay: var(--delay);
-}
-
-@keyframes floating {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-15px) scale(1.08); }
-}
-
-.hero-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 18px 40px;
-  background: var(--primary-gradient);
+.close-btn {
+  background: transparent;
   border: none;
-  border-radius: 9999px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-decoration: none;
-  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
   transition: var(--transition-smooth);
-  position: relative;
-  overflow: hidden;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
-.hero-btn::before {
-  content: "";
-  position: absolute;
-  top: 0; left: -100%; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
+.close-btn:hover {
+  background-color: rgba(15, 23, 42, 0.05);
+  color: var(--text-main);
 }
 
-.hero-btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
-}
-
-.hero-btn:hover::before {
-  left: 100%;
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 40px;
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  gap: 16px;
 }
 
-.scroll-arrow {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--text-muted), transparent);
-  position: relative;
-  overflow: hidden;
-}
-
-.scroll-arrow::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: #fff;
-  animation: scrollDown 2s infinite ease-in-out;
-}
-
-@keyframes scrollDown {
-  0% { transform: translateY(-100%); }
-  80%, 100% { transform: translateY(100%); }
-}
-
-/* セクション共通 */
-.section {
-  padding: 100px 0;
-  position: relative;
-  z-index: 1;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  background: rgba(167, 139, 250, 0.1);
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  border-radius: 9999px;
-  color: var(--secondary);
-  font-weight: 700;
-  font-size: 0.8rem;
-  margin-bottom: 16px;
-  letter-spacing: 0.05em;
-}
-
-.section-badge.pink {
-  background: rgba(236, 72, 153, 0.1);
-  border-color: rgba(236, 72, 153, 0.3);
-  color: var(--primary);
-}
-
-.section-badge.purple {
-  background: rgba(167, 139, 250, 0.1);
-  border-color: rgba(167, 139, 250, 0.3);
-  color: var(--secondary);
-}
-
-.section-title {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 900;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #fff, #9ca3af);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.section-desc {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-}
-
-/* ガラスモーフィズムカード */
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 40px;
-  max-width: 650px;
-  margin: 0 auto 40px auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  transition: var(--transition-smooth);
-}
-
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.02);
-}
-
-.pink-card {
-  background: var(--glass-pink-bg);
-  border-color: var(--glass-pink-border);
-}
-
-.pink-card:hover {
-  border-color: rgba(236, 72, 153, 0.4);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 35px rgba(236, 72, 153, 0.05);
-}
-
-/* フォーム要素 */
 .form-group {
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .form-label {
-  display: block;
+  font-size: 12.5px;
   font-weight: 700;
-  font-size: 1rem;
-  margin-bottom: 12px;
-  color: #fff;
-}
-
-.date-inputs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.date-field {
-  display: flex;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  padding: 0 16px;
-  transition: var(--transition-smooth);
-}
-
-.date-field:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
-}
-
-.date-input, .text-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-family: var(--font-family);
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 16px 0;
-  outline: none;
-}
-
-.text-input {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  padding: 16px 20px;
-  transition: var(--transition-smooth);
-}
-
-.text-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
-}
-
-/* Chrome, Safari, Edge, Opera のスピンボタンを非表示にする */
-.date-input::-webkit-outer-spin-button,
-.date-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox のスピンボタンを非表示にする */
-.date-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.date-unit {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-left: 8px;
-}
-
-/* 診断ボタン */
-.diagnose-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 18px;
-  background: var(--primary-gradient);
-  border: none;
-  border-radius: 16px;
-  color: #fff;
-  font-family: var(--font-family);
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
-}
-
-.diagnose-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
-}
-
-.diagnose-btn.pink-btn {
-  background: linear-gradient(135deg, #ec4899, #f43f5e);
-  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
-}
-
-.diagnose-btn.pink-btn:hover {
-  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
-}
-
-/* 結果表示エリア */
-.result-area {
-  margin-top: 40px;
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Threadsのまとめ画像をインスパイアした結果カード */
-.result-card {
-  background: #fbf7f0; /* Threads画像のような暖かみのあるプレミアムな白ベージュ */
-  color: #3e2723;      /* ディープブラウン */
-  border-radius: 28px;
-  padding: 40px;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4), 0 0 0 12px rgba(251, 247, 240, 0.05);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #efebe9;
-  text-align: center;
-}
-
-/* 装飾的な背景 */
-.result-card::before {
-  content: "★ ★ ★";
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #d7ccc8;
-  font-size: 0.8rem;
-  letter-spacing: 0.5em;
-}
-
-.oshi-result-card {
-  margin-bottom: 24px;
-}
-
-.oshi-label {
-  display: inline-block;
-  background: #f48fb1;
-  color: #fff;
-  padding: 4px 16px;
-  border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 10px rgba(244, 143, 177, 0.3);
-}
-
-.result-header {
+  color: var(--text-main);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
-.char-number {
-  background: #3e2723;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 900;
-  padding: 4px 14px;
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
   border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border-fine);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
 }
 
-.char-group-badge {
-  background: #d7ccc8;
-  color: #3e2723;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  border: 1px solid #bcaaa4;
+.form-input:focus {
+  border-color: rgba(79, 70, 229, 0.4);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08), var(--shadow-sm);
 }
 
-.char-animal-icon {
-  font-size: 5rem;
-  margin: 10px 0;
-  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1));
-  animation: heartBeat 2s infinite ease-in-out;
-}
-
-@keyframes heartBeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-.char-name {
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: #3e2723;
-  margin-bottom: 4px;
-  letter-spacing: -0.02em;
-}
-
-.char-animal-name {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #795548;
-  margin-bottom: 8px;
-}
-
-.char-spell {
-  display: inline-block;
-  background: #efebe9;
-  padding: 2px 10px;
-  font-size: 0.8rem;
-  color: #8d6e63;
-  border-radius: 4px;
-  margin-bottom: 16px;
-}
-
-.char-keyword {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #d84315;
-  background: #fbe9e7;
-  padding: 12px 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  border: 1px dashed #ffab91;
-  display: inline-block;
-}
-
-.char-details {
-  text-align: left;
+.form-row {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-top: 1px dashed #d7ccc8;
-  padding-top: 24px;
+  gap: 12px;
 }
 
-.detail-item {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.detail-icon {
-  font-size: 1.35rem;
-  background: #efebe9;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.detail-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #8d6e63;
-  margin-bottom: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.detail-text {
-  font-size: 0.95rem;
-  color: #4e342e;
-  font-weight: 500;
-}
-
-/* 相性カード */
-.compatibility-card {
-  background: linear-gradient(180deg, #fffcf9 0%, #fff5eb 100%);
-  color: #3e2723;
-  border-radius: 28px;
-  padding: 40px;
-  max-width: 600px;
-  margin: 30px auto 0 auto;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  border: 2px solid #ffe0b2;
-}
-
-.compat-title {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #e65100;
-  margin-bottom: 24px;
-}
-
-.compat-groups {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 30px;
-}
-
-.compat-group-item {
-  background: #efebe9;
-  padding: 12px 20px;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border: 1px solid #d7ccc8;
-}
-
-.compat-vs {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: #ff8f00;
-  background: #fff3e0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1.5px solid #ffe0b2;
-}
-
-.compat-score-area {
-  margin-bottom: 24px;
-}
-
-.compat-score {
-  font-size: 4rem;
-  font-weight: 900;
-  color: #e65100;
-  line-height: 1;
-}
-
-.compat-label {
-  display: inline-block;
-  background: #e65100;
-  color: #fff;
-  padding: 4px 16px;
-  border-radius: 9999px;
-  font-weight: 700;
-  font-size: 0.9rem;
+.form-submit-btn {
   margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.2);
-}
-
-.compat-desc {
-  font-size: 1.05rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
   font-weight: 700;
-  margin-bottom: 24px;
-  color: #5d4037;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+  transition: var(--transition-smooth);
 }
 
-.compat-tip {
-  background: #fff8e1;
-  border-left: 4px solid #ffb300;
-  padding: 16px 20px;
-  border-radius: 0 12px 12px 0;
-  text-align: left;
-  font-size: 0.95rem;
-  color: #5d4037;
-  margin-bottom: 30px;
+.form-submit-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* ローディングスピナー */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* スクロールバー装飾 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.08);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.18);
+}
+
+/* 完全プライバシー保護バナー（SaaSスタイル） */
+.privacy-shield-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 8px;
+  color: #065f46;
+  font-size: 11.5px;
   line-height: 1.5;
 }
 
-.compat-tip strong {
-  display: block;
-  color: #b78103;
-  margin-bottom: 4px;
+.privacy-shield-banner .shield-icon {
+  font-size: 16px;
+  line-height: 1;
 }
 
-/* シェアボタン */
-.share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #3e2723;
-  color: #fff;
-  border: none;
-  padding: 14px 28px;
+.privacy-shield-banner .shield-text {
+  font-weight: 500;
+}
+
+/* 🔮 プレミアム購入導線 (オーロラ調エモデザイン) */
+.premium-banner {
+  background: var(--grad-premium);
+  background-size: 200% 200%;
+  animation: aurora-glow 6s ease infinite;
   border-radius: 12px;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  margin-top: 10px;
-  box-shadow: 0 6px 20px rgba(62, 39, 35, 0.25);
-}
-
-.share-btn:hover {
-  transform: translateY(-2px);
-  background: #4e342e;
-  box-shadow: 0 10px 25px rgba(62, 39, 35, 0.4);
-}
-
-/* ---- 12キャラ一覧セクション ---- */
-.group-filter {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.filter-btn {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-muted);
-  padding: 12px 24px;
-  border-radius: 9999px;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: #fff;
-  color: #0b0f19;
-  border-color: #fff;
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-.filter-btn.moon.active {
-  background: var(--secondary-gradient);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 10px 25px rgba(167, 139, 250, 0.3);
-}
-
-.filter-btn.earth.active {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-}
-
-.filter-btn.sun.active {
-  background: var(--gold-gradient);
-  color: #3e2723;
-  border-color: transparent;
-  box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
-}
-
-/* キャラグリッド */
-.animals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-}
-
-.animal-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 30px;
+  padding: 16px;
+  color: #ffffff;
   text-align: center;
-  transition: var(--transition-smooth);
-  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 0, 127, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   position: relative;
   overflow: hidden;
 }
 
-.animal-card::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 6px;
-  background: var(--border-color, var(--glass-border));
+@keyframes aurora-glow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.animal-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--border-color, rgba(255, 255, 255, 0.2));
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+.premium-banner-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.card-emoji {
-  font-size: 3.5rem;
-  margin-bottom: 12px;
-  display: inline-block;
+.premium-banner-desc {
+  font-size: 10.5px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.premium-btn {
+  background: #ffffff;
+  color: #8b5cf6;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
   transition: var(--transition-smooth);
-}
-
-.animal-card:hover .card-emoji {
-  transform: scale(1.15) rotate(5deg);
-}
-
-.card-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.card-group {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
   display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 9999px;
-  margin-bottom: 16px;
 }
 
-.card-desc {
-  font-size: 0.85rem;
+.premium-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.3);
+  color: #7c3aed;
+}
+
+/* チャット用フローティング購入カード */
+.purchase-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px dashed rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-left: 4px solid #8b5cf6;
+}
+
+.purchase-card-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.purchase-card-desc {
+  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.5;
 }
 
-/* フッター */
-.site-footer {
-  border-top: 1px solid var(--glass-border);
-  padding: 60px 0;
-  text-align: center;
-  background: rgba(11, 15, 25, 0.9);
-  position: relative;
-  z-index: 1;
+.purchase-card-btn {
+  align-self: flex-start;
+  background: var(--grad-premium);
+  background-size: 200% 200%;
+  animation: aurora-glow 6s ease infinite;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(255, 0, 127, 0.2);
+  transition: var(--transition-smooth);
 }
 
-.footer-inner {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 24px;
+.purchase-card-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 0, 127, 0.3);
 }
 
-.footer-logo {
-  font-weight: 900;
-  font-size: 1.2rem;
-  margin-bottom: 16px;
-  color: #fff;
+/* ============================================================
+ * 👥 グループ診断機能用追加スタイル
+ * ============================================================ */
+
+.sidebar-tabs {
+  display: flex;
+  padding: 4px;
+  background: rgba(15, 23, 42, 0.03);
+  border-radius: 8px;
+  margin: 8px 16px;
+  gap: 4px;
+  border: 1px solid var(--border-fine);
 }
 
-.footer-note {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-  line-height: 1.6;
+.tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sidebar-muted);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
-.footer-copy {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.25);
+.tab-btn.active {
+  background: #ffffff;
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
 }
 
-/* モバイルレスポンシブ */
-@media (max-width: 768px) {
-  .header-inner {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px 16px;
-  }
-  
-  .hero {
-    padding-top: 140px;
-  }
-  
-  .date-inputs {
-    gap: 8px;
-  }
-  
-  .date-field {
-    padding: 0 10px;
-  }
-  
-  .date-input {
-    font-size: 1rem;
-    padding: 12px 0;
-  }
-  
-  .glass-card {
-    padding: 24px;
-  }
-  
-  .result-card, .compatibility-card {
-    padding: 24px 16px;
-  }
-  
-  .compat-groups {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .compat-vs {
-    transform: rotate(90deg);
-  }
+.tab-btn:hover:not(.active) {
+  color: var(--text-sidebar);
+  background: rgba(255, 255, 255, 0.3);
 }
-  </style>
+
+.sidebar-section {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar-section.active {
+  display: flex;
+}
+
+/* グループ追加モーダル内のメンバー追加行 */
+.group-member-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  background: rgba(15, 23, 42, 0.02);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-fine);
+  margin-bottom: 8px;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.remove-member-row-btn {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.remove-member-row-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* アクティブなバッジエリアの表示微調整 */
+.active-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+</style>
 </head>
 <body>
 
-  <!-- ✨ パーティクル背景 -->
-  <div class="particles" id="particles"></div>
+  <!-- ✨ パーティクル＆グラデーション背景 -->
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
 
-  <!-- ヘッダー -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">
-        <span class="logo-icon">🌟</span>
-        <span class="logo-text">動物キャラナビ</span>
-      </div>
-      <nav class="header-nav">
-        <a href="#diagnosis" class="nav-link">診断する</a>
-        <a href="#oshi" class="nav-link">推し診断</a>
-        <a href="#animals" class="nav-link">12キャラ</a>
-      </nav>
+  <!-- ============================================================
+   * 📱 メインコンテナ（サイドバー ＋ チャットエリア）
+   * ============================================================ -->
+  
+  <!-- 1. 左側サイドバー（お相手・推し管理） -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-icon">❖</span>
+      <span class="logo-title">推しナビAI</span>
     </div>
-  </header>
-
-  <!-- ヒーローセクション -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">🎤 推し活×個性心理学</div>
-      <h1 class="hero-title">
-        あなたと推しの<br>
-        <span class="gradient-text">本当の相性</span>がわかる
-      </h1>
-      <p class="hero-subtitle">
-        生年月日から60種類の動物キャラを診断。<br>
-        推しとの相性スコアもチェックできる！
-      </p>
-      <div class="hero-animals">
-        <span class="hero-animal floating" style="--delay:0s">🐺</span>
-        <span class="hero-animal floating" style="--delay:0.3s">🦁</span>
-        <span class="hero-animal floating" style="--delay:0.6s">🐯</span>
-        <span class="hero-animal floating" style="--delay:0.9s">🦄</span>
-        <span class="hero-animal floating" style="--delay:1.2s">🐨</span>
-        <span class="hero-animal floating" style="--delay:1.5s">🦌</span>
-      </div>
-      <a href="#diagnosis" class="hero-btn">
-        <span>🔮 今すぐ診断する</span>
-      </a>
+    
+    <!-- 👥 リスト切り替え用プレミアムタブ -->
+    <div class="sidebar-tabs">
+      <button class="tab-btn active" id="tabPersonal">👤 個人診断</button>
+      <button class="tab-btn" id="tabGroup">👥 グループ診断</button>
     </div>
-    <div class="hero-scroll">
-      <span>scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
-
-  <!-- ---- 自分の診断 ---- -->
-  <section class="section diagnosis-section" id="diagnosis">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge">STEP 01</div>
-        <h2 class="section-title">あなたのキャラを診断</h2>
-        <p class="section-desc">生年月日を入力してね</p>
-      </div>
-
-      <div class="diagnosis-card glass-card">
-        <div class="form-group">
-          <label class="form-label">📅 生年月日</label>
-          <div class="date-inputs">
-            <div class="date-field">
-              <input type="number" id="myYear" class="date-input" placeholder="1995" min="1926" max="2010">
-              <span class="date-unit">年</span>
-            </div>
-            <div class="date-field">
-              <input type="number" id="myMonth" class="date-input" placeholder="4" min="1" max="12">
-              <span class="date-unit">月</span>
-            </div>
-            <div class="date-field">
-              <input type="number" id="myDay" class="date-input" placeholder="1" min="1" max="31">
-              <span class="date-unit">日</span>
-            </div>
-          </div>
+    
+    <div class="sidebar-content">
+      <!-- 個人診断用セクション -->
+      <div id="personalSection" class="sidebar-section active">
+        <div class="section-title">🔮 診断したお相手リスト</div>
+        <div class="member-list" id="memberList">
+          <!-- JSで動的にメンバーを一覧描画 -->
         </div>
-        <button class="diagnose-btn" id="myDiagnoseBtn" onclick="runMyDiagnosis()">
-          <span class="btn-icon">✨</span>
-          <span>診断する</span>
+        
+        <button class="add-member-btn" id="addMemberBtn">
+          <span>＋</span>
+          <span>新しくお相手を登録</span>
         </button>
       </div>
 
-      <!-- 結果カード -->
-      <div class="result-area" id="myResult" style="display:none;">
-        <div class="result-card" id="myResultCard">
-          <div class="result-header">
-            <div class="char-number" id="myCharNumber"></div>
-            <div class="char-group-badge" id="myGroupBadge"></div>
-          </div>
-          <div class="char-animal-icon" id="myAnimalIcon"></div>
-          <div class="char-name" id="myCharName"></div>
-          <div class="char-animal-name" id="myAnimalName"></div>
-          <div class="char-spell" id="myCharSpell"></div>
-          <div class="char-keyword" id="myKeyword"></div>
-          <div class="char-details">
-            <div class="detail-item">
-              <span class="detail-icon">💫</span>
-              <div class="detail-content">
-                <div class="detail-label">性格</div>
-                <div class="detail-text" id="myPersonality"></div>
-              </div>
-            </div>
-            <div class="detail-item">
-              <span class="detail-icon">💕</span>
-              <div class="detail-content">
-                <div class="detail-label">恋愛傾向</div>
-                <div class="detail-text" id="myLove"></div>
-              </div>
-            </div>
-            <div class="detail-item">
-              <span class="detail-icon">💰</span>
-              <div class="detail-content">
-                <div class="detail-label">マネー感覚</div>
-                <div class="detail-text" id="myMoney"></div>
-              </div>
-            </div>
-            <div class="detail-item">
-              <span class="detail-icon">⭐</span>
-              <div class="detail-content">
-                <div class="detail-label">天職</div>
-                <div class="detail-text" id="myVocation"></div>
-              </div>
-            </div>
-            <div class="detail-item">
-              <span class="detail-icon">🍀</span>
-              <div class="detail-content">
-                <div class="detail-label">開運ポイント</div>
-                <div class="detail-text" id="myLucky"></div>
-              </div>
-            </div>
-          </div>
-          <button class="share-btn" onclick="shareResult('my')">
-            <span>📤 この結果をシェア</span>
-          </button>
+      <!-- グループ診断用セクション -->
+      <div id="groupSection" class="sidebar-section">
+        <div class="section-title">👥 登録したグループリスト</div>
+        <div class="member-list" id="groupList">
+          <!-- JSで動的にグループを一覧描画 -->
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ---- 推し診断 ---- -->
-  <section class="section oshi-section" id="oshi">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge pink">STEP 02</div>
-        <h2 class="section-title">推しのキャラ & 相性チェック</h2>
-        <p class="section-desc">推しの生年月日を入れてみて！</p>
-      </div>
-
-      <div class="diagnosis-card glass-card pink-card">
-        <div class="form-group">
-          <label class="form-label">💖 推しの名前（任意）</label>
-          <input type="text" id="oshiName" class="text-input" placeholder="例：廉くん">
-        </div>
-        <div class="form-group">
-          <label class="form-label">📅 推しの生年月日</label>
-          <div class="date-inputs">
-            <div class="date-field">
-              <input type="number" id="oshiYear" class="date-input" placeholder="1999" min="1926" max="2010">
-              <span class="date-unit">年</span>
-            </div>
-            <div class="date-field">
-              <input type="number" id="oshiMonth" class="date-input" placeholder="1" min="1" max="12">
-              <span class="date-unit">月</span>
-            </div>
-            <div class="date-field">
-              <input type="number" id="oshiDay" class="date-input" placeholder="23" min="1" max="31">
-              <span class="date-unit">日</span>
-            </div>
-          </div>
-        </div>
-        <button class="diagnose-btn pink-btn" onclick="runOshiDiagnosis()">
-          <span class="btn-icon">💖</span>
-          <span>推しを診断 & 相性チェック</span>
+        
+        <button class="add-member-btn" id="addGroupBtn">
+          <span>＋</span>
+          <span>新しくグループを登録</span>
         </button>
       </div>
 
-      <!-- 推し結果 -->
-      <div class="result-area" id="oshiResult" style="display:none;">
-        <!-- 推しキャラ -->
-        <div class="result-card oshi-result-card" id="oshiResultCard">
-          <div class="oshi-label" id="oshiNameLabel">推しのキャラ</div>
-          <div class="result-header">
-            <div class="char-number" id="oshiCharNumber"></div>
-            <div class="char-group-badge" id="oshiGroupBadge"></div>
-          </div>
-          <div class="char-animal-icon" id="oshiAnimalIcon"></div>
-          <div class="char-name" id="oshiCharName"></div>
-          <div class="char-animal-name" id="oshiAnimalName"></div>
-          <div class="char-keyword" id="oshiKeyword"></div>
-          <div class="char-details">
-            <div class="detail-item">
-              <span class="detail-icon">💫</span>
-              <div class="detail-content">
-                <div class="detail-label">性格</div>
-                <div class="detail-text" id="oshiPersonality"></div>
-              </div>
-            </div>
-            <div class="detail-item">
-              <span class="detail-icon">💕</span>
-              <div class="detail-content">
-                <div class="detail-label">好きな言葉</div>
-                <div class="detail-text" id="oshiCatchphrase"></div>
-              </div>
-            </div>
-          </div>
+      <!-- 🔮 プレミアム個別鑑定へのコンバージョン導線 -->
+      <div class="premium-banner">
+        <div class="premium-banner-title">🔮 プレミアム詳細鑑定</div>
+        <div class="premium-banner-desc">
+          一生モノの相性・関係性診断レポートをPDFでお届けします。
         </div>
-
-        <!-- 相性カード -->
-        <div class="compatibility-card" id="compatCard" style="display:none;">
-          <h3 class="compat-title">💫 あなたと推しの相性</h3>
-          <div class="compat-groups">
-            <div class="compat-group-item" id="myGroupItem"></div>
-            <div class="compat-vs">VS</div>
-            <div class="compat-group-item" id="oshiGroupItem"></div>
-          </div>
-          <div class="compat-score-area">
-            <div class="compat-score" id="compatScore"></div>
-            <div class="compat-label" id="compatLabel"></div>
-          </div>
-          <div class="compat-desc" id="compatDesc"></div>
-          <div class="compat-tip">
-            <strong>🎯 攻略のヒント：</strong>
-            <span id="compatTip"></span>
-          </div>
-          <button class="share-btn" onclick="shareResult('oshi')">
-            <span>📤 相性結果をシェア</span>
-          </button>
-        </div>
+        <a href="https://line.me/R/ti/p/@your_line_id" target="_blank" class="premium-btn" id="premiumLinkSidebar">
+          詳細を見る
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- ---- 12キャラ一覧 ---- -->
-  <section class="section animals-section" id="animals">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-badge purple">12 ANIMALS</div>
-        <h2 class="section-title">12の動物キャラクター</h2>
-        <p class="section-desc">3つのグループに分かれているよ</p>
-      </div>
-
-      <!-- グループフィルター -->
-      <div class="group-filter">
-        <button class="filter-btn active" onclick="filterAnimals('all')" id="filterAll">すべて</button>
-        <button class="filter-btn moon" onclick="filterAnimals('MOON')" id="filterMoon">🌙 月グループ</button>
-        <button class="filter-btn earth" onclick="filterAnimals('EARTH')" id="filterEarth">🌍 地球グループ</button>
-        <button class="filter-btn sun" onclick="filterAnimals('SUN')" id="filterSun">☀️ 太陽グループ</button>
-      </div>
-
-      <div class="animals-grid" id="animalsGrid">
-        <!-- JavaScriptで動的生成 -->
-      </div>
+    
+    <div class="sidebar-footer">
+      <button class="footer-btn" id="settingsBtn">
+        <span>⚙️</span>
+        <span>APIキー設定</span>
+      </button>
     </div>
-  </section>
+  </aside>
 
-  <!-- フッター -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <span>🌟</span> 動物キャラナビ
+  <!-- 2. 右側メインエリア（チャットUI） -->
+  <main class="main-area">
+    
+    <!-- チャット上部ヘッダー -->
+    <header class="chat-header">
+      <div class="active-member-display">
+        <div class="member-avatar" id="activeAvatar">🔮</div>
+        <div class="active-member-details">
+          <div class="active-name" id="activeName">お相手を選択して相性を占う</div>
+          <div class="active-badges" id="activeBadges">
+            <!-- 自分と相手の特性バッジが入る -->
+          </div>
+        </div>
       </div>
-      <p class="footer-note">
-        個性心理学（動物キャラナビ）に基づいた診断サイトです。<br>
-        診断結果はエンターテインメントとしてお楽しみください。
+      
+      <div class="chat-controls">
+        <label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">使用AI：</label>
+        <select class="selector-ai" id="aiModelSelector">
+          <option value="openai">OpenAI (gpt-4o-mini)</option>
+          <option value="gemini">Gemini (1.5-flash)</option>
+        </select>
+      </div>
+    </header>
+    
+    <!-- 中央：メッセージ表示部（未選択時はウェルカム画面） -->
+    <div class="chat-messages" id="chatMessages" style="display: none;">
+      <!-- チャットの吹き出しが動的に入る -->
+    </div>
+    
+    <!-- 未選択時のウェルカム画面 -->
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-icon">❖</div>
+      <h2 class="welcome-title">推しナビAI (OshiNavi)</h2>
+      <p class="welcome-desc">
+        12のアニマル気質診断（アニマル診断）で、あなたと「推し」や「気になるあの人」の相性を科学的に分析。<br>
+        お互いの本音（深層モチベーション）と建前（表層スタイル）のズレから、効果的なコミュニケーション方法をアドバイスします。
       </p>
-      <p class="footer-copy">© 2025 動物キャラナビ</p>
-    </div>
-  </footer>
 
+      <!-- ✨ クイック相性診断カード (W生年月日入力) -->
+      <div class="quick-diag-area">
+        <div class="quick-diag-title">
+          <span class="shield-icon">🛡️</span>
+          <span>完全プライバシー診断（データは保存されません）</span>
+        </div>
+        
+        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
+          👤 あなたの情報
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="font-size: 10px;">あなたの仮名</label>
+            <input type="text" id="quickMyName" class="form-input" placeholder="例: 自分" value="自分">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="font-size: 10px;">あなたの生年月日</label>
+            <input type="date" id="quickMyBirthDate" class="form-input" required>
+          </div>
+        </div>
+
+        <div style="font-size: 11px; color: var(--text-muted); margin: 8px 0 4px 0; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 8px;">
+          💜 お相手・推しの情報
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="font-size: 10px;">お相手の仮名</label>
+            <input type="text" id="quickOshiName" class="form-input" placeholder="例: 推しメン, あの人" value="推しメン">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="font-size: 10px;">お相手の生年月日</label>
+            <input type="date" id="quickOshiBirthDate" class="form-input" required>
+          </div>
+        </div>
+
+        <button type="button" class="form-submit-btn" id="quickDiagBtn" style="margin-top: 12px; background: var(--grad-primary); border: none; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);">
+          ⚡ 二人の相性を今すぐ占う
+        </button>
+      </div>
+    </div>
+    
+    <!-- 下部：メッセージ入力フォーム -->
+    <div class="chat-input-area" id="chatInputArea" style="display: none;">
+      <div class="input-container">
+        <input type="text" class="chat-input" id="chatInput" placeholder="推しに喜ばれる言葉、ファンレターの書き方、仲良くなるアプローチなど何でも相談してください...">
+        <button class="send-btn" id="sendBtn">⚡</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+   * ⚙️ 設定用モーダル（APIキー保存）
+   * ============================================================ -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ API連携設定</h3>
+        <button class="close-btn" id="closeSettings">×</button>
+      </div>
+      <form id="settingsForm">
+        <div class="modal-body">
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+            本システムはプライベートAPI接続を利用します。APIキーはお使いのブラウザの保護領域（localStorage）またはGASの環境にのみ安全に保存され、直接AIプロバイダー（OpenAI / Google）への通信にのみ使用されます。
+          </p>
+          
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label">🔑 OpenAI APIキー (sk-...)</label>
+              <div id="openaiIndicator" style="font-size: 11px;"></div>
+            </div>
+            <input type="password" class="form-input" id="openaiKeyInput" placeholder="キーを入力して保存（空欄のままで既存のキーを維持）">
+          </div>
+          
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label">🔑 Gemini APIキー</label>
+              <div id="geminiIndicator" style="font-size: 11px;"></div>
+            </div>
+            <input type="password" class="form-input" id="geminiKeyInput" placeholder="キーを入力して保存（空欄のままで既存のキーを維持）">
+          </div>
+          
+          <button type="submit" class="form-submit-btn">APIキーを安全に保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+   * 👥 メンバー（お相手）登録用モーダル
+   * ============================================================ -->
+  <div class="modal" id="addMemberModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">👤 相性診断相手を登録</h3>
+        <button class="close-btn" id="closeAddMember">×</button>
+      </div>
+      <form id="addMemberForm">
+        <div class="modal-body">
+          <!-- 🔒 完全プライバシー・安全シールドラベル -->
+          <div class="privacy-shield-banner">
+            <span class="shield-icon">🛡️</span>
+            <span class="shield-text">生年月日データは一切保存されません。ブラウザ上で特性コードのみに変換され、完全に匿名化された状態で安全に同期されます。</span>
+          </div>
+
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 12px; font-weight: 600;">
+            👤 あなたの情報（相性計算用・ブラウザにのみ保存されます）
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">あなたの生年月日</label>
+              <input type="date" class="form-input" id="myBirthDate" required>
+            </div>
+          </div>
+
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 12px;">
+            💜 お相手・推しの情報
+          </div>
+          <div class="form-group">
+            <label class="form-label">お相手のお名前 (仮名やイニシャルでの登録を推奨)</label>
+            <input type="text" class="form-input" id="newName" placeholder="例: メンバーX, 推しメンA" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">お相手の生年月日</label>
+            <input type="date" class="form-input" id="newBirthDate" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">お相手との関係性やメモ（AIの提案に反映されます）</label>
+            <textarea class="form-input" id="newMemo" rows="3" placeholder="例: ファンとして応援しているアーティスト。ライブでのファンサやSNSでのコメントでどうすれば印象に残るか知りたい。" style="resize: none;"></textarea>
+          </div>
+          
+          <button type="submit" class="form-submit-btn" style="background: var(--grad-primary); border: none;">お相手を安全に登録して診断</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+   * 👥 グループ（チーム・推し）登録用モーダル
+   * ============================================================ -->
+  <div class="modal" id="addGroupModal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">👥 グループ診断相手を登録</h3>
+        <button class="close-btn" id="closeAddGroup">×</button>
+      </div>
+      <form id="addGroupForm">
+        <div class="modal-body">
+          <!-- 🔒 安全シールドラベル -->
+          <div class="privacy-shield-banner">
+            <span class="shield-icon">🛡️</span>
+            <span class="shield-text">生年月日は不要です。アニマル気質の本質番号（1〜60）のみで完全に匿名化された状態でグループを診断・管理します。</span>
+          </div>
+
+          <div class="form-row" style="margin-top: 12px;">
+            <div class="form-group" style="flex: 1.5;">
+              <label class="form-label">グループ名 / チーム名</label>
+              <input type="text" class="form-input" id="newGroupName" placeholder="例: 推しナビ５, 開発チーム, 〇〇家" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">診断タイプ</label>
+              <select class="form-input" id="newGroupType" required>
+                <option value="oshi">👑 推しグループ診断</option>
+                <option value="team">💼 家族/友人/職場/チーム診断</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span>👥 メンバーリスト (最低2名必要)</span>
+            <button type="button" class="footer-btn" id="addMemberRowBtn" style="padding: 4px 8px; font-size: 11px; background: var(--border-fine); cursor: pointer;">＋ メンバーを追加</button>
+          </div>
+
+          <!-- メンバー追加用の動的行コンテナ -->
+          <div id="groupMembersContainer" style="max-height: 250px; overflow-y: auto; margin-top: 8px; padding-right: 4px;">
+            <!-- JSで初期メンバー行を動的に生成します -->
+          </div>
+
+          <button type="submit" class="form-submit-btn" style="background: var(--grad-primary); border: none; margin-top: 16px;">グループを安全に登録して診断</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 外部JavaScript（ローカル開発用） -->
   <script>
 // ============================================================
-// 個性心理学 動物キャラナビ データ
-// 十二運星に基づいた正確なキャラクター定義
+// 個性行動特性分析（動物特性）データ & 算出ロジック (data.js)
+// 行動心理特性に基づいた正確な特性定義 ＆ 表層スタイル算出機能
 // ============================================================
 
+// ---- グループ定義 ----
 const GROUPS = {
   MOON: {
     id: 'MOON', name: '月グループ', emoji: '🌙',
@@ -1287,6 +1353,7 @@ const GROUPS = {
   }
 };
 
+// ---- 全60キャラクターデータ（番号順） ----
 const CHARACTER_TABLE = [
   { n:1,  animal:'チータ',  group:'SUN',   name:'長距離ランナーのチータ', spell:'草花', jui:'沐浴' },
   { n:2,  animal:'たぬき',  group:'MOON',  name:'社交家のたぬき',         spell:'大樹', jui:'衰' },
@@ -1316,40 +1383,41 @@ const CHARACTER_TABLE = [
   { n:26, animal:'ひつじ',  group:'MOON',  name:'粘り強いひつじ',            spell:'大地', jui:'墓' },
   { n:27, animal:'ペガサス',group:'SUN',   name:'波乱に満ちたペガサス',      spell:'金属', jui:'絶' },
   { n:28, animal:'ペガサス',group:'SUN',   name:'優雅なペガサス',            spell:'宝石', jui:'絶' },
-  { n:29, animal:'ひつじ',  group:'MOON',  name:'チャレンジ精神の旺盛なひつじ', spell:'海', jui:'墓' },
-  { n:30, animal:'狼',      group:'EARTH', name:'順応性のある狼',            spell:'雨露', jui:'胎' },
-  { n:31, animal:'ゾウ',    group:'SUN',   name:'リーダーとなるゾウ',        spell:'草花', jui:'死' },
-  { n:32, animal:'こじか',  group:'MOON',  name:'しっかり者のこじか',        spell:'大樹', jui:'養' },
-  { n:33, animal:'子守熊',  group:'EARTH', name:'活動的な子守熊',            spell:'太陽', jui:'病' },
-  { n:34, animal:'猿',      group:'EARTH', name:'気分屋の猿',                spell:'ろうそく', jui:'長生' },
-  { n:35, animal:'ひつじ',  group:'MOON',  name:'頼られると嬉しいひつじ',    spell:'山',   jui:'墓' },
-  { n:36, animal:'狼',      group:'EARTH', name:'好感のもたれる狼',          spell:'大地', jui:'胎' },
-  { n:37, animal:'ゾウ',    group:'SUN',   name:'まっしぐらに突き進むゾウ',  spell:'金属', jui:'死' },
-  { n:38, animal:'こじか',  group:'MOON',  name:'華やかなこじか',            spell:'宝石', jui:'養' },
-  { n:39, animal:'子守熊',  group:'EARTH', name:'夢とロマンの子守熊',        spell:'海',   jui:'病' },
-  { n:40, animal:'猿',      group:'EARTH', name:'尽くす猿',                  spell:'雨露', jui:'長生' },
-  { n:41, animal:'たぬき',  group:'MOON',  name:'大器晩成のたぬき',          spell:'草花', jui:'衰' },
-  { n:42, animal:'チータ',  group:'SUN',   name:'足腰の強いチータ',          spell:'大樹', jui:'沐浴' },
-  { n:43, animal:'虎',      group:'EARTH', name:'動きまわる虎',              spell:'太陽', jui:'帝旺' },
-  { n:44, animal:'黒ひょう',group:'MOON',  name:'情熱的な黒ひょう',          spell:'ろうそく', jui:'冠帯' },
-  { n:45, animal:'子守熊',  group:'EARTH', name:'サービス精神旺盛な子守熊',  spell:'山',   jui:'病' },
-  { n:46, animal:'猿',      group:'EARTH', name:'守りの猿',                  spell:'大地', jui:'長生' },
-  { n:47, animal:'たぬき',  group:'MOON',  name:'人間味あふれるたぬき',      spell:'金属', jui:'衰' },
-  { n:48, animal:'チータ',  group:'SUN',   name:'品格のあるチータ',          spell:'宝石', jui:'沐浴' },
-  { n:49, animal:'虎',      group:'EARTH', name:'ゆったりとした悠然の虎',    spell:'海',   jui:'帝旺' },
-  { n:50, animal:'黒ひょう',group:'MOON',  name:'落ち込みの激しい黒ひょう',  spell:'雨露', jui:'冠帯' },
-  { n:51, animal:'ライオン',group:'SUN',   name:'我が道を行くライオン',       spell:'草花', jui:'建禄' },
-  { n:52, animal:'ライオン',group:'SUN',   name:'統率力のあるライオン',       spell:'大樹', jui:'建禄' },
-  { n:53, animal:'黒ひょう',group:'MOON',  name:'感情豊かな黒ひょう',         spell:'太陽', jui:'冠帯' },
-  { n:54, animal:'虎',      group:'EARTH', name:'楽天的な虎',                spell:'ろうそく', jui:'帝旺' },
-  { n:55, animal:'虎',      group:'EARTH', name:'パワフルな虎',              spell:'山',   jui:'帝旺' },
-  { n:56, animal:'黒ひょう',group:'MOON',  name:'気取らない黒ひょう',        spell:'大地', jui:'冠帯' },
-  { n:57, animal:'ライオン',group:'SUN',   name:'感情的なライオン',           spell:'金属', jui:'建禄' },
-  { n:58, animal:'ライオン',group:'SUN',   name:'傷つきやすいライオン',       spell:'宝石', jui:'建禄' },
-  { n:59, animal:'黒ひょう',group:'MOON',  name:'束縛を嫌う黒ひょう',        spell:'海',   jui:'冠帯' },
-  { n:60, animal:'虎',      group:'EARTH', name:'慈悲深い虎',                spell:'雨露', jui:'帝旺' },
+  { n:29, animal:'ひつじ',  group:'MOON',  name:'チャレンジ精神旺盛なひつじ', spell:'海',   jui:'墓' },
+  { n:30, animal:'狼',      group:'EARTH', name:'順応性のある狼',              spell:'雨露', jui:'胎' },
+  { n:31, animal:'こじか',  group:'MOON',  name:'リーダーとなるこじか',        spell:'草花', jui:'養' },
+  { n:32, animal:'猿',      group:'EARTH', name:'気分屋の猿',                  spell:'大樹', jui:'長生' },
+  { n:33, animal:'チータ',  group:'SUN',   name:'足腰の強いチータ',            spell:'太陽', jui:'沐浴' },
+  { n:34, animal:'たぬき',  group:'MOON',  name:'大器晩成のたぬき',            spell:'ろうそく', jui:'衰' },
+  { n:35, animal:'ゾウ',    group:'SUN',   name:'悠然と構えるゾウ',            spell:'山',   jui:'死' },
+  { n:36, animal:'虎',      group:'EARTH', name:'慈悲深い虎',                  spell:'大地', jui:'帝旺' },
+  { n:37, animal:'こじか',  group:'MOON',  name:'しっかり者のこじか',          spell:'金属', jui:'養' },
+  { n:38, animal:'猿',      group:'EARTH', name:'つき合い上手な猿',            spell:'宝石', jui:'長生' },
+  { n:39, animal:'チータ',  group:'SUN',   name:'品格のあるチータ',            spell:'海',   jui:'沐浴' },
+  { n:40, animal:'たぬき',  group:'MOON',  name:'頼りになるたぬき',            spell:'雨露', jui:'衰' },
+  { n:41, animal:'ライオン',group:'SUN',   name:'感情的なライオン',            spell:'草花', jui:'建禄' },
+  { n:42, animal:'ゾウ',    group:'SUN',   name:'まっしぐらに突き進むゾウ',    spell:'大樹', jui:'死' },
+  { n:43, animal:'虎',      group:'EARTH', name:'動きまわる虎',                spell:'太陽', jui:'帝旺' }
+  { n:44,  animal:'黒ひょう',group:'MOON',  name:'情熱的な黒ひょう',          spell:'ろうそく', jui:'冠帯' },
+  { n:45,  animal:'子守熊',  group:'EARTH', name:'サービス精神旺盛な子守熊',  spell:'山',   jui:'病' },
+  { n:46,  animal:'猿',      group:'EARTH', name:'守りの猿',                  spell:'大地', jui:'長生' },
+  { n:47,  animal:'たぬき',  group:'MOON',  name:'人間味あふれるたぬき',      spell:'金属', jui:'衰' },
+  { n:48,  animal:'チータ',  group:'SUN',   name:'品格のあるチータ',          spell:'宝石', jui:'沐浴' },
+  { n:49,  animal:'虎',      group:'EARTH', name:'ゆったりとした悠然の虎',    spell:'海',   jui:'帝旺' },
+  { n:50,  animal:'黒ひょう',group:'MOON',  name:'落ち込みの激しい黒ひょう',  spell:'雨露', jui:'冠帯' },
+  { n:51,  animal:'ライオン',group:'SUN',   name:'我が道を行くライオン',       spell:'草花', jui:'建禄' },
+  { n:52,  animal:'ライオン',group:'SUN',   name:'統率力のあるライオン',       spell:'大樹', jui:'建禄' },
+  { n:53,  animal:'黒ひょう',group:'MOON',  name:'感情豊かな黒ひょう',         spell:'太陽', jui:'冠帯' },
+  { n:54,  animal:'虎',      group:'EARTH', name:'楽天的な虎',                spell:'ろうそく', jui:'帝旺' },
+  { n:55,  animal:'虎',      group:'EARTH', name:'パワフルな虎',              spell:'山',   jui:'帝旺' },
+  { n:56,  animal:'黒ひょう',group:'MOON',  name:'気取らない黒ひょう',        spell:'大地', jui:'冠帯' },
+  { n:57,  animal:'ライオン',group:'SUN',   name:'感情的なライオン',           spell:'金属', jui:'建禄' },
+  { n:58,  animal:'ライオン',group:'SUN',   name:'傷つきやすいライオン',       spell:'宝石', jui:'建禄' },
+  { n:59,  animal:'黒ひょう',group:'MOON',  name:'束縛を嫌う黒ひょう',        spell:'海',   jui:'冠帯' },
+  { n:60,  animal:'虎',      group:'EARTH', name:'慈悲深い虎',                spell:'雨露', jui:'帝旺' },
 ];
 
+// ---- 動物ごとのプロフィールデータ ----
 const ANIMAL_PROFILES = {
   '狼': {
     emoji: '🐺', color: '#6c7a89', bgColor: '#ecf0f1', group: 'EARTH',
@@ -1360,7 +1428,10 @@ const ANIMAL_PROFILES = {
     money: '「ドカンと使うが無駄遣いなし」な職人タイプ。',
     vocation: 'クリエイター・プログラマー・専門職・コンサルタント',
     lucky: '好きなことにトコトン打ち込む',
-    subTypes: [13,19,24,25,30,36],
+    onePhrase: 'やっぱり変わってるね（人と違うことを指摘されるのが無上の喜び）',
+    responsibility: '会社や仕事に対する責任感ではなく、人としてすべきことをしようとするタイプ。自分で納得しない限り責任は感じない。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
   },
   'こじか': {
     emoji: '🦌', color: '#e8a87c', bgColor: '#fef9c3', group: 'MOON',
@@ -1371,7 +1442,10 @@ const ANIMAL_PROFILES = {
     money: 'お金の計算も人任せ気味。金銭管理は少し甘め。',
     vocation: '保育士・心理カウンセラー・ペット関連・教師',
     lucky: '本物に接する（美術品・自然・その道の達人）',
-    subTypes: [11,17,32,38],
+    onePhrase: 'どんなときも味方だよ（大事なのは絆と安心感）',
+    responsibility: '仕事は堅実に取り組むが、特に責任感という意識はない。真面目で几帳面なだけ。困った時は、可愛がってくれる上司や慕ってくれる後輩が助けてくれる。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的。相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
   },
   '猿': {
     emoji: '🐒', color: '#c0392b', bgColor: '#fde8e8', group: 'EARTH',
@@ -1382,7 +1456,10 @@ const ANIMAL_PROFILES = {
     money: '小銭大好き。割り勘は10円単位で几帳面。',
     vocation: 'サービス業・ゲームクリエイター・芸人・パティシエ',
     lucky: '瞑想。ひとりで静かに内観する時間が運気UP',
-    subTypes: [3,9,15,34,40,46],
+    onePhrase: '一緒にいると楽しい（おだてに乗りやすいので褒め言葉はおいしい）',
+    responsibility: '責任感というより、ただ目の前のものに食いついていくタイプ。攻めには強いが、守りに入ると逃げ腰。責任の所在もうやむやに。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
   },
   'チータ': {
     emoji: '🐆', color: '#d4ac0d', bgColor: '#fef3c7', group: 'SUN',
@@ -1391,9 +1468,12 @@ const ANIMAL_PROFILES = {
     personality: '成功願望が強く競争心も強い。何事も果敢に挑戦するが諦めも早い。切り替えが速く過去を引きずらない。',
     love: '「成功」が世界でいちばん好きな言葉。「キミならきっと成功する」が最高のプロポーズ。',
     money: '前向きな浪費家。衝動買いの達人だが後悔しない。',
-    vocation: '芸能界・政治家・スポーツ選手・開業医・外交官',
+    vocation: '芸能界・政治家・スポーツ選手・逆境の起業家',
     lucky: '恋愛成就。恋がうまくいくと万事うまくいく',
-    subTypes: [1,7,42,48],
+    onePhrase: 'キミならきっと成功する（"成功"という言葉が世界でいちばん好き）',
+    responsibility: '成功願望や好奇心から仕事に着手、責任感からではない。攻撃の時はパワフルに立ち向かうが、守備の時は根気が続かず、意欲を失う。',
+    howToTalk: '心に浮かんだことを感情のままに表現。感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
   },
   '黒ひょう': {
     emoji: '🐈‍⬛', color: '#2c3e50', bgColor: '#e8eaf6', group: 'MOON',
@@ -1404,7 +1484,10 @@ const ANIMAL_PROFILES = {
     money: '気がついたら「ない！」タイプ。お金は使ってこそ輝く。',
     vocation: 'アナウンサー・ファッションデザイナー・マスコミ・デザイナー',
     lucky: '人生の師を見つける。良き師との出会いで人生が変わる',
-    subTypes: [5,44,50,53,56,59],
+    onePhrase: 'センスいいね（これに尽きる）',
+    responsibility: '密かにトップを狙う自信家ゆえ仕事はきちんとこなし、任せて安心。プライドの高さから、ミスを認めたり、失敗の責任を取りたがらない。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的。相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
   },
   'ライオン': {
     emoji: '🦁', color: '#935116', bgColor: '#fff7ed', group: 'SUN',
@@ -1413,299 +1496,1717 @@ const ANIMAL_PROFILES = {
     personality: '徹底的にこだわる完璧主義者。責任感が強く、自分の味方は最後まで守る。王様扱いに弱い。',
     love: '「特別な人だもん」が最高の言葉。漠然と愛してくれる人を求める。',
     money: '「釣りはいらない」な大物感。節約も貯蓄もさらっとこなす。',
-    vocation: '大手企業・国家公務員・警察官・上場企業・医師',
+    vocation: '大手企業・国家公務員・経営幹部・医師',
     lucky: '感性に響いたものを惜しみなく人に伝える',
-    subTypes: [51,52,57,58],
+    onePhrase: '特別な人だもん（"選ばれし民"的ワードが大好物。センスを褒めて）',
+    responsibility: '仕事に対する責任感が強く、けじめのない人が許せない完璧主義者。リスクをものともせず、何が起きても弱音は吐かない。ただ、人を振り回す。',
+    howToTalk: '心に浮かんだことを感情のままに表現. 感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
   },
   '虎': {
     emoji: '🐯', color: '#e67e22', bgColor: '#fff3e0', group: 'EARTH',
     keyword: '有言実行',
     catchphrase: 'キミにしか相談できない',
-    personality: '自由・平等・博愛主義。面倒見がよく、親分肌。仕事とプライベートをきっちり分ける。',
+    personality: '自由・平等・博愛主義。面倒見がよく、親分肌。仕事とプライベートをきっちり分ける。バランス感覚に優れた親分。',
     love: '頼られると親分肌・姉御肌が爆発！「キミにしか相談できない」が一番刺さる。',
     money: 'マネーの虎。抜群の金銭感覚の持ち主。',
-    vocation: '実業家・企業経営・会計士・プロスポーツ選手',
+    vocation: '実業家・企业経営・会計士・プロスポーツ選手',
     lucky: '逆境がバネになる。逃げず、ひるまず、迎え撃って吉！',
-    subTypes: [6,43,49,54,55,60],
+    onePhrase: 'キミにしか相談できない（頼られると親分肌・姉御肌が爆発）',
+    responsibility: '責任感の強さは12キャラ中トップ。真摯な責任感だけでなく、人に迷惑をかけたくない思いで、自分を追い詰めて、部下の責任もしっかり取るタイプ。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
   },
   'たぬき': {
     emoji: '🦝', color: '#795548', bgColor: '#efebe9', group: 'MOON',
     keyword: '笑顔は敵をつくらない',
     catchphrase: '一緒にいるとほっとする',
-    personality: 'どんな相手とも上手く合わせられる。いつも笑顔で場を和ませ、敵を作りにくい。',
-    love: '「一緒にいるとほっとする」が一番のプロポーズ。じわじわ愛が深まるタイプ。',
+    personality: 'どんな相手とも上手く合わせられる。いつも笑顔で場を和ませ、敵を作りにくい。古いものや歴史、実績を重んじる。',
+    love: '「一緒にいるとほっとする」が一番のプロポーズ。じわじわ愛が深まるタイプ. ',
     money: '財運があるのでお金はまわる。蓄える才能あり。',
     vocation: '司会者・アナウンサー・教師・コンサルタント',
     lucky: '人と会う。老若男女問わず交流すると運気UP',
-    subTypes: [2,8,41,47],
+    onePhrase: '一緒にいるとほっとする（和みのプロなのでその技を称える）',
+    responsibility: '責任感というより、真面目で適当ができないタイプ。期限の管理が甘く、頼まれると何でも引き受けてパニックになるため、無責任と思われることも。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的。相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
   },
   '子守熊': {
     emoji: '🐨', color: '#7f8c8d', bgColor: '#f0f4f8', group: 'EARTH',
     keyword: '最後に勝つのは自分',
     catchphrase: '夢は叶うよ',
-    personality: 'サービス精神旺盛で人が喜ぶ顔を見るのが好き。損得勘定に長け、倹約家で無駄が嫌い。',
+    personality: 'サービス精神旺盛で人が喜ぶ顔を見るのが好き。損得勘定に長け、倹約家で無駄が嫌い。ロマンチストだが超現実的。',
     love: '先制攻撃が一番効果的。すぐに結論を出さないのでじっくり待って。',
     money: '経済観念抜群で財テクも得意。コツコツ型。',
     vocation: 'ミュージシャン・作曲家・声優・アロマセラピスト',
     lucky: '音楽や映画、美術に接していると才能が開花',
-    subTypes: [4,10,16,33,39,45],
+    onePhrase: '夢は叶うよ',
+    responsibility: '責任感ではなく、評価のための仕事の完遂こそ第一。負ける勝負はしないので、失敗もなし。苦手な仕事は能力のある部下にご馳走してでも任せてしまう。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
   },
   'ゾウ': {
     emoji: '🐘', color: '#5b9bd5', bgColor: '#e3f2fd', group: 'SUN',
     keyword: '根性だったら負けません',
     catchphrase: 'よく頑張ったね',
-    personality: '努力家だが努力している姿は見せない。その道のプロ・職人を目指す。キレたら最も怖い。',
+    personality: '努力家だが努力している姿は見せない。その道のプロ・職人を目指す。キレたら最も怖い、圧倒的な推進力を持つ大器。',
     love: '正面から堂々と攻めましょう。見てくれている人がいるとしみじみ嬉しい。',
     money: '一攫千金のギャンブラー精神。大きな数字に強い。',
     vocation: '国家公務員・政治家・警察官・医師・パイロット',
     lucky: '精神世界に触れる。努力や根性とは違う世界をのぞいてみる',
-    subTypes: [12,18,31,37],
+    onePhrase: 'よく頑張ったね（見てくれている人がいるとしみじみ嬉しい）',
+    responsibility: '手抜きせず今日のことは今日のうちに済ませるタイプ。プライドの高さから、受けた仕事は後には引けず、自分を追い詰めて慎重に熱心に打ち込む。',
+    howToTalk: '心に浮かんだことを感情のままに表現。感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
   },
   'ひつじ': {
     emoji: '🐑', color: '#d63384', bgColor: '#fce4ec', group: 'MOON',
     keyword: '仲よきことは美しきかな',
     catchphrase: 'みんなも行くよ',
-    personality: '「みんな仲良く」がテーマ。寂しがり屋で一人ぼっちが嫌い。ものを集めるのが好きな情報収集家。',
+    personality: '「みんな仲良く」がテーマ。寂しがり屋で一人ぼっちが嫌い。客観的に人間関係を観察でき、情報を収集する。',
     love: '「みんなも行くよ」が背中を押す魔法の言葉。フレンドリーな対応が基本。',
     money: '小銭より紙幣が好き。蓄財の達人。',
-    vocation: '内科医・心理学者・カウンセラー',
+    vocation: '内科医・心理学者・冠婚葬祭業・カウンセラー',
     lucky: '先祖への感謝。お墓参りを大切にすると加護が強まる',
-    subTypes: [14,20,23,26,29,35],
+    onePhrase: 'みんなも行くよ（"みんな"がつくと腰が上がる）',
+    responsibility: '組織を重んじ、律儀で義理堅く世間体を大切にする責任感の強いタイプ。無責任な人は嫌い。責任は自分に非がないと感じたら絶対にとらない。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的. 相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
   },
   'ペガサス': {
     emoji: '🦄', color: '#e91e8c', bgColor: '#fce4ec', group: 'SUN',
     keyword: '自由奔放',
     catchphrase: 'あなたの感性はスゴイ',
-    personality: '感情の落差が激しい気分屋。天才肌で長所はすごいが後は平凡。外国人的な感性を持つ。',
-    love: '「あなたの感性はスゴイ」が刺さる。具体的に何がスゴイかは言わなくてよい。',
-    money: '財布にも羽が生えている。でもなぜかまわってくる。',
-    vocation: '宇宙飛行士・CGクリエイター・アニメーター・パイロット',
+    personality: '感情の落差が激しい気分屋。天才肌で長所はすごいが後は平凡。束縛を極度に嫌い、ひらめきで飛び回る。',
+    love: '「あなたの感性はスゴイ」が刺さる。具体的に何がスゴイかは言わなくてよい。自由を奪わないこと。',
+    money: '財布にも羽が生えている。でもなぜかままわってくる。',
+    vocation: 'クリエイティブ・CGデザイナー・新規開拓リーダー・芸術家',
     lucky: '多忙に過ごす。忙しく飛び回ることで才能が開花',
-    subTypes: [21,22,27,28],
+    onePhrase: 'あなたの感性はスゴイ（何がどうスゴイかは言わなくてもよし）',
+    responsibility: '働くことは苦ではなく、頼まれると安請け合いをする。成り行き任せで無理はしないので、結果が出ないことも。自分に責任があるかどうかわからない。',
+    howToTalk: '心に浮かんだことを感情のままに表現。感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
+  },
+};�ミにしか相談できない（頼られると親分肌・姉御肌が爆発）',
+    responsibility: '責任感の強さは12キャラ中トップ。真摯な責任感だけでなく、人に迷惑をかけたくない思いで、自分を追い詰めて、部下の責任もしっかり取るタイプ。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
+  },
+  'たぬき': {
+    emoji: '🦝', color: '#795548', bgColor: '#efebe9', group: 'MOON',
+    keyword: '笑顔は敵をつくらない',
+    catchphrase: '一緒にいるとほっとする',
+    personality: 'どんな相手とも上手く合わせられる。いつも笑顔で場を和ませ、敵を作りにくい。古いものや歴史、実績を重んじる。',
+    love: '「一緒にいるとほっとする」が一番のプロポーズ。じわじわ愛が深まるタイプ。',
+    money: '財運があるのでお金はまわる。蓄える才能あり。',
+    vocation: '司会者・アナウンサー・教師・コンサルタント',
+    lucky: '人と会う。老若男女問わず交流すると運気UP',
+    onePhrase: '一緒にいるとほっとする（和みのプロなのでその技を称える）',
+    responsibility: '責任感というより、真面目で適当ができないタイプ。期限の管理が甘く、頼まれると何でも引き受けてパニックになるため、無責任と思われることも。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的。相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
+  },
+  '子守熊': {
+    emoji: '🐨', color: '#7f8c8d', bgColor: '#f0f4f8', group: 'EARTH',
+    keyword: '最後に勝つのは自分',
+    catchphrase: '夢は叶うよ',
+    personality: 'サービス精神旺盛で人が喜ぶ顔を見るのが好き。損得勘定に長け、倹約家で無駄が嫌い。ロマンチストだが超現実的。',
+    love: '先制攻撃が一番効果的。すぐに結論を出さないのでじっくり待って。',
+    money: '経済観念抜群で財テクも得意。コツコツ型。',
+    vocation: 'ミュージシャン・作曲家・声優・アロマセラピスト',
+    lucky: '音楽や映画、美術に接していると才能が開花',
+    onePhrase: '夢は叶うよ',
+    responsibility: '責任感ではなく、評価のための仕事の完遂こそ第一。負ける勝負はしないので、失敗もなし。苦手な仕事は能力のある部下にご馳走してでも任せてしまう。',
+    howToTalk: '話は要点のみ。結論から。回りくどい言い方や建前だけの話をするのは時間の無駄。短いセンテンスの箇条書きのような話し方。結論から言ってもらわないとイライラが募ります。',
+    eatingValue: '「何を」食べるかが大事。食事をすることが最大目的。効率的に栄養を摂取することがゴール。相手や場所にはあまりこだわらない。ただ費用対効果を重要視するので、メニューに値段が書いてないとハラハラして落ち着きません。'
+  },
+  'ゾウ': {
+    emoji: '🐘', color: '#5b9bd5', bgColor: '#e3f2fd', group: 'SUN',
+    keyword: '根性だったら負けません',
+    catchphrase: 'よく頑張ったね',
+    personality: '努力家だが努力している姿は見せない。その道のプロ・職人を目指す。キレたら最も怖い、圧倒的な推進力を持つ大器。',
+    love: '正面から堂々と攻めましょう。見てくれている人がいるとしみじみ嬉しい。',
+    money: '一攫千金のギャンブラー精神。大きな数字に強い。',
+    vocation: '国家公務員・政治家・警察官・医師・パイロット',
+    lucky: '精神世界に触れる。努力や根性とは違う世界をのぞいてみる',
+    onePhrase: 'よく頑張ったね（見てくれている人がいるとしみじみ嬉しい）',
+    responsibility: '手抜きせず今日のことは今日のうちに済ませるタイプ。プライドの高さから、受けた仕事は後には引けず、自分を追い詰めて慎重に熱心に打ち込む。',
+    howToTalk: '心に浮かんだことを感情のままに表現。感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
+  },
+  'ひつじ': {
+    emoji: '🐑', color: '#d63384', bgColor: '#fce4ec', group: 'MOON',
+    keyword: '仲よきことは美しきかな',
+    catchphrase: 'みんなも行くよ',
+    personality: '「みんな仲良く」がテーマ。寂しがり屋で一人ぼっちが嫌い。客観的に人間関係を観察でき、情報を収集する。',
+    love: '「みんなも行くよ」が背中を押す魔法の言葉。フレンドリーな対応が基本。',
+    money: '小銭より紙幣が好き。蓄財の達人。',
+    vocation: '内科医・心理学者・冠婚葬祭業・カウンセラー',
+    lucky: '先祖への感謝。お墓参りを大切にすると加護が強まる',
+    onePhrase: 'みんなも行くよ（"みんな"がつくと腰が上がる）',
+    responsibility: '組織を重んじ、律儀で義理堅く世間体を大切にする責任感の強いタイプ。無責任な人は嫌い。責任は自分に非がないと感じたら絶対にとらない。',
+    howToTalk: 'とにかく話が長い！頭に浮かんだことを整理することなく、そのまま口に出すので、どんどん時間だけが過ぎていきます。句点がなく「〜でね〜でね」と果てしなく続く話を、最後まで聞いてもらえると大満足。',
+    eatingValue: '「誰と」食べるかが大事。食事は会話が目的. 相手次第で料理の味も変わって感じるほどです。気の合った友達と楽しくおしゃべりしながら食事を共にするのは至福のひととき。食事は大切な人との絆を深めるためのものです。'
+  },
+  'ペガサス': {
+    emoji: '🦄', color: '#e91e8c', bgColor: '#fce4ec', group: 'SUN',
+    keyword: '自由奔放',
+    catchphrase: 'あなたの感性はスゴイ',
+    personality: '感情の落差が激しい気分屋。天才肌で長所はすごいが後は平凡。束縛を極度に嫌い、ひらめきで飛び回る。',
+    love: '「あなたの感性はスゴイ」が刺さる。具体的に何がスゴイかは言わなくてよい。自由を奪わないこと。',
+    money: '財布にも羽が生えている。でもなぜかままわってくる。',
+    vocation: 'クリエイティブ・CGデザイナー・新規開拓リーダー・芸術家',
+    lucky: '多忙に過ごす。忙しく飛び回ることで才能が開花',
+    onePhrase: 'あなたの感性はスゴイ（何がどうスゴイかは言わなくてもよし）',
+    responsibility: '働くことは苦ではなく、頼まれると安請け合いをする。成り行き任せで無理はしないので、結果が出ないことも。自分に責任があるかどうかわからない。',
+    howToTalk: '心に浮かんだことを感情のままに表現。感覚で話すのでMOONやEARTHにはイマイチ理解できません。擬音が多く、なんでも大げさに伝えるので、MOONには「なぜすごいのか？」EARTHには「どのくらいすごいのか？」伝わりません。',
+    eatingValue: '「どこで」食べるかが大事。場所やシチュエーションといった「環境」重視。どんな雰囲気で食べるかを大切にします。外食も大好き。日本の飲食業界を支えているのはSUNといっても過言ではないほど。TPOが命。'
+  },
+};争心も強い。何事も果敢に挑戦するが諦めも早い。切り替えが速く過去を引きずらない。',
+    love: '「成功」が世界でいちばん好きな言葉。「キミならきっと成功する」が最高のプロポーズ。',
+    money: '前向きな浪費家。衝動買いの達人だが後悔しない。',
+    vocation: '芸能界・政治家・スポーツ選手・逆境の起業家',
+    lucky: '恋愛成就。恋がうまくいくと万事うまくいく',
+  },
+  '黒ひょう': {
+    emoji: '🐈‍⬛', color: '#2c3e50', bgColor: '#e8eaf6', group: 'MOON',
+    keyword: 'スマートでおしゃれな自信家',
+    catchphrase: 'センスいいね',
+    personality: 'メンツやプライドを重んじる。おしゃれで美意識が高い。正義感が強く不正を許さない。',
+    love: '「センスいいね」が最高の褒め言葉。努力は人に見せないクールな一面も。',
+    money: '気がついたら「ない！」タイプ。お金は使ってこそ輝く。',
+    vocation: 'アナウンサー・ファッションデザイナー・マスコミ・デザイナー',
+    lucky: '人生の師を見つける。良き師との出会いで人生が変わる',
+  },
+  'ライオン': {
+    emoji: '🦁', color: '#935116', bgColor: '#fff7ed', group: 'SUN',
+    keyword: 'オンリーワンよりナンバーワン',
+    catchphrase: '特別な人だもん',
+    personality: '徹底的にこだわる完璧主義者。責任感が強く、自分の味方は最後まで守る。王様扱いに弱い。',
+    love: '「特別な人だもん」が最高の言葉。漠然と愛してくれる人を求める。',
+    money: '「釣りはいらない」な大物感。節約も貯蓄もさらっとこなす。',
+    vocation: '大手企業・国家公務員・経営幹部・医師',
+    lucky: '感性に響いたものを惜しみなく人に伝える',
+  },
+  '虎': {
+    emoji: '🐯', color: '#e67e22', bgColor: '#fff3e0', group: 'EARTH',
+    keyword: '有言実行',
+    catchphrase: 'キミにしか相談できない',
+    personality: '自由・平等・博愛主義。面倒見がよく、親分肌。仕事とプライベートをきっちり分ける。バランス感覚に優れた親分。',
+    love: '頼られると親分肌・姉御肌が爆発！「キミにしか相談できない」が一番刺さる。',
+    money: 'マネーの虎。抜群の金銭感覚の持ち主。',
+    vocation: '実業家・企業経営・会計士・プロスポーツ選手',
+    lucky: '逆境がバネになる。逃げず、ひるまず、迎え撃って吉！',
+  },
+  'たぬき': {
+    emoji: '🦝', color: '#795548', bgColor: '#efebe9', group: 'MOON',
+    keyword: '笑顔は敵をつくらない',
+    catchphrase: '一緒にいるとほっとする',
+    personality: 'どんな相手とも上手く合わせられる。いつも笑顔で場を和ませ、敵を作りにくい。古いものや歴史、実績を重んじる。',
+    love: '「一緒にいるとほっとする」が一番のプロポーズ。じわじわ愛が深まるタイプ。',
+    money: '財運があるのでお金はまわる。蓄える才能あり。',
+    vocation: '司会者・アナウンサー・教師・コンサルタント',
+    lucky: '人と会う。老若男女問わず交流すると運気UP',
+  },
+  '子守熊': {
+    emoji: '🐨', color: '#7f8c8d', bgColor: '#f0f4f8', group: 'EARTH',
+    keyword: '最後に勝つのは自分',
+    catchphrase: '夢は叶うよ',
+    personality: 'サービス精神旺盛で人が喜ぶ顔を見るのが好き。損得勘定に長け、倹約家で無駄が嫌い。ロマンチストだが超現実的。',
+    love: '先制攻撃が一番効果的。すぐに結論を出さないのでじっくり待って。',
+    money: '経済観念抜群で財テクも得意。コツコツ型。',
+    vocation: 'ミュージシャン・作曲家・声優・アロマセラピスト',
+    lucky: '音楽や映画、美術に接していると才能が開花',
+  },
+  'ゾウ': {
+    emoji: '🐘', color: '#5b9bd5', bgColor: '#e3f2fd', group: 'SUN',
+    keyword: '根性だったら負けません',
+    catchphrase: 'よく頑張ったね',
+    personality: '努力家だが努力している姿は見せない。その道のプロ・職人を目指す。キレたら最も怖い、圧倒的な推進力を持つ大器。',
+    love: '正面から堂々と攻めましょう。見てくれている人がいるとしみじみ嬉しい。',
+    money: '一攫千金のギャンブラー精神。大きな数字に強い。',
+    vocation: '国家公務員・政治家・警察官・医師・パイロット',
+    lucky: '精神世界に触れる。努力や根性とは違う世界をのぞいてみる',
+  },
+  'ひつじ': {
+    emoji: '🐑', color: '#d63384', bgColor: '#fce4ec', group: 'MOON',
+    keyword: '仲よきことは美しきかな',
+    catchphrase: 'みんなも行くよ',
+    personality: '「みんな仲良く」がテーマ。寂しがり屋で一人ぼっちが嫌い。客観的に人間関係を観察でき、情報を収集する。',
+    love: '「みんなも行くよ」が背中を押す魔法の言葉。フレンドリーな対応が基本。',
+    money: '小銭より紙幣が好き。蓄財の達人。',
+    vocation: '内科医・心理学者・冠婚葬祭業・カウンセラー',
+    lucky: '先祖への感謝。お墓参りを大切にすると加護が強まる',
+  },
+  'ペガサス': {
+    emoji: '🦄', color: '#e91e8c', bgColor: '#fce4ec', group: 'SUN',
+    keyword: '自由奔放',
+    catchphrase: 'あなたの感性はスゴイ',
+    personality: '感情の落差が激しい気分屋。天才肌で長所はすごいが後は平凡。束縛を極度に嫌い、ひらめきで飛び回る。',
+    love: '「あなたの感性はスゴイ」が刺さる。具体的に何がスゴイかは言わなくてよい。自由を奪わないこと。',
+    money: '財布にも羽が生えている。でもなぜかまわってくる。',
+    vocation: 'クリエイティブ・CGデザイナー・新規開拓リーダー・芸術家',
+    lucky: '多忙に過ごす。忙しく飛び回ることで才能が開花',
   },
 };
 
-const COMPATIBILITY = {
-  same:    { score: 100, label: '最高の仲間✨', desc: '同じ価値観でベストパートナー！' },
-  beats:   { score: 80,  label: 'あなたが勝ち🏆', desc: 'あなたが引っ張るリーダー的存在' },
-  losesTo: { score: 85,  label: 'ついていきたい💫', desc: '相手から学べることが多い憧れの人' },
+// ============================================================
+// 🧩 行動心理特性（十二特性）に基づく表層スタイル算出ロジック
+// ============================================================
+
+// 十干 (10種)
+const KAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+
+// 十二支 (12種) - 0:子, 1:丑, ... 11:亥
+const SHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+
+// 十二運星 (12種)
+const JUI_ON_SEI = ['長生', '沐浴', '冠帯', '建禄', '帝旺', '衰', '病', '死', '墓', '絶', '胎', '養'];
+
+// 十二運星 ➡️ 12動物への対応マップ
+const JUI_TO_ANIMAL = {
+  '長生': '猿', '沐浴': 'チータ', '冠帯': '黒ひょう', '建禄': 'ライオン',
+  '帝旺': '虎', '衰': 'たぬき', '病': '子守熊', '死': 'ゾウ',
+  '墓': 'ひつじ', '絶': 'ペガサス', '胎': '狼', '養': 'こじか'
 };
 
-function getGroupCompatibility(myGroup, theirGroup) {
-  if (myGroup === theirGroup) return COMPATIBILITY.same;
-  const groupJanken = { MOON: 'EARTH', EARTH: 'SUN', SUN: 'MOON' };
-  if (groupJanken[myGroup] === theirGroup) return COMPATIBILITY.beats;
-  return COMPATIBILITY.losesTo;
-}
+// 十二運星算出マトリクス [日干Idx][月支Idx] ➡️ 十二運星インデックス
+// 0:長生, 1:沐浴, 2:冠帯, 3:建禄, 4:帝旺, 5:衰, 6:病, 7:死, 8:墓, 9:絶, 10:胎, 11:養
+const JUI_MATRIX = {
+  0: { 0:1, 1:2, 2:3, 3:4, 4:5, 5:6, 6:7, 7:8, 8:9, 9:10, 10:11, 11:0 },  // 甲
+  1: { 0:6, 1:5, 2:4, 3:3, 4:2, 5:1, 6:0, 7:11, 8:10, 9:9, 10:8, 11:7 },  // 乙
+  2: { 0:10, 1:11, 2:0, 3:1, 4:2, 5:3, 6:4, 7:5, 8:6, 9:7, 10:8, 11:9 },  // 丙
+  3: { 0:9, 1:8, 2:7, 3:6, 4:5, 5:4, 6:3, 7:2, 8:1, 9:0, 10:11, 11:10 },  // 丁
+  4: { 0:10, 1:11, 2:0, 3:1, 4:2, 5:3, 6:4, 7:5, 8:6, 9:7, 10:8, 11:9 },  // 戊 (丙と同宮)
+  5: { 0:9, 1:8, 2:7, 3:6, 4:5, 5:4, 6:3, 7:2, 8:1, 9:0, 10:11, 11:10 },  // 己 (丁と同宮)
+  6: { 0:7, 1:8, 2:9, 3:10, 4:11, 5:0, 6:1, 7:2, 8:3, 9:4, 10:5, 11:6 },  // 庚
+  7: { 0:0, 1:11, 2:10, 3:9, 4:8, 5:7, 6:6, 7:5, 8:4, 9:3, 10:2, 11:1 },  // 辛
+  8: { 0:4, 1:5, 2:6, 3:7, 4:8, 5:9, 6:10, 7:11, 8:0, 9:1, 10:2, 11:3 },  // 壬
+  9: { 0:3, 1:2, 2:1, 3:0, 4:11, 5:10, 6:9, 7:8, 8:7, 9:6, 10:5, 11:4 }   // 癸
+};
 
+/**
+ * 生年月日から本質キャラクター番号 (1〜60) を取得
+ */
 function getCharacterNumber(year, month, day) {
   const base = new Date(1926, 0, 1);
   const target = new Date(year, month - 1, day);
   const diffMs = target.getTime() - base.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  // 0-indexedの値を取得し、+1で1-60の番号に変換
   const idx0 = ((26 + diffDays) % 60 + 60) % 60;
-  return idx0 + 1;
+  return idx0 + 1; // 1〜60
 }
 
-function diagnose(year, month, day) {
+/**
+ * 生年月日から「日干 (十干) インデックス」を取得 (0:甲 〜 9:癸)
+ */
+function getNikkanIndex(charNum) {
+  return (charNum - 1) % 10;
+}
+
+/**
+ * 生年月日から「月支 (十二支) インデックス」を取得 (0:子 〜 11:亥)
+ * 節切り（二十四節気）を考慮した簡易高精度ロジック
+ */
+function getGetsushiIndex(year, month, day) {
+  // 各月の代表的な節入り日（1月〜12月。簡易的に最も正確な値を配置）
+  const setsuiryDays = [0, 6, 4, 6, 5, 6, 6, 7, 8, 8, 8, 7, 7];
+  
+  let targetMonth = month;
+  
+  // 節入り日より前の生まれの場合、前月の月支になる
+  if (day < setsuiryDays[month]) {
+    targetMonth = month - 1;
+    if (targetMonth === 0) {
+      targetMonth = 12;
+    }
+  }
+  
+  // 各月（1〜12月）に対応する月支インデックス (0:子, 1:丑, ... 11:亥)
+  // 1月:丑(1), 2月:寅(2), 3月:卯(3), 4月:辰(4), 5月:巳(5), 6月:午(6), 
+  // 7月:未(7), 8月:申(8), 9月:酉(9), 10月:戌(10), 11月:亥(11), 12月:子(0)
+  const monthToShiIdx = [
+    0,  // ダミー
+    1,  // 1月 = 丑
+    2,  // 2月 = 寅
+    3,  // 3月 = 卯
+    4,  // 4月 = 辰
+    5,  // 5月 = 巳
+    6,  // 6月 = 午
+    7,  // 7月 = 未
+    8,  // 8月 = 申
+    9,  // 9月 = 酉
+    10, // 10月 = 戌
+    11, // 11月 = 亥
+    0   // 12月 = 子
+  ];
+  
+  return monthToShiIdx[targetMonth];
+}
+
+/**
+ * 本質キャラクターと表面キャラクターの両方を算出するメイン診断関数
+ */
+function diagnoseDetails(year, month, day) {
+  // 1. 本質キャラの算出
   const charNum = getCharacterNumber(year, month, day);
-  const charData = CHARACTER_TABLE[charNum - 1];
-  const profile = ANIMAL_PROFILES[charData.animal];
+  const essentialData = CHARACTER_TABLE[charNum - 1];
+  const essentialProfile = ANIMAL_PROFILES[essentialData.animal];
+  
+  // 2. 表面キャラの算出
+  const nikkanIdx = getNikkanIndex(charNum);
+  const getsushiIdx = getGetsushiIndex(year, month, day);
+  
+  const juiIdx = JUI_MATRIX[nikkanIdx][getsushiIdx];
+  const juiOnSeiName = JUI_ON_SEI[juiIdx];
+  const surfaceAnimal = JUI_TO_ANIMAL[juiOnSeiName];
+  const surfaceProfile = ANIMAL_PROFILES[surfaceAnimal];
+  
   return {
-    number: charNum,
-    ...charData,
-    profile,
-    group: GROUPS[charData.group],
+    birthDate: `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,
+    essential: {
+      number: charNum,
+      animal: essentialData.animal,
+      name: essentialData.name,
+      spell: essentialData.spell,
+      group: GROUPS[essentialData.group],
+      profile: essentialProfile
+    },
+    surface: {
+      animal: surfaceAnimal,
+      jui: juiOnSeiName,
+      group: GROUPS[surfaceProfile.group],
+      profile: surfaceProfile
+    }
   };
 }
 
-// ---------------------------------------------------
-let myDiagnosisResult = null;
+/**
+ * アニマル番号（1〜60）から本質特性情報のみを復元する（グループ診断用）
+ */
+function diagnoseByNumber(charNum) {
+  const num = parseInt(charNum, 10);
+  if (isNaN(num) || num < 1 || num > 60) {
+    return null;
+  }
+  const essentialData = CHARACTER_TABLE[num - 1];
+  const essentialProfile = ANIMAL_PROFILES[essentialData.animal];
+  
+  return {
+    essential: {
+      number: num,
+      animal: essentialData.animal,
+      name: essentialData.name,
+      spell: essentialData.spell,
+      group: GROUPS[essentialData.group],
+      profile: essentialProfile
+    },
+    surface: {
+      animal: '不明',
+      jui: '不明',
+      group: { name: '不明', emoji: '❓', color: '#94a3b8', gradient: 'linear-gradient(135deg, #64748b, #94a3b8)', description: '表面グループ情報はありません。' },
+      profile: { emoji: '❓', color: '#94a3b8', bgColor: '#f1f5f9', group: 'UNKNOWN', keyword: '不明', catchphrase: '不明', personality: '本質番号のみの登録のため、表面キャラクターの情報はありません。', love: '', money: '' }
+    }
+  };
+}
 
+</script>
+  <script>
+/* ============================================================
+ * 12のアニマル気質AIマネジメント・コンパニオン
+ * フロントエンドUI制御ロジック (main.js)
+ * ============================================================ */
+
+// 状態管理
+let members = [];
+let groups = [];
+let activeMember = null;
+let activeGroup = null;
+let currentTab = 'personal'; // 'personal' または 'group'
+let chatHistories = {}; // チャット履歴 { 'member_x' or 'group_y': [{role, content}] }
+let apiKeyStatus = { openai: false, gemini: false };
+let isLocalMock = false; // ローカルでのデモ動作モード
+
+// 読み込み時の初期化
 document.addEventListener('DOMContentLoaded', () => {
-  renderAnimalsGrid();
-  setupParticles();
+  detectEnvironment();
+  loadInitialData();
+  setupEventListeners();
+  initGroupFormRows(); // グループ登録用の初期メンバー行を準備
 });
 
-function setupParticles() {
-  const container = document.getElementById('particles');
-  if (!container) return;
-  for (let i = 0; i < 20; i++) {
-    const particle = document.createElement('div');
-    particle.style.position = 'absolute';
-    particle.style.width = Math.random() * 6 + 4 + 'px';
-    particle.style.height = particle.style.width;
-    particle.style.background = Math.random() > 0.5 ? 'rgba(236, 72, 153, 0.3)' : 'rgba(167, 139, 250, 0.3)';
-    particle.style.borderRadius = '50%';
-    particle.style.top = Math.random() * 100 + 'vh';
-    particle.style.left = Math.random() * 100 + 'vw';
-    particle.style.animation = `floating ${Math.random() * 5 + 5}s infinite ease-in-out`;
-    particle.style.animationDelay = Math.random() * 3 + 's';
-    container.appendChild(particle);
-  }
-}
-
-function runMyDiagnosis() {
-  const year = parseInt(document.getElementById('myYear').value);
-  const month = parseInt(document.getElementById('myMonth').value);
-  const day = parseInt(document.getElementById('myDay').value);
-  if (!validateDate(year, month, day)) {
-    alert('正しい生年月日を入力してください（1926年〜2010年）');
-    return;
-  }
-  myDiagnosisResult = diagnose(year, month, day);
-  showMyResult(myDiagnosisResult);
-  setTimeout(() => {
-    document.getElementById('myResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
-function showMyResult(res) {
-  document.getElementById('myResult').style.display = 'block';
-  document.getElementById('myCharNumber').innerText = `No.${res.number}`;
-  document.getElementById('myGroupBadge').innerText = `${res.group.emoji} ${res.group.name}`;
-  document.getElementById('myAnimalIcon').innerText = res.profile.emoji;
-  document.getElementById('myCharName').innerText = res.name;
-  document.getElementById('myAnimalName').innerText = `${res.animal}タイプ`;
-  document.getElementById('myCharSpell').innerText = `魔力属性: ${res.spell} 🌟`;
-  document.getElementById('myKeyword').innerText = `✨ 「${res.profile.keyword}」`;
-  document.getElementById('myPersonality').innerText = res.profile.personality;
-  document.getElementById('myLove').innerText = res.profile.love;
-  document.getElementById('myMoney').innerText = res.profile.money;
-  document.getElementById('myVocation').innerText = res.profile.vocation;
-  document.getElementById('myLucky').innerText = res.profile.lucky;
-  const card = document.getElementById('myResultCard');
-  card.style.borderColor = res.group.color;
-  card.style.boxShadow = `0 30px 70px rgba(0, 0, 0, 0.4), 0 0 30px ${res.group.color}33`;
-}
-
-function runOshiDiagnosis() {
-  if (!myDiagnosisResult) {
-    alert('まずは上の「STEP 01」でご自身のキャラを診断してください！');
-    document.getElementById('diagnosis').scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-  const oshiName = document.getElementById('oshiName').value.trim() || '推し';
-  const year = parseInt(document.getElementById('oshiYear').value);
-  const month = parseInt(document.getElementById('oshiMonth').value);
-  const day = parseInt(document.getElementById('oshiDay').value);
-  if (!validateDate(year, month, day)) {
-    alert('推しの正しい生年月日を入力してください（1926年〜2010年）');
-    return;
-  }
-  const oshiRes = diagnose(year, month, day);
-  showOshiResult(oshiRes, oshiName);
-  calculateAndShowCompatibility(myDiagnosisResult, oshiRes, oshiName);
-  setTimeout(() => {
-    document.getElementById('oshiResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
-function showOshiResult(res, oshiName) {
-  document.getElementById('oshiResult').style.display = 'block';
-  document.getElementById('oshiNameLabel').innerText = `💖 ${oshiName} のキャラ`;
-  document.getElementById('oshiCharNumber').innerText = `No.${res.number}`;
-  document.getElementById('oshiGroupBadge').innerText = `${res.group.emoji} ${res.group.name}`;
-  document.getElementById('oshiAnimalIcon').innerText = res.profile.emoji;
-  document.getElementById('oshiCharName').innerText = res.name;
-  document.getElementById('oshiAnimalName').innerText = `${res.animal}タイプ`;
-  document.getElementById('oshiKeyword').innerText = `✨ 「${res.profile.keyword}」`;
-  document.getElementById('oshiPersonality').innerText = res.profile.personality;
-  document.getElementById('oshiCatchphrase').innerText = `「${res.profile.catchphrase}」と言ってあげると大喜び！`;
-  const card = document.getElementById('oshiResultCard');
-  card.style.borderColor = res.group.color;
-}
-
-function calculateAndShowCompatibility(my, oshi, oshiName) {
-  document.getElementById('compatCard').style.display = 'block';
-  const compat = getGroupCompatibility(my.group.id, oshi.group.id);
-  let finalScore = compat.score;
-  if (my.group.id !== oshi.group.id) {
-    const seed = (my.number * oshi.number) % 15;
-    finalScore = compat.score === 80 ? 80 + seed : 85 + (seed % 10);
-  }
-  document.getElementById('myGroupItem').innerHTML = `${my.group.emoji} あなた<br><small>(${my.group.name})</small>`;
-  document.getElementById('oshiGroupItem').innerHTML = `${oshi.group.emoji} ${oshiName}<br><small>(${oshi.group.name})</small>`;
-  document.getElementById('compatScore').innerText = `${finalScore}点`;
-  document.getElementById('compatLabel').innerText = compat.label;
+// 匿名メンバーデータから詳細キャラクターデータを復元する（生年月日を完全に持たないセキュア設計）
+function mountMemberDetails(rawMember) {
+  const charNum = rawMember.essentialNumber;
+  const surfaceAnimal = rawMember.surfaceAnimal;
+  const surfaceJui = rawMember.surfaceJui;
   
-  let desc = `あなた(${my.group.name})と${oshiName}さん(${oshi.group.name})は、`;
-  if (my.group.id === oshi.group.id) {
-    desc += `価値観がピッタリ同じ「最高のソウルメイト」！言葉がなくても通じ合える、最強に心地よい関係です✨`;
-  } else if (compat.score === 80) {
-    desc += `あなたが${oshiName}さんを自然とリードする関係。あなたの頼もしい姿に、${oshiName}さんは大きな安心感を抱くはずです🏆`;
-  } else {
-    desc += `あなたが${oshiName}さんの圧倒的な世界観や感性に惹かれる関係。刺激的で、いつでもあなたにトキメキを与えてくれる憧れの人です💫`;
-  }
-  document.getElementById('compatDesc').innerText = desc;
-
-  let tip = `${oshiName}さんは【${oshi.animal}】タイプ。`;
-  tip += `プライドをくすぐる「${oshi.profile.catchphrase}」という褒め言葉が効果絶大です！`;
-  tip += `また、${oshiName}さんは${oshi.profile.personality.substring(0, 45)}...という特徴があるので、そこを優しくフォローしてあげると急接近できますよ🎯`;
-  document.getElementById('compatTip').innerText = tip;
+  const essentialData = CHARACTER_TABLE[charNum - 1];
+  const essentialProfile = ANIMAL_PROFILES[essentialData.animal];
+  const surfaceProfile = ANIMAL_PROFILES[surfaceAnimal];
+  
+  return {
+    index: rawMember.index,
+    name: rawMember.name,
+    isTemporary: rawMember.isTemporary || false, // 一時使い切り診断フラグ
+    essential: {
+      number: charNum,
+      animal: essentialData.animal,
+      name: essentialData.name,
+      spell: essentialData.spell,
+      group: GROUPS[essentialData.group],
+      profile: essentialProfile
+    },
+    surface: {
+      animal: surfaceAnimal,
+      jui: surfaceJui,
+      group: GROUPS[surfaceProfile.group],
+      profile: surfaceProfile
+    },
+    memo: rawMember.memo
+  };
 }
 
-function renderAnimalsGrid(filterGroup = 'all') {
-  const grid = document.getElementById('animalsGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  for (const [animalName, p] of Object.entries(ANIMAL_PROFILES)) {
-    if (filterGroup !== 'all' && p.group !== filterGroup) continue;
-    const groupObj = GROUPS[p.group];
-    const card = document.createElement('div');
-    card.className = 'animal-card';
-    card.style.setProperty('--border-color', groupObj.color);
-    card.innerHTML = `
-      <span class="card-emoji">${p.emoji}</span>
-      <h3 class="card-title">${animalName}</h3>
-      <span class="card-group" style="background:${groupObj.color}22; color:${groupObj.color}">${groupObj.emoji} ${groupObj.name}</span>
-      <p class="card-desc">${p.personality.substring(0, 50)}...</p>
-    `;
-    card.addEventListener('click', () => {
-      alert(`【${animalName}の取扱説明書】\n\n◆ 特徴:\n${p.personality}\n\n◆ 恋愛運:\n${p.love}\n\n◆ 喜ぶ魔法の言葉:\n「${p.catchphrase}」`);
+// 匿名グループデータから詳細メンバー情報を復元する
+function mountGroupDetails(rawGroup) {
+  const mountedMembers = rawGroup.members.map(m => {
+    const details = diagnoseByNumber(m.essentialNumber);
+    return {
+      name: m.name,
+      essentialNumber: parseInt(m.essentialNumber, 10),
+      essential: details.essential,
+      memo: m.memo || ''
+    };
+  });
+
+  return {
+    index: rawGroup.index,
+    name: rawGroup.name,
+    type: rawGroup.type, // 'oshi' または 'team'
+    members: mountedMembers
+  };
+}
+
+// 実行環境の検出 (GAS上か、ローカルファイルブラウザか)
+function detectEnvironment() {
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    isLocalMock = false;
+    console.log("GAS環境を検出しました。ライブデータを接続します。");
+  } else {
+    isLocalMock = true;
+    console.log("ローカル環境を検出しました。モックデータで動作します。");
+    // ローカルデモ用のダミーデータを挿入
+    members = getLocalMockMembers();
+    groups = getLocalMockGroups();
+  }
+}
+
+// 初期データのロード
+function loadInitialData() {
+  // 保存されている自分の生年月日があればフォームに復元
+  const savedMyBirth = localStorage.getItem('myBirthDate');
+  if (savedMyBirth) {
+    const myBirthInputs = ['quickMyBirthDate', 'myBirthDate'];
+    myBirthInputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = savedMyBirth;
     });
-    grid.appendChild(card);
   }
-}
 
-function filterAnimals(group) {
-  const buttons = ['all', 'Moon', 'Earth', 'Sun'];
-  buttons.forEach(b => {
-    const btn = document.getElementById(`filter${b}`);
-    if (btn) btn.classList.remove('active');
-  });
-  const activeBtn = document.getElementById(`filter${group.charAt(0) + group.slice(1).toLowerCase()}`);
-  if (activeBtn) activeBtn.classList.add('active');
-  renderAnimalsGrid(group);
-}
+  if (isLocalMock) {
+    // ローカル環境のAPIキーステータス検出 (localStorageから安全に読み込み)
+    apiKeyStatus.openai = !!localStorage.getItem('openai_api_key');
+    apiKeyStatus.gemini = !!localStorage.getItem('gemini_api_key');
 
-function validateDate(y, m, d) {
-  if (isNaN(y) || isNaN(m) || isNaN(d)) return false;
-  if (y < 1920 || y > 2026) return false;
-  if (m < 1 || m > 12) return false;
-  if (d < 1 || d > 31) return false;
-  const date = new Date(y, m - 1, d);
-  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
-}
-
-function shareResult(type) {
-  let shareText = '';
-  if (type === 'my') {
-    if (!myDiagnosisResult) return;
-    shareText = `【動物キャラナビ診断】\n私の個性心理学キャラは『No.${myDiagnosisResult.number} ${myDiagnosisResult.name}』でした！✨\n属性: ${myDiagnosisResult.group.name} 🌙\nキーワード: 「${myDiagnosisResult.profile.keyword}」\n#動物キャラナビ #個性心理学 #推し活相性診断\n`;
+    renderMemberList();
+    renderGroupList();
+    updateApiKeyIndicators();
   } else {
-    const oshiName = document.getElementById('oshiName').value.trim() || '推し';
-    const compatScore = document.getElementById('compatScore').innerText;
-    const compatLabel = document.getElementById('compatLabel').innerText;
-    shareText = `【推し活×個性心理学】\n私と${oshiName}さんの相性診断結果は…『${compatScore} (${compatLabel})』でした！💖\nお互いのキャラ:\n私: ${myDiagnosisResult.name}\n${oshiName}さん: ${document.getElementById('oshiCharName').innerText}\n#動物キャラナビ #推し活相性診断 #個性心理学\n`;
+    // GASバックエンドからデータを取得
+    showGlobalLoading(true);
+    
+    // APIキーステータスの取得
+    google.script.run
+      .withSuccessHandler(status => {
+        apiKeyStatus = status;
+        updateApiKeyIndicators();
+      })
+      .getApiKeyStatus();
+      
+    // メンバー一覧の取得
+    google.script.run
+      .withSuccessHandler(data => {
+        members = data.map(mountMemberDetails);
+        renderMemberList();
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("データの取得に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .getMembers();
+
+    // グループ一覧の取得
+    google.script.run
+      .withSuccessHandler(data => {
+        groups = data.map(mountGroupDetails);
+        renderGroupList();
+      })
+      .getGroups();
   }
-  navigator.clipboard.writeText(shareText).then(() => {
-    alert('診断結果をクリップボードにコピーしました！\nThreadsやXに貼り付けてシェアしてね 🚀');
-  }).catch(err => {
-    console.error('Copy failed: ', err);
-    prompt('結果をコピーしてシェアしてください：', shareText);
+}
+
+// イベントリスナーのセットアップ
+function setupEventListeners() {
+  // メッセージ送信
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  // 設定モーダルの開閉
+  document.getElementById('settingsBtn').addEventListener('click', showSettingsModal);
+  document.getElementById('closeSettings').addEventListener('click', hideSettingsModal);
+  
+  // メンバー追加モーダルの開閉
+  document.getElementById('addMemberBtn').addEventListener('click', showAddMemberModal);
+  document.getElementById('closeAddMember').addEventListener('click', hideAddMemberModal);
+  
+  // グループ登録モーダルの開閉
+  document.getElementById('addGroupBtn').addEventListener('click', showAddGroupModal);
+  document.getElementById('closeAddGroup').addEventListener('click', hideAddGroupModal);
+  document.getElementById('addMemberRowBtn').addEventListener('click', () => addMemberRow());
+
+  // タブ切り替え
+  document.getElementById('tabPersonal').addEventListener('click', () => switchTab('personal'));
+  document.getElementById('tabGroup').addEventListener('click', () => switchTab('group'));
+
+  // クイック一時診断
+  document.getElementById('quickDiagBtn').addEventListener('click', runQuickDiagnostic);
+  
+  // フォーム送信
+  document.getElementById('settingsForm').addEventListener('submit', saveSettings);
+  document.getElementById('addMemberForm').addEventListener('submit', submitAddMember);
+  document.getElementById('addGroupForm').addEventListener('submit', submitAddGroup);
+}
+
+// ============================================================
+// 👥 タブ切り替え制御
+// ============================================================
+function switchTab(tab) {
+  currentTab = tab;
+  
+  // タブボタンのアクティブ状態切り替え
+  document.getElementById('tabPersonal').classList.toggle('active', tab === 'personal');
+  document.getElementById('tabGroup').classList.toggle('active', tab === 'group');
+  
+  // リストセクションの表示切り替え
+  document.getElementById('personalSection').classList.toggle('active', tab === 'personal');
+  document.getElementById('groupSection').classList.toggle('active', tab === 'group');
+
+  // チャット画面のリセット（未選択状態にする）
+  resetChatDisplay();
+}
+
+function resetChatDisplay() {
+  activeMember = null;
+  activeGroup = null;
+  
+  // アバターや名前の表示リセット
+  document.getElementById('activeAvatar').innerText = '🔮';
+  document.getElementById('activeName').innerText = 'お相手を選択して相性を占う';
+  document.getElementById('activeBadges').innerHTML = '';
+  
+  // チャット入力欄とチャットメッセージを非表示にし、ウェルカム画面を表示
+  document.getElementById('chatMessages').style.display = 'none';
+  document.getElementById('chatInputArea').style.display = 'none';
+  document.getElementById('welcomeScreen').style.display = 'flex';
+  
+  // リストのアクティブ背景を解除するため再描画
+  renderMemberList();
+  renderGroupList();
+}
+
+// ============================================================
+// 👥 メンバーリスト描画 ＆ 管理
+// ============================================================
+
+function renderMemberList() {
+  const container = document.getElementById('memberList');
+  container.innerHTML = '';
+  
+  if (members.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;">
+        登録されたお相手がまだいません。<br>下のボタンから追加してください。
+      </div>
+    `;
+    return;
+  }
+  
+  members.forEach(member => {
+    const item = document.createElement('div');
+    item.className = `member-item ${activeMember && activeMember.index === member.index ? 'active' : ''}`;
+    
+    // アイテムクリックで選択
+    item.onclick = (e) => {
+      if (e.target.closest('.delete-btn')) return;
+      selectMember(member);
+    };
+    
+    item.innerHTML = `
+      <div class="member-avatar">${member.essential.profile.emoji}</div>
+      <div class="member-info">
+        <div class="member-name">${member.name}</div>
+        <div class="member-meta">
+          <span>本質: ${member.essential.animal}</span>
+          <span>•</span>
+          <span>表面: ${member.surface.animal}</span>
+        </div>
+      </div>
+      <button class="delete-btn" title="削除" onclick="deleteMemberHandler(${member.index})">×</button>
+    `;
+    container.appendChild(item);
   });
 }
-  </script>
+
+function selectMember(member) {
+  // 自分自身の特性データを localStorage の生年月日情報から算出・結合する
+  const savedMyBirth = localStorage.getItem('myBirthDate');
+  if (savedMyBirth) {
+    const myYear = parseInt(savedMyBirth.substring(0,4));
+    const myMonth = parseInt(savedMyBirth.substring(5,7));
+    const myDay = parseInt(savedMyBirth.substring(8,10));
+    const myDetails = diagnoseDetails(myYear, myMonth, myDay);
+    member.myEssential = myDetails.essential;
+    member.mySurface = myDetails.surface;
+  } else {
+    // 登録がない場合は仮データ
+    member.myEssential = { number: 0, animal: '未設定', name: '自分' };
+    member.mySurface = { animal: '未設定' };
+  }
+
+  activeMember = member;
+  activeGroup = null;
+  
+  renderMemberList(); // アクティブ状態の背景を反映
+  renderGroupList();
+  
+  // チャットヘッダーの更新
+  document.getElementById('activeAvatar').innerText = member.essential.profile.emoji;
+  document.getElementById('activeName').innerText = `${member.name} 💖 あなた の相性診断`;
+  
+  const badgeArea = document.getElementById('activeBadges');
+  badgeArea.innerHTML = `
+    <span class="badge badge-essential" style="background-color: rgba(139, 92, 246, 0.05); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.12);">
+      本質: ${member.essential.name}
+    </span>
+    <span class="badge badge-surface" style="background-color: rgba(6, 182, 212, 0.05); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.12);">
+      表面: ${member.surface.animal} (${member.surface.jui})
+    </span>
+  `;
+  
+  // 表示の切り替え
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('chatMessages').style.display = 'block';
+  document.getElementById('chatInputArea').style.display = 'block';
+  
+  renderChatMessages();
+}
+
+function deleteMemberHandler(index) {
+  if (!confirm("本当にこのメンバーを削除しますか？")) return;
+  
+  if (isLocalMock) {
+    members = members.filter(m => m.index !== index);
+    renderMemberList();
+    if (activeMember && activeMember.index === index) {
+      resetChatDisplay();
+    }
+  } else {
+    showGlobalLoading(true);
+    google.script.run
+      .withSuccessHandler(data => {
+        members = data.map(mountMemberDetails);
+        renderMemberList();
+        if (activeMember && activeMember.index === index) {
+          resetChatDisplay();
+        }
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("削除に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .deleteMember(index);
+  }
+}
+
+// ============================================================
+// 👥 グループリスト描画 ＆ 管理
+// ============================================================
+
+function renderGroupList() {
+  const container = document.getElementById('groupList');
+  container.innerHTML = '';
+  
+  if (groups.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;">
+        登録されたグループがありません。<br>下のボタンから追加してください。
+      </div>
+    `;
+    return;
+  }
+  
+  groups.forEach(group => {
+    const item = document.createElement('div');
+    item.className = `member-item ${activeGroup && activeGroup.index === group.index ? 'active' : ''}`;
+    
+    item.onclick = (e) => {
+      if (e.target.closest('.delete-btn')) return;
+      selectGroup(group);
+    };
+    
+    // グループメンバーの絵文字を並べる
+    const emojis = group.members.map(m => m.essential.profile.emoji).join('');
+    const typeLabel = group.type === 'oshi' ? '👑 推し' : '💼 チーム';
+    
+    item.innerHTML = `
+      <div class="member-avatar">👥</div>
+      <div class="member-info">
+        <div class="member-name">${group.name}</div>
+        <div class="member-meta">
+          <span>${typeLabel}</span>
+          <span>•</span>
+          <span style="font-size: 10px; letter-spacing: 1px;">${emojis}</span>
+        </div>
+      </div>
+      <button class="delete-btn" title="削除" onclick="deleteGroupHandler(${group.index})">×</button>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function selectGroup(group) {
+  activeGroup = group;
+  activeMember = null;
+  
+  renderMemberList();
+  renderGroupList();
+  
+  // チャットヘッダーの更新
+  document.getElementById('activeAvatar').innerText = '👥';
+  document.getElementById('activeName').innerText = `${group.name} 🌟 全体相性診断`;
+  
+  // メンバー全員のバッジをヘッダーに配置
+  const badgeArea = document.getElementById('activeBadges');
+  badgeArea.innerHTML = '';
+  group.members.forEach(m => {
+    const badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.style.cssText = `background-color: rgba(139, 92, 246, 0.05); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.12); font-size: 10px; padding: 2px 6px;`;
+    badge.innerText = `${m.name} (${m.essential.animal})`;
+    badgeArea.appendChild(badge);
+  });
+  
+  // 表示の切り替え
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('chatMessages').style.display = 'block';
+  document.getElementById('chatInputArea').style.display = 'block';
+  
+  renderChatMessages();
+}
+
+function deleteGroupHandler(index) {
+  if (!confirm("本当にこのグループを削除しますか？")) return;
+  
+  if (isLocalMock) {
+    groups = groups.filter(g => g.index !== index);
+    renderGroupList();
+    if (activeGroup && activeGroup.index === index) {
+      resetChatDisplay();
+    }
+  } else {
+    showGlobalLoading(true);
+    google.script.run
+      .withSuccessHandler(data => {
+        groups = data.map(mountGroupDetails);
+        renderGroupList();
+        if (activeGroup && activeGroup.index === index) {
+          resetChatDisplay();
+        }
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("グループの削除に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .deleteGroup(index);
+  }
+}
+
+// ============================================================
+// 👥 グループモーダル内フォーム動的制御
+// ============================================================
+
+function initGroupFormRows() {
+  const container = document.getElementById('groupMembersContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  addMemberRow();
+  addMemberRow();
+}
+
+function addMemberRow() {
+  const container = document.getElementById('groupMembersContainer');
+  if (!container) return;
+  const rowCount = container.children.length;
+  
+  const row = document.createElement('div');
+  row.className = 'group-member-row';
+  row.dataset.index = rowCount;
+  
+  // アニマル番号 1〜60 のセレクトオプション生成
+  let optionsHtml = '<option value="" disabled selected>選択してください</option>';
+  CHARACTER_TABLE.forEach(char => {
+    optionsHtml += `<option value="${char.n}">${char.n}: ${char.name} (${char.group})</option>`;
+  });
+  
+  row.innerHTML = `
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+      <label class="form-label" style="font-size: 10px;">名前 / 仮名</label>
+      <input type="text" class="form-input member-name-input" placeholder="例: メンバー${String.fromCharCode(65 + rowCount)}" required style="height: 32px; font-size: 12px; padding: 4px 8px;">
+    </div>
+    <div style="flex: 1.5; display: flex; flex-direction: column; gap: 4px;">
+      <label class="form-label" style="font-size: 10px;">アニマル番号 (1〜60)</label>
+      <select class="form-input member-num-input" required style="height: 32px; font-size: 12px; padding: 4px 8px;">
+        ${optionsHtml}
+      </select>
+    </div>
+    <div style="flex: 1.5; display: flex; flex-direction: column; gap: 4px;">
+      <label class="form-label" style="font-size: 10px;">メモ (任意)</label>
+      <input type="text" class="form-input member-memo-input" placeholder="例: リーダー役" style="height: 32px; font-size: 12px; padding: 4px 8px;">
+    </div>
+    <button type="button" class="remove-member-row-btn" onclick="removeMemberRow(this)">×</button>
+  `;
+  
+  container.appendChild(row);
+  updateRemoveButtonsVisibility();
+}
+
+function removeMemberRow(button) {
+  const container = document.getElementById('groupMembersContainer');
+  if (container.children.length <= 2) {
+    alert("グループ診断には最低2名のメンバーが必要です。");
+    return;
+  }
+  const row = button.closest('.group-member-row');
+  row.remove();
+  updateRemoveButtonsVisibility();
+}
+
+function updateRemoveButtonsVisibility() {
+  const container = document.getElementById('groupMembersContainer');
+  if (!container) return;
+  const buttons = container.querySelectorAll('.remove-member-row-btn');
+  buttons.forEach(btn => {
+    btn.style.display = container.children.length <= 2 ? 'none' : 'flex';
+  });
+}
+
+// ============================================================
+// 👥 モーダル表示制御
+// ============================================================
+
+function showAddMemberModal() {
+  document.getElementById('addMemberModal').classList.add('active');
+}
+function hideAddMemberModal() {
+  document.getElementById('addMemberModal').classList.remove('active');
+  document.getElementById('addMemberForm').reset();
+}
+
+function showAddGroupModal() {
+  document.getElementById('addGroupModal').classList.add('active');
+  initGroupFormRows(); // モーダルを開くたびに入力欄を初期状態にリセット
+}
+function hideAddGroupModal() {
+  document.getElementById('addGroupModal').classList.remove('active');
+  document.getElementById('addGroupForm').reset();
+}
+
+// ============================================================
+// 👥 診断実行 ＆ 新規登録処理
+// ============================================================
+
+function runQuickDiagnostic() {
+  const myNameInput = document.getElementById('quickMyName');
+  const myBirthInput = document.getElementById('quickMyBirthDate');
+  const oshiNameInput = document.getElementById('quickOshiName');
+  const oshiBirthInput = document.getElementById('quickOshiBirthDate');
+  
+  const myName = myNameInput.value.trim() || 'あなた';
+  const myBirth = myBirthInput.value;
+  const oshiName = oshiNameInput.value.trim() || '推しメン';
+  const oshiBirth = oshiBirthInput.value;
+  
+  if (!myBirth || !oshiBirth) {
+    alert("自分とお相手の生年月日を両方入力してください。");
+    return;
+  }
+  
+  // 自分の生年月日をブラウザに安全にキャッシュ
+  localStorage.setItem('myBirthDate', myBirth);
+  
+  // 自分の診断
+  const myYear = parseInt(myBirth.substring(0,4));
+  const myMonth = parseInt(myBirth.substring(5,7));
+  const myDay = parseInt(myBirth.substring(8,10));
+  const myDetails = diagnoseDetails(myYear, myMonth, myDay);
+  
+  // 相手の診断
+  const oshiYear = parseInt(oshiBirth.substring(0,4));
+  const oshiMonth = parseInt(oshiBirth.substring(5,7));
+  const oshiDay = parseInt(oshiBirth.substring(8,10));
+  const oshiDetails = diagnoseDetails(oshiYear, oshiMonth, oshiDay);
+  
+  // 一時セッションメンバーオブジェクトの構築
+  const tempMember = {
+    index: 'temp_' + Date.now(), // 一時的な一意キー
+    name: oshiName + ' [一時]',
+    isTemporary: true,
+    myEssential: myDetails.essential,
+    mySurface: myDetails.surface,
+    essential: oshiDetails.essential,
+    surface: oshiDetails.surface,
+    memo: 'その場限りの一時セッション診断'
+  };
+  
+  // アクティブメンバーに設定して画面遷移
+  switchTab('personal');
+  selectMember(tempMember);
+  
+  // 診断後は入力欄をリセット（プライバシー保護）
+  oshiBirthInput.value = '';
+}
+
+function submitAddMember(e) {
+  e.preventDefault();
+  
+  const myBirth = document.getElementById('myBirthDate').value;
+  const name = document.getElementById('newName').value.trim();
+  const birthDate = document.getElementById('newBirthDate').value;
+  const memo = document.getElementById('newMemo').value.trim();
+  
+  if (!myBirth || !name || !birthDate) {
+    alert("すべての生年月日とお名前を入力してください。");
+    return;
+  }
+  
+  // 自分の生年月日をブラウザに保存
+  localStorage.setItem('myBirthDate', myBirth);
+  
+  const year = parseInt(birthDate.substring(0,4));
+  const month = parseInt(birthDate.substring(5,7));
+  const day = parseInt(birthDate.substring(8,10));
+  
+  // 相手の特性を算出
+  const details = diagnoseDetails(year, month, day);
+  
+  if (isLocalMock) {
+    const newMember = {
+      index: members.length + 1,
+      name: name,
+      essentialNumber: details.essential.number,
+      surfaceAnimal: details.surface.animal,
+      surfaceJui: details.surface.jui,
+      memo: memo
+    };
+    members.push(mountMemberDetails(newMember));
+    renderMemberList();
+    selectMember(members[members.length - 1]);
+    hideAddMemberModal();
+  } else {
+    showGlobalLoading(true);
+    google.script.run
+      .withSuccessHandler(data => {
+        members = data.map(mountMemberDetails);
+        renderMemberList();
+        // 追加したメンバーを自動選択
+        const added = members.find(m => m.name === name);
+        if (added) selectMember(added);
+        hideAddMemberModal();
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("登録に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .addMember(name, details.essential.number, details.essential.name, details.surface.animal, details.surface.jui, memo);
+  }
+}
+
+function submitAddGroup(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('newGroupName').value.trim();
+  const type = document.getElementById('newGroupType').value;
+  
+  // メンバー行からデータを収集
+  const rows = document.querySelectorAll('.group-member-row');
+  const groupMembers = [];
+  
+  for (let row of rows) {
+    const memberName = row.querySelector('.member-name-input').value.trim();
+    const charNum = row.querySelector('.member-num-input').value;
+    const memberMemo = row.querySelector('.member-memo-input').value.trim();
+    
+    if (!memberName || !charNum) {
+      alert("すべてのメンバーの名前と動物番号を入力してください。");
+      return;
+    }
+    
+    groupMembers.push({
+      name: memberName,
+      essentialNumber: parseInt(charNum, 10),
+      memo: memberMemo
+    });
+  }
+  
+  if (groupMembers.length < 2) {
+    alert("グループ診断には最低2名のメンバーが必要です。");
+    return;
+  }
+  
+  if (isLocalMock) {
+    const newGroup = {
+      index: groups.length + 1,
+      name: name,
+      type: type,
+      members: groupMembers
+    };
+    groups.push(mountGroupDetails(newGroup));
+    renderGroupList();
+    selectGroup(groups[groups.length - 1]);
+    hideAddGroupModal();
+  } else {
+    showGlobalLoading(true);
+    google.script.run
+      .withSuccessHandler(data => {
+        groups = data.map(mountGroupDetails);
+        renderGroupList();
+        const added = groups.find(g => g.name === name);
+        if (added) selectGroup(added);
+        hideAddGroupModal();
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("グループの登録に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .addGroup(name, type, JSON.stringify(groupMembers));
+  }
+}
+
+// ============================================================
+// 🤖 ローカル直接 API 診断ロジック ＆ プロンプト生成 (フロントエンド移植)
+// ============================================================
+
+// フロントエンド用システムプロンプト生成関数 (個人)
+function buildSystemPromptLocal(member) {
+  const ess = member.essential;
+  const surf = member.surface;
+  
+  const myEss = member.myEssential || { number: 0, animal: '未設定', name: '自分' };
+  
+  return `あなたは12のアニマル気質診断、心理分析の最高峰スペシャリストであり、気になる「推し」や「お相手」とのコミュニケーションを円滑にする親しみやすいAI診断パートナーです。
+相談者（ユーザー）は、登録されたお相手（推し、または気になる人）との相性や効果的な関わり方、仲良くなる方法について悩んでいます。
+
+現在の診断対象ペア情報は以下の通りです：
+---
+■ 相談者（あなた）の本質特性:
+   - 特性タイプ: No.${myEss.number || '未設定'} ${myEss.name || ''} (シンボル: ${myEss.animal || '未設定'})
+
+■ お相手（推し・気になる人）: ${member.name} さん
+■ お相手の深層モチベーション（本音・本来の欲求特性・価値観の根底）:
+   - 特性タイプ: No.${ess.number} ${ess.name} (シンボル: ${ess.animal})
+   - 所属グループ: ${ess.group.name} (${ess.group.emoji})
+   - 深層の心理特徴: ${ess.profile.personality}
+   - 主な動機付け・価値観: "${ess.profile.keyword}"
+
+■ お相手の表層行動スタイル（外向きの態度・第一印象・コミュニケーションの窓口）:
+   - スタイルタイプ: ${surf.animal} (意思決定特性: ${surf.jui})
+   - 所属グループ: ${surf.group.name} (${surf.group.emoji})
+   - 表層の行動特徴: ${surf.profile.personality}
+   - 表層的な行動観: "${surf.profile.keyword}"
+
+■ お相手との関係性やメモ: ${member.memo || '特になし'}
+---
+
+【本質特性と表層スタイルのギャップ分析】
+お相手は、公の場や第一印象（表層スタイル）では「${surf.animal}」の特性を見せます。
+しかし、本音や本当に求めていること（深層モチベーション）では「${ess.animal}」の価値観が根底にあります。
+例えば、表向きは${surf.profile.keyword}のように見えても、本音では${ess.profile.keyword}を求めているというギャップが存在します。
+
+【あなたの任務】
+相談者からの質問（例：メッセージの送り方、喜ぶプレゼント、仲良くなるきっかけなど）に対し、相談者の本質（${myEss.animal}）とお相手の本音（${ess.animal}）・建前（${surf.animal}）をふまえた、具体的で心が温まる実践的なアプローチを提案してください。
+
+以下の構成で回答してください：
+1. **二人の特性・相性分析**: あなた（${myEss.animal}）とお相手（本質: ${ess.animal} / 表面: ${surf.animal}）の価値観のズレや、なぜ魅力的に感じるのか・どうすれ違いやすいかを解説。
+2. **お相手を惹きつける具体的なアプローチ**: お相手が本音で喜ぶ関わり方や、メッセージの送り方、効果的な褒め言葉。
+3. **エモくて即効性のある声かけ/メッセージ例**: ファンレターやLINE等でそのまま使える、お相手の心に響く「具体的なメッセージテンプレート」。
+
+【重要：コンバージョン導線の挿入】
+ユーザーが「もっと深く知りたい」と思った時のために、回答の最後の段落に、自然な流れで「一生モノのプレミアム個別鑑定書（詳細PDF）」を紹介し、必ず [PREMIUM_LINK] という文字列（大カッコを含む）のみを新しい行に出力してください。フロントエンドでこのタグが綺麗な購入バナーに自動変換されます。
+
+回答は、親しみやすく相談者の恋心や推し活を温かく応援するような、プロフェッショナルでエモいトーン（日本語）で、Markdown形式で美しく出力してください。`;
+}
+
+// フロントエンド用システムプロンプト生成関数 (グループ)
+function buildGroupSystemPromptLocal(group) {
+  const typeLabel = group.type === 'oshi' ? '推しグループ' : 'チーム（家族/友人/職場）';
+  
+  let membersText = '';
+  group.members.forEach((m, idx) => {
+    membersText += `■ メンバー ${idx + 1}: ${m.name}\n`;
+    membersText += `   - 特性タイプ: No.${m.essential.number} ${m.essential.name} (本質: ${m.essential.animal})\n`;
+    membersText += `   - 所属グループ: ${m.essential.group.name} (${m.essential.group.emoji})\n`;
+    membersText += `   - 本質特徴: ${m.essential.profile.personality}\n`;
+    membersText += `   - モチベーション・価値観: "${m.essential.profile.keyword}"\n`;
+    if (m.memo) {
+      membersText += `   - 役割・メモ: ${m.memo}\n`;
+    }
+    membersText += `\n`;
+  });
+  
+  return `あなたは12のアニマル気質診断、組織心理学、そして相性診断の最高峰スペシャリストです。
+相談者（ユーザー）は、自身が登録した${typeLabel}である「${group.name}」のメンバー同士の関係性、全体のバランス、より良いコミュニケーションやアプローチ方法について相談しています。
+
+グループ名: ${group.name}
+診断タイプ: ${typeLabel}
+
+登録されているグループメンバーの情報は以下の通りです：
+---
+${membersText}
+---
+
+【分析・アプローチの指示】
+12のアニマル気質の理論に基づき、メンバーそれぞれの本質特性や所属グループ（SUN / MOON / EARTH）のバランスを多角的に分析し、以下のポイントをふまえてアドバイスを構成してください。
+1. **グループ全体の特性とエネルギーバランス**:
+   SUN（太陽 = 感性・直感）、MOON（月 = 人情・調和）、EARTH（地球 = 現実・成果）の構成比率から見るグループ全体の雰囲気やダイナミクス。
+2. **メンバー間の相性・シナジー（相生・相剋の関係）**:
+   特に注目すべきコンビ・関係性や、うまく連携するためのヒント、意思疎通で注意すべきギャップ。
+3. **グループワーク・人間関係を最大化するための具体的アドバイス**:
+   相談内容（メンバーのモチベーション向上、意見調整、応援方法など）に対し、個々の本質特性に響く具体的なコミュニケーション方法や、役割分担の提案。
+
+以下の構成で回答してください：
+1. **グループ全体のアニマル気質プロファイリング**: グループ全体の雰囲気、SUN/MOON/EARTHの比率からわかるグループの力学を解説。
+2. **メンバー間のキー相性・シナジー分析**: 特に相乗効果の高いコンビや、対立・すれ違いが起きやすいポイントと、その対処法を具体的に解説。
+3. **このグループを活性化するアプローチ・メッセージ例**: 会話やメッセージで使える、メンバー全員が納得する具体的な声かけやアプローチのテンプレート。
+
+【重要：コンバージョン導線の挿入】
+回答の最後の段落に、自然な流れで「このグループ全員の関係性マップ、一生モノの相性PDF診断レポート」を紹介し、必ず [PREMIUM_LINK] という文字列（大カッコを含む）のみを新しい行に出力してください。フロントエンドでこのタグが綺麗な購入バナーに自動変換されます。
+
+回答は、親しみやすく、グループの活動や関係性を心から応援するような、プロフェッショナルでエモいトーン（日本語）で、Markdown形式で美しく出力してください。`;
+}
+
+// OpenAI 直接 API 呼び出し (fetch)
+async function callOpenAIDirect(apiKey, systemPrompt, userMessage, history) {
+  const url = 'https://api.openai.com/v1/chat/completions';
+  
+  const messages = [{ role: 'system', content: systemPrompt }];
+  const recentHistory = history.slice(-6);
+  recentHistory.forEach(msg => {
+    messages.push({ role: msg.role, content: msg.content });
+  });
+  messages.push({ role: 'user', content: userMessage });
+  
+  const payload = {
+    model: 'gpt-4o-mini',
+    messages: messages,
+    temperature: 0.7
+  };
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify(payload)
+  });
+  
+  if (!response.ok) {
+    const errorJson = await response.json();
+    throw new Error(errorJson.error ? errorJson.error.message : 'OpenAI直接通信に失敗しました。');
+  }
+  
+  const resData = await response.json();
+  return resData.choices[0].message.content;
+}
+
+// Gemini 直接 API 呼び出し (fetch)
+async function callGeminiDirect(apiKey, systemPrompt, userMessage, history) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  
+  const contents = [];
+  const recentHistory = history.slice(-6);
+  recentHistory.forEach(msg => {
+    contents.push({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }]
+    });
+  });
+  contents.push({
+    role: 'user',
+    parts: [{ text: userMessage }]
+  });
+  
+  const payload = {
+    contents: contents,
+    systemInstruction: {
+      parts: [{ text: systemPrompt }]
+    },
+    generationConfig: {
+      temperature: 0.7
+    }
+  };
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    try {
+      const errorJson = JSON.parse(errorText);
+      throw new Error(errorJson.error ? errorJson.error.message : errorText);
+    } catch(e) {
+      throw new Error(`Gemini直接通信に失敗しました (HTTP ${response.status})`);
+    }
+  }
+  
+  const resData = await response.json();
+  return resData.candidates[0].content.parts[0].text;
+}
+
+// ============================================================
+// 💬 チャット画面描画 ＆ メッセージ管理
+// ============================================================
+
+function renderChatMessages() {
+  const container = document.getElementById('chatMessages');
+  container.innerHTML = '';
+  
+  const activeObj = activeMember || activeGroup;
+  if (!activeObj) return;
+  
+  const activeKey = activeMember ? `member_${activeMember.index}` : `group_${activeGroup.index}`;
+  const history = chatHistories[activeKey] || [];
+  
+  if (history.length === 0) {
+    let greetText = '';
+    
+    if (activeMember) {
+      // 個人診断の挨拶メッセージ
+      greetText = `はじめまして！あなたと**${activeMember.name}さん**の相性を12のアニマル気質で紐解き、関係性を深めるアプローチ方法をご提案します。💖
+      
+お相手（${activeMember.name}さん）は、表に見せる行動スタイル（表層行動スタイル）が**『${activeMember.surface.animal}タイプ』**で、本音や意思決定の基準（深層モチベーション）が**『${activeMember.essential.animal}タイプ』**となっています。
+      
+二人の特性ギャップをふまえ、お相手に喜ばれるコミュニケーション方法、ファンレターやメッセージの書き方、心の距離を縮めるコツなど何でもお気軽に相談してくださいね！
+      
+[PREMIUM_LINK]`;
+    } else {
+      // グループ診断の挨拶メッセージ
+      const typeLabel = activeGroup.type === 'oshi' ? '推しグループ' : 'チーム';
+      const listItems = activeGroup.members.map(m => `* **${m.name}さん**: ${m.essential.name} (本質: ${m.essential.animal} / ${m.essential.group.emoji} ${m.essential.group.name})`).join('\n');
+      
+      // グループグループ（SUN/MOON/EARTH）の構成を集計
+      const groupCounts = { SUN: 0, MOON: 0, EARTH: 0 };
+      activeGroup.members.forEach(m => {
+        if (m.essential.group.id in groupCounts) {
+          groupCounts[m.essential.group.id]++;
+        }
+      });
+      
+      let atmosphereDesc = '';
+      if (groupCounts.SUN > groupCounts.MOON && groupCounts.SUN > groupCounts.EARTH) {
+        atmosphereDesc = '「太陽（SUN）チーム」が多めで、直感的でエネルギーが高く、常に新鮮なワクワクを求める華やかでダイナミックな雰囲気を持っています。☀️';
+      } else if (groupCounts.MOON > groupCounts.SUN && groupCounts.MOON > groupCounts.EARTH) {
+        atmosphereDesc = '「月（MOON）チーム」が多めで、人情味にあふれ、調和や全体のチームワークを非常に大切にするアットホームで温かい雰囲気を持っています。🌙';
+      } else if (groupCounts.EARTH > groupCounts.SUN && groupCounts.EARTH > groupCounts.MOON) {
+        atmosphereDesc = '「地球（EARTH）チーム」が多めで、非常に現実的で効率性や形になる成果を重んじる、地に足がついた実力派のプロフェッショナルな雰囲気を持っています。🌏';
+      } else {
+        atmosphereDesc = 'SUN・MOON・EARTHの各グループのバランスが非常に均等で、それぞれの特性が交じり合い、多様な視点とシナジーが生まれやすい黄金バランスを持っています。⚖️';
+      }
+      
+      greetText = `はじめまして！登録された${typeLabel}**『${activeGroup.name}』**メンバー全員の特性を12のアニマル気質で分析し、チームの相性やより良い関係づくりのためのアプローチをご提案します。🌟
+      
+■ **登録メンバー特性一覧**
+${listItems}
+      
+■ **グループ全体の雰囲気分析**
+本質特性グループの比率から見ると、このグループは${atmosphereDesc}
+      
+グループ全体をまとめるコツや、メンバー間の対立・すれ違い対策、推しグループ内でのコンビ・トリオの相性など、知りたいことを何でもご相談ください！
+      
+[PREMIUM_LINK]`;
+    }
+    
+    addMessageBubble('ai', greetText, false);
+    return;
+  }
+  
+  history.forEach(msg => {
+    addMessageBubble(msg.role === 'user' ? 'user' : 'ai', msg.content, false);
+  });
+  
+  scrollToBottom();
+}
+
+function addMessageBubble(sender, text, shouldScroll = true) {
+  const container = document.getElementById('chatMessages');
+  const row = document.createElement('div');
+  row.className = `message-row ${sender}`;
+  
+  const avatar = document.createElement('div');
+  avatar.className = 'message-avatar';
+  
+  if (sender === 'user') {
+    avatar.innerText = '👤';
+  } else {
+    avatar.innerText = activeMember ? activeMember.essential.profile.emoji : '👥';
+  }
+  
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.innerHTML = parseMarkdown(text);
+  
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  container.appendChild(row);
+  
+  if (shouldScroll) {
+    scrollToBottom();
+  }
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || (!activeMember && !activeGroup)) return;
+  
+  // 送信中の状態制御
+  input.value = '';
+  setSendingState(true);
+  
+  const activeKey = activeMember ? `member_${activeMember.index}` : `group_${activeGroup.index}`;
+  
+  // ユーザーメッセージの表示と履歴保存
+  addMessageBubble('user', text);
+  if (!chatHistories[activeKey]) {
+    chatHistories[activeKey] = [];
+  }
+  chatHistories[activeKey].push({ role: 'user', content: text });
+  
+  // AIプロバイダー（OpenAI or Gemini）の取得
+  const provider = document.getElementById('aiModelSelector').value;
+  
+  if (isLocalMock) {
+    // 🟢 ローカル直接API通信の判定（localStorageからキーを取得）
+    const localOpenAIKey = localStorage.getItem('openai_api_key');
+    const localGeminiKey = localStorage.getItem('gemini_api_key');
+    const activeKeyToken = provider === 'openai' ? localOpenAIKey : localGeminiKey;
+    
+    if (activeKeyToken) {
+      // 🟢 本物の API 通信を実行！
+      const systemPrompt = activeMember ? buildSystemPromptLocal(activeMember) : buildGroupSystemPromptLocal(activeGroup);
+      const apiCall = provider === 'openai' 
+        ? callOpenAIDirect(activeKeyToken, systemPrompt, text, chatHistories[activeKey].slice(0, -1))
+        : callGeminiDirect(activeKeyToken, systemPrompt, text, chatHistories[activeKey].slice(0, -1));
+        
+      apiCall
+        .then(reply => {
+          addMessageBubble('ai', reply);
+          chatHistories[activeKey].push({ role: 'assistant', content: reply });
+          setSendingState(false);
+        })
+        .catch(err => {
+          addMessageBubble('ai', `⚠️ API通信エラーが発生しました:\n${err.message}\n\n※APIキーの設定、利用制限、またはブラウザのネットワーク接続を確認してください。`);
+          setSendingState(false);
+        });
+    } else {
+      // 🟡 キーがない場合はダミーの体験モック応答にフォールバック
+      setTimeout(() => {
+        let mockReply = '';
+        
+        if (activeMember) {
+          mockReply = `（※体験デモモード：APIキーが設定されていないため、疑似診断をお届けします。右上「⚙️設定」からAPIキーを入力すると、本物のAI相性診断を開始できます！）
+        
+### 💡 二人の本質特性 ＆ ギャップ相性分析
+お相手（${activeMember.name}さん）は、表向き見せる態度が**【${activeMember.surface.animal}】**で、本音（深層モチベーション）が**【${activeMember.essential.animal}】**です。
+一見、${activeMember.surface.animal}のようにスマートに振る舞っているかもしれませんが、実は本音では${activeMember.essential.animal}のようなこだわりや熱いパッション、あるいは甘えん坊な一面を秘めています。
+あなたの持つ本質特性と照らし合わせると、お相手の「建前」に振り回されず、「本音の求めているもの」をそっと満たしてあげることで、他の人とは一味違う特別な存在として距離を縮めることができます。
+
+### 🎯 距離を縮める具体的なアプローチ
+1. **コミュニケーションのコツ**: 表向きのリアクション（${activeMember.surface.animal}）が薄くても心配しないでください。お相手の本音（${activeMember.essential.animal}）に響く言葉（「いつも独自の視点が素敵ですね」「陰ながらのこだわりを見ていました」など）をかけることで、一気に心を許してくれるようになります。
+2. **メッセージ（ファンレターやSNS等）のポイント**: お相手の本質キーワードである「${activeMember.essential.animal}」の特性を意識して、形式的ではない、相手の感性やディテールにフォーカスした内容を送るのが最も効果的です。
+
+### 💬 すぐに使えるメッセージ例
+> 「${activeMember.name}さん、先日の〇〇でのこだわり、本当に素敵でした！お相手のセンスやこだわりを具体的に褒める言葉を入れてみてください。驚くほど好印象になります！」
+        
+[PREMIUM_LINK]`;
+        } else {
+          const typeLabel = activeGroup.type === 'oshi' ? '推しグループ' : 'チーム';
+          mockReply = `（※体験デモモード：APIキーが設定されていないため、疑似診断をお届けします。右上「⚙️設定」からAPIキーを入力すると、本物のAI相性診断を開始できます！）
+        
+### 💡 グループ『${activeGroup.name}』の相性・シナジー分析
+12のアニマル気質の本質特性から見ると、この${typeLabel}には非常に多様で個性的なメンバーが集まっています。
+特に、メンバー同士の「グループ属性（SUN/MOON/EARTH）」の関係性を見ると、全体の力学が非常に興味深いです。
+
+### 🎯 チームワークを高める（または応援する）ためのポイント
+1. **役割分担の黄金比**: SUNグループの直感的エネルギーと、EARTHグループの着実な実行力、MOONグループのチームワーク調和能力がそれぞれ連動することで、誰か一人が無理をすることなく、非常に大きな成果を引き出すことができます。
+2. **関係性の注意点**: 感覚で突き進むSUNタイプのメンバーと、計画的な進捗を好むEARTHタイプのメンバーの間で、意思疎通のズレが発生することがあります。その際は、人情派のMOONタイプのメンバーが仲立ちをすることで、衝突を避けて円滑なチームビルディングを行えます。
+
+### 💬 グループ全体へのおすすめアプローチ
+* **ミーティングや会話の場**: 最初に全体のビジョン（SUN向け）を語り、その後で具体的なタスクや数字（EARTH向け）を詰め、最後に皆の納得感や心のケア（MOON向け）を確認する順番で進行すると、メンバー全員の満足度が極限まで高まります。
+        
+[PREMIUM_LINK]`;
+        }
+        
+        addMessageBubble('ai', mockReply);
+        chatHistories[activeKey].push({ role: 'assistant', content: mockReply });
+        setSendingState(false);
+      }, 1500);
+    }
+  } else {
+    // GASバックエンドAI呼び出し
+    const targetPayload = activeMember ? activeMember : activeGroup;
+    const payload = JSON.parse(JSON.stringify(targetPayload));
+    payload.isGroup = !!activeGroup;
+    
+    google.script.run
+      .withSuccessHandler(reply => {
+        addMessageBubble('ai', reply);
+        chatHistories[activeKey].push({ role: 'assistant', content: reply });
+        setSendingState(false);
+      })
+      .withFailureHandler(err => {
+        addMessageBubble('ai', `⚠️ エラーが発生しました:\n${err.message}`);
+        setSendingState(false);
+      })
+      .chatWithAI(payload, text, provider, chatHistories[activeKey]);
+  }
+}
+
+// 簡易Markdownパーサー
+function parseMarkdown(text) {
+  let html = text;
+  
+  // プレミアムリンクプレースホルダーの置き換え
+  const premiumCardHtml = `
+    <div class="purchase-card">
+      <div class="purchase-card-title">🔮 プレミアム詳細鑑定書のご案内</div>
+      <div class="purchase-card-desc">
+        メンバー全員の深層心理の相性、一生モノの関係性シナジーマップ、具体的なアプローチ方法を網羅した「一生モノのプレミアム関係性診断レポート(PDF)」をご用意しています。より深い分析をご希望の方は、ぜひ以下から詳細をご確認ください。
+      </div>
+      <a href="https://line.me/R/ti/p/@your_line_id" target="_blank" class="purchase-card-btn" id="premiumLinkChat">
+        詳細・購入はこちら（LINE公式へ）
+      </a>
+    </div>
+  `;
+  html = html.replace(/\[PREMIUM_LINK\]/g, premiumCardHtml);
+
+  // 引用符 (blockquote) の変換
+  html = html.replace(/^>\s+(.*)$/gmi, '<blockquote>$1</blockquote>');
+  
+  // 太字の変換
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // 見出し (h3) の変換
+  html = html.replace(/^###\s+(.*)$/gmi, '<h3>$1</h3>');
+  
+  // リストの変換
+  html = html.replace(/^\*\s+(.*)$/gmi, '<li>$1</li>');
+  
+  // 改行の変換
+  html = html.replace(/\n/g, '<br>');
+  
+  return html;
+}
+
+// ============================================================
+// ⚙️ 設定（APIキー登録）
+// ============================================================
+
+function showSettingsModal() {
+  document.getElementById('settingsModal').classList.add('active');
+  
+  // GAS環境の場合、現在の保存ステータスを読み込む
+  if (!isLocalMock) {
+    google.script.run
+      .withSuccessHandler(status => {
+        apiKeyStatus = status;
+        updateApiKeyIndicators();
+      })
+      .getApiKeyStatus();
+  }
+}
+
+function hideSettingsModal() {
+  document.getElementById('settingsModal').classList.remove('active');
+  document.getElementById('settingsForm').reset();
+}
+
+function saveSettings(e) {
+  e.preventDefault();
+  
+  const openaiKey = document.getElementById('openaiKeyInput').value.trim();
+  const geminiKey = document.getElementById('geminiKeyInput').value.trim();
+  
+  if (!openaiKey && !geminiKey) {
+    alert("キーが入力されていません。");
+    return;
+  }
+  
+  if (isLocalMock) {
+    if (openaiKey) {
+      localStorage.setItem('openai_api_key', openaiKey);
+      apiKeyStatus.openai = true;
+    }
+    if (geminiKey) {
+      localStorage.setItem('gemini_api_key', geminiKey);
+      apiKeyStatus.gemini = true;
+    }
+    updateApiKeyIndicators();
+    alert("APIキーをお使いのブラウザ（localStorage）に安全に保存しました！");
+    hideSettingsModal();
+  } else {
+    showGlobalLoading(true);
+    google.script.run
+      .withSuccessHandler(() => {
+        if (openaiKey) apiKeyStatus.openai = true;
+        if (geminiKey) apiKeyStatus.gemini = true;
+        updateApiKeyIndicators();
+        alert("APIキーを安全に保存しました！");
+        hideSettingsModal();
+        showGlobalLoading(false);
+      })
+      .withFailureHandler(err => {
+        alert("APIキーの保存に失敗しました: " + err.message);
+        showGlobalLoading(false);
+      })
+      .saveApiKeys(openaiKey, geminiKey);
+  }
+}
+
+function updateApiKeyIndicators() {
+  const openaiIndicator = document.getElementById('openaiIndicator');
+  const geminiIndicator = document.getElementById('geminiIndicator');
+  
+  if (apiKeyStatus.openai) {
+    openaiIndicator.innerHTML = '<span style="color: #34d399">🟢 登録済み</span>';
+  } else {
+    openaiIndicator.innerHTML = '<span style="color: #f87171">🔴 未登録</span>';
+  }
+  
+  if (apiKeyStatus.gemini) {
+    geminiIndicator.innerHTML = '<span style="color: #34d399">🟢 登録済み</span>';
+  } else {
+    geminiIndicator.innerHTML = '<span style="color: #f87171">🔴 未登録</span>';
+  }
+}
+
+// ============================================================
+// 🛠️ 画面ユーティリティ
+// ============================================================
+
+function scrollToBottom() {
+  const container = document.getElementById('chatMessages');
+  container.scrollTop = container.scrollHeight;
+}
+
+function setSendingState(sending) {
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  
+  if (sending) {
+    input.disabled = true;
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = '<div class="spinner"></div>';
+  } else {
+    input.disabled = false;
+    sendBtn.disabled = false;
+    sendBtn.innerHTML = '⚡';
+    input.focus();
+  }
+}
+
+function showGlobalLoading(show) {
+  console.log("Global loading state: " + show);
+}
+
+// ローカル用のモックデータ生成 (個人)
+function getLocalMockMembers() {
+  return [
+    {
+      index: 1,
+      name: "推しメンAさん",
+      essentialNumber: 12,
+      surfaceAnimal: "黒ひょう",
+      surfaceJui: "冠帯",
+      memo: "ファンとして応援している大好きなアイドル。ステージ上ではカリスマ感があるが、本質的な性格や喜ぶアプローチ知りたい。"
+    },
+    {
+      index: 2,
+      name: "気になるあの人",
+      essentialNumber: 45,
+      surfaceAnimal: "こじか",
+      surfaceJui: "養",
+      memo: "最近よく話す気になる人。人見知りでデリケートな一面があるが、もっと仲良くなる方法を分析したい。"
+    }
+  ].map(mountMemberDetails);
+}
+
+// ローカル用のモックデータ生成 (グループ)
+function getLocalMockGroups() {
+  return [
+    {
+      index: 1,
+      name: "推しナビ５",
+      type: "oshi",
+      members: [
+        { name: "メンバーA", essentialNumber: 12, memo: "センター担当、人気者" },
+        { name: "メンバーB", essentialNumber: 24, memo: "クールで職人肌な性格" },
+        { name: "メンバーC", essentialNumber: 43, memo: "リーダーでしっかり者" }
+      ]
+    },
+    {
+      index: 2,
+      name: "開発チーム",
+      type: "team",
+      members: [
+        { name: "自分", essentialNumber: 5, memo: "ディレクター" },
+        { name: "山田さん", essentialNumber: 36, memo: "メインエンジニア" },
+        { name: "佐藤さん", essentialNumber: 52, memo: "デザイナー" }
+      ]
+    }
+  ].map(mountGroupDetails);
+}
+
+</script>
 </body>
 </html>
