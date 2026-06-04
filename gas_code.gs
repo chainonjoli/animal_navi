@@ -1,5 +1,5 @@
 /**
- * 個性心理学 動物キャラナビ診断
+ * 12のアニマル気質 動物キャラナビ診断
  * Google Apps Script (GAS) ウェブアプリ公開用スクリプト
  * 
  * 【デプロイ手順】
@@ -16,7 +16,7 @@
 function doGet() {
   return HtmlService.createTemplateFromFile('index')
       .evaluate()
-      .setTitle('個性心理学 動物キャラナビ｜あなたと推しの相性診断')
+      .setTitle('12のアニマル気質 動物キャラナビ｜あなたと推しの相性診断')
       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }

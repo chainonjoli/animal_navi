@@ -199,11 +199,11 @@ function shareResult(type) {
 
   if (type === 'my' && window.myDiagnosisResult) {
     const r = window.myDiagnosisResult;
-    text = `【動物キャラナビ診断】\n私のキャラは『No.${r.number} ${r.name}』✨\n${r.groupData.emoji} ${r.groupData.name}\nキーワード: 「${r.profile.keyword}」\n\n#動物キャラナビ #個性心理学 #推し活\n`;
+    text = `【動物キャラナビ診断】\n私のキャラは『No.${r.number} ${r.name}』✨\n${r.groupData.emoji} ${r.groupData.name}\nキーワード: 「${r.profile.keyword}」\n\n#動物キャラナビ #アニマル気質 #推し活\n`;
   } else if (type === 'oshi' && window.oshiDiagnosisResult) {
     const oshiName = document.getElementById('oshiName')?.value?.trim() || '推し';
     const score = document.getElementById('compatScore')?.textContent || '';
-    text = `【推し活×個性心理学】\n私と${oshiName}の相性: ${score}点！\n私: ${window.myDiagnosisResult.name}\n${oshiName}: ${window.oshiDiagnosisResult.name}\n\n#動物キャラナビ #推し活相性 #個性心理学\n`;
+    text = `【推し活×アニマル気質】\n私と${oshiName}の相性: ${score}点！\n私: ${window.myDiagnosisResult.name}\n${oshiName}: ${window.oshiDiagnosisResult.name}\n\n#動物キャラナビ #推し活相性 #アニマル気質\n`;
   }
 
   if (!text) return;

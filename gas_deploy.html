@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>個性心理学 動物キャラナビ｜あなたと推しの相性診断</title>
-  <meta name="description" content="生年月日から60種類の動物キャラクターを診断！推しとの相性もわかる個性心理学サイト。アイドルオタクのための推し活ツール。">
+  <title>12のアニマル気質 動物キャラナビ｜あなたと推しの相性診断</title>
+  <meta name="description" content="生年月日から60種類の動物キャラクターを診断！推しとの相性もわかる12のアニマル気質サイト。アイドルオタクのための推し活ツール。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
 /* ============================================================
-   個性心理学 動物キャラナビ スタイルシート
+   12のアニマル気質 動物キャラナビ スタイルシート
    テーマ: 推し活 × プレミアム・ガラスモーフィズム (Rich & Active Aesthetics)
    ============================================================ */
 
@@ -1013,7 +1013,7 @@ body {
   <!-- ヒーローセクション -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge">🎤 推し活×個性心理学</div>
+      <div class="hero-badge">🎤 推し活×12のアニマル気質</div>
       <h1 class="hero-title">
         あなたと推しの<br>
         <span class="gradient-text">本当の相性</span>がわかる
@@ -1253,7 +1253,7 @@ body {
         <span>🌟</span> 動物キャラナビ
       </div>
       <p class="footer-note">
-        個性心理学（動物キャラナビ）に基づいた診断サイトです。<br>
+        12のアニマル気質（動物キャラナビ）に基づいた診断サイトです。<br>
         診断結果はエンターテインメントとしてお楽しみください。
       </p>
       <p class="footer-copy">© 2025 動物キャラナビ</p>
@@ -1262,7 +1262,7 @@ body {
 
   <script>
 // ============================================================
-// 個性心理学 動物キャラナビ データ
+// 12のアニマル気質 動物キャラナビ データ
 // 十二運星に基づいた正確なキャラクター定義
 // ============================================================
 
@@ -1692,12 +1692,12 @@ function shareResult(type) {
   let shareText = '';
   if (type === 'my') {
     if (!myDiagnosisResult) return;
-    shareText = `【動物キャラナビ診断】\n私の個性心理学キャラは『No.${myDiagnosisResult.number} ${myDiagnosisResult.name}』でした！✨\n属性: ${myDiagnosisResult.group.name} 🌙\nキーワード: 「${myDiagnosisResult.profile.keyword}」\n#動物キャラナビ #個性心理学 #推し活相性診断\n`;
+    shareText = `【動物キャラナビ診断】\n私の12のアニマル気質キャラは『No.${myDiagnosisResult.number} ${myDiagnosisResult.name}』でした！✨\n属性: ${myDiagnosisResult.group.name} 🌙\nキーワード: 「${myDiagnosisResult.profile.keyword}」\n#動物キャラナビ #12のアニマル気質 #推し活相性診断\n`;
   } else {
     const oshiName = document.getElementById('oshiName').value.trim() || '推し';
     const compatScore = document.getElementById('compatScore').innerText;
     const compatLabel = document.getElementById('compatLabel').innerText;
-    shareText = `【推し活×個性心理学】\n私と${oshiName}さんの相性診断結果は…『${compatScore} (${compatLabel})』でした！💖\nお互いのキャラ:\n私: ${myDiagnosisResult.name}\n${oshiName}さん: ${document.getElementById('oshiCharName').innerText}\n#動物キャラナビ #推し活相性診断 #個性心理学\n`;
+    shareText = `【推し活×12のアニマル気質】\n私と${oshiName}さんの相性診断結果は…『${compatScore} (${compatLabel})』でした！💖\nお互いのキャラ:\n私: ${myDiagnosisResult.name}\n${oshiName}さん: ${document.getElementById('oshiCharName').innerText}\n#動物キャラナビ #推し活相性診断 #12のアニマル気質\n`;
   }
   navigator.clipboard.writeText(shareText).then(() => {
     alert('診断結果をクリップボードにコピーしました！\nThreadsやXに貼り付けてシェアしてね 🚀');
