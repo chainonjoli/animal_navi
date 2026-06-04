@@ -2,306 +2,527 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>推しナビAI — 12のアニマル気質で占う「推し」との相性診断</title>
-  <!-- プレミアム外部CSSリンク（ローカル開発用） -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>キャラナビ診断（動物占い） Vol.01 | 推しを知ると、自分もわかる。</title>
+  <meta name="description" content="個性心理学の動物タイプで、推しへの感情を整理する。大人のための推し活考察アーカイブ。">
+  <meta name="theme-color" content="#F6F1EA">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Klee+One:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <!-- ✨ パーティクル＆グラデーション背景 -->
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
+  <!-- ✨ Background Ambiance -->
+  <div class="bg-ambiance"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">感情アーカイブを整理中…</div>
+  </div>
+
+  <!-- Masthead -->
+  <header class="masthead" id="masthead-main">
+    <div class="masthead-inner">
+      <div class="masthead-brand">
+        <h1 class="masthead-title">キャラナビ診断（動物占い）</h1>
+        <span class="masthead-en">CHARANAVI DIAGNOSIS</span>
+      </div>
+      <span class="masthead-tagline">個性心理学 × 推し活</span>
+    </div>
+    <div class="masthead-rule"></div>
+  </header>
 
   <!-- ============================================================
-   * 📱 メインコンテナ（サイドバー ＋ チャットエリア）
-   * ============================================================ -->
-  
-  <!-- 1. 左側サイドバー（お相手・推し管理） -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <span class="logo-icon">❖</span>
-      <span class="logo-title">推しナビAI</span>
-    </div>
-    
-    <!-- 👥 リスト切り替え用プレミアムタブ -->
-    <div class="sidebar-tabs">
-      <button class="tab-btn active" id="tabPersonal">👤 個人診断</button>
-      <button class="tab-btn" id="tabGroup">👥 グループ診断</button>
-    </div>
-    
-    <div class="sidebar-content">
-      <!-- 個人診断用セクション -->
-      <div id="personalSection" class="sidebar-section active">
-        <div class="section-title">🔮 診断したお相手リスト</div>
-        <div class="member-list" id="memberList">
-          <!-- JSで動的にメンバーを一覧描画 -->
-        </div>
-        
-        <button class="add-member-btn" id="addMemberBtn">
-          <span>＋</span>
-          <span>新しくお相手を登録</span>
-        </button>
+       PAGE: TOP
+       ============================================================ -->
+  <div class="page active" id="page-top">
+    <section class="hero" style="min-height: calc(100vh - 140px); padding-top: 20px;">
+      <div class="hero-eyebrow">
+        <span>📎</span>
+        <span>OSHI-KATSU × PERSONALITY</span>
       </div>
 
-      <!-- グループ診断用セクション -->
-      <div id="groupSection" class="sidebar-section">
-        <div class="section-title">👥 登録したグループリスト</div>
-        <div class="member-list" id="groupList">
-          <!-- JSで動的にグループを一覧描画 -->
-        </div>
-        
-        <button class="add-member-btn" id="addGroupBtn">
-          <span>＋</span>
-          <span>新しくグループを登録</span>
-        </button>
-      </div>
+      <h1 class="hero-title" style="font-family: var(--font-serif); font-size: 2.1rem; line-height: 1.6; margin-bottom: 2rem;">
+        推しを見ると、<br>
+        <span class="marker-highlight">自分の感情</span>がわかる。
+      </h1>
 
-      <!-- 🔮 プレミアム個別鑑定へのコンバージョン導線 -->
-      <div class="premium-banner">
-        <div class="premium-banner-title">🔮 プレミアム詳細鑑定</div>
-        <div class="premium-banner-desc">
-          一生モノの相性・関係性診断レポートをPDFでお届けします。
-        </div>
-        <a href="https://line.me/R/ti/p/@your_line_id" target="_blank" class="premium-btn" id="premiumLinkSidebar">
-          詳細を見る
-        </a>
-      </div>
-    </div>
-    
-    <div class="sidebar-footer">
-      <button class="footer-btn" id="settingsBtn">
-        <span>⚙️</span>
-        <span>APIキー設定</span>
-      </button>
-    </div>
-  </aside>
-
-  <!-- 2. 右側メインエリア（チャットUI） -->
-  <main class="main-area">
-    
-    <!-- チャット上部ヘッダー -->
-    <header class="chat-header">
-      <div class="active-member-display">
-        <div class="member-avatar" id="activeAvatar">🔮</div>
-        <div class="active-member-details">
-          <div class="active-name" id="activeName">お相手を選択して相性を占う</div>
-          <div class="active-badges" id="activeBadges">
-            <!-- 自分と相手の特性バッジが入る -->
-          </div>
-        </div>
-      </div>
-      
-      <div class="chat-controls">
-        <label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">使用AI：</label>
-        <select class="selector-ai" id="aiModelSelector">
-          <option value="openai">OpenAI (gpt-4o-mini)</option>
-          <option value="gemini">Gemini (1.5-flash)</option>
-        </select>
-      </div>
-    </header>
-    
-    <!-- 中央：メッセージ表示部（未選択時はウェルカム画面） -->
-    <div class="chat-messages" id="chatMessages" style="display: none;">
-      <!-- チャットの吹き出しが動的に入る -->
-    </div>
-    
-    <!-- 未選択時のウェルカム画面 -->
-    <div class="welcome-screen" id="welcomeScreen">
-      <div class="welcome-icon">❖</div>
-      <h2 class="welcome-title">推しナビAI (OshiNavi)</h2>
-      <p class="welcome-desc">
-        12のアニマル気質診断（アニマル診断）で、あなたと「推し」や「気になるあの人」の相性を科学的に分析。<br>
-        お互いの本音（深層モチベーション）と建前（表層スタイル）のズレから、効果的なコミュニケーション方法をアドバイスします。
+      <p class="hero-subtitle" style="font-family: var(--font-hand); font-size: 0.9rem; line-height: 1.8; margin-bottom: 2.5rem; color: var(--text-primary);">
+        生年月日から動物タイプを導き出し、<br>
+        推しとの関係性や、なぜ惹かれるのかを<br>
+        やさしく整理する感情アーカイブ。
       </p>
 
-      <!-- ✨ クイック相性診断カード (W生年月日入力) -->
-      <div class="quick-diag-area">
-        <div class="quick-diag-title">
-          <span class="shield-icon">🛡️</span>
-          <span>完全プライバシー診断（データは保存されません）</span>
+      <!-- Sticky note -->
+      <div class="hero-memo" style="transform: rotate(-1.5deg); margin-bottom: 3.5rem; max-width: 280px; width: 100%;">
+        <div class="sticky-note sticky-note--pink">
+          <p class="sticky-handwritten">"なんでこんなに<br>好きなんだろう？"<br><span class="sticky-small">を、動物タイプで整理する。</span></p>
         </div>
-        
-        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">
-          👤 あなたの情報
+      </div>
+
+      <button class="btn-cta" id="btnStartDiagnosis" onclick="navigateTo('diagnosis')">
+        <span>あなたの動物タイプを調べる</span>
+        <span>→</span>
+      </button>
+
+      <div class="hero-scroll" style="bottom: 10px;">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Column Section -->
+    <section class="features" style="padding-top: 2rem; padding-bottom: 4rem;">
+      <div class="container">
+        <!-- Section header -->
+        <div class="col-header">
+          <span class="col-num">01</span>
+          <div class="col-divider"></div>
+          <span class="col-label">COLUMN</span>
         </div>
-        <div class="form-row">
-          <div class="form-group" style="flex: 1;">
-            <label class="form-label" style="font-size: 10px;">あなたの仮名</label>
-            <input type="text" id="quickMyName" class="form-input" placeholder="例: 自分" value="自分">
-          </div>
-          <div class="form-group" style="flex: 1;">
-            <label class="form-label" style="font-size: 10px;">あなたの生年月日</label>
-            <input type="date" id="quickMyBirthDate" class="form-input" required>
+
+        <h2 class="section-title">
+          <span class="title-main"><span class="marker-highlight">個性心理学</span>とは？</span>
+        </h2>
+
+        <div class="editorial-grid" style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem;">
+          <p class="lead-text" style="font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); font-weight: 600;">
+            占いではない。<br>
+            <span class="text-em">感情と行動のパターン</span>を<br>
+            やさしく整理するためのツール。
+          </p>
+
+          <div class="body-text" style="font-size: 0.88rem; line-height: 1.9; color: var(--text-primary);">
+            <p>
+              個性心理学は、人の性格や行動パターンを<strong>12の動物タイプ</strong>に分類する考え方。生年月日から導き出されるあなたの動物タイプは、感情の動き方、人との関わり方、好きになるときのクセを教えてくれます。
+            </p>
+            <p style="margin-top: 1rem;">
+              大切なのは「当たる・当たらない」ではなく、<span class="underline-accent">自分の感情を言葉にするきっかけ</span>になること。
+            </p>
           </div>
         </div>
 
-        <div style="font-size: 11px; color: var(--text-muted); margin: 8px 0 4px 0; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 8px;">
-          💜 お相手・推しの情報
+        <!-- Sticky Note inside Column -->
+        <div class="sticky-note sticky-note--yellow" style="transform: rotate(1.2deg); margin-bottom: 3rem;">
+          <p class="sticky-label">📎 MEMO</p>
+          <p class="sticky-body" style="font-family: var(--font-hand);">12の動物タイプは、それぞれ異なる「好き」の形を持っている。占いじゃなくて"感情の整理術"として使う。</p>
         </div>
-        <div class="form-row">
-          <div class="form-group" style="flex: 1;">
-            <label class="form-label" style="font-size: 10px;">お相手の仮名</label>
-            <input type="text" id="quickOshiName" class="form-input" placeholder="例: 推しメン, あの人" value="推しメン">
+
+        <!-- Features list -->
+        <div class="col-header" style="margin-top: 4rem;">
+          <span class="col-num">02</span>
+          <div class="col-divider"></div>
+          <span class="col-label">HOW IT WORKS</span>
+        </div>
+        <h2 class="section-title" style="margin-bottom: 2rem;">感情を整理するステップ</h2>
+
+        <div class="feature-card">
+          <div class="feature-step">01</div>
+          <div>
+            <div class="feature-title">🔮 あなたのキャラを診断</div>
+            <div class="feature-desc">生年月日を入力するだけ。12の動物タイプからあなたのキャラクターが判明。</div>
           </div>
-          <div class="form-group" style="flex: 1;">
-            <label class="form-label" style="font-size: 10px;">お相手の生年月日</label>
-            <input type="date" id="quickOshiBirthDate" class="form-input" required>
+        </div>
+        <div class="feature-card">
+          <div class="feature-step">02</div>
+          <div>
+            <div class="feature-title">💖 推しとの相性を分析</div>
+            <div class="feature-desc">空気感・役割バランス・感情相性の3軸で、推しとの関係性を可視化。</div>
           </div>
         </div>
 
-        <button type="button" class="form-submit-btn" id="quickDiagBtn" style="margin-top: 12px; background: var(--grad-primary); border: none; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);">
-          ⚡ 二人の相性を今すぐ占う
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-logo">✦ キャラナビ診断（動物占い）</div>
+      <p class="footer-note">
+        個性心理学に基づいた大人のための考察ツールです。<br>
+        自分の心と推しの尊さを整理する時間をお楽しみください。
+      </p>
+      <p class="footer-copy">© 2024 キャラナビ診断（動物占い）</p>
+    </footer>
+  </div>
+
+  <!-- ============================================================
+       PAGE: DIAGNOSIS
+       ============================================================ -->
+  <div class="page" id="page-diagnosis">
+    <div class="container">
+      <div class="col-header">
+        <span class="col-num">03</span>
+        <div class="col-divider"></div>
+        <span class="col-label">YOUR TYPE</span>
+      </div>
+
+      <h2 class="section-title">あなたの<span class="marker-highlight">動物タイプ</span>を知る</h2>
+      <p class="section-desc" style="margin-bottom: 2rem;">生年月日を入力してください。</p>
+
+      <div class="glass-card" id="diagnosisForm">
+        <div class="form-group">
+          <label class="form-label">📅 BIRTHDAY</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="myYear" class="date-input" placeholder="1995" min="1920" max="2026">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myMonth" class="date-input" placeholder="4" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="myDay" class="date-input" placeholder="1" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" id="btnMyDiagnose" onclick="runMyDiagnosis()">
+          <span>診断する</span>
+          <span>→</span>
         </button>
       </div>
-    </div>
-    
-    <!-- 下部：メッセージ入力フォーム -->
-    <div class="chat-input-area" id="chatInputArea" style="display: none;">
-      <div class="input-container">
-        <input type="text" class="chat-input" id="chatInput" placeholder="推しに喜ばれる言葉、ファンレターの書き方、仲良くなるアプローチなど何でも相談してください...">
-        <button class="send-btn" id="sendBtn">⚡</button>
+
+      <!-- Result Area -->
+      <div class="result-area hidden" id="myResult">
+        <div class="result-card" id="myResultCard">
+          <div class="result-label" id="myResultLabel">YOUR ANIMAL TYPE</div>
+          <div class="result-header" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div class="char-number" id="myCharNumber">No.--</div>
+            <div class="char-group-badge" id="myGroupBadge">--</div>
+          </div>
+          <div class="char-animal-icon" id="myAnimalIcon">🔮</div>
+          <div class="char-name" id="myCharName">--</div>
+          <div class="char-animal-name" id="myAnimalName">--</div>
+          <div class="char-spell" id="myCharSpell">--</div>
+          <div class="char-keyword" id="myKeyword">--</div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💬</span>
+              <div>
+                <div class="detail-label">PERSONALITY — 基本性格</div>
+                <div class="detail-text" id="myPersonality">--</div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💓</span>
+              <div>
+                <div class="detail-label">LOVE — 好きの傾向</div>
+                <div class="detail-text" id="myLove">--</div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">⭐</span>
+              <div>
+                <div class="detail-label">VOCATION — 適職傾向</div>
+                <div class="detail-text" id="myVocation">--</div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🍀</span>
+              <div>
+                <div class="detail-label">LUCKY POINT — 開運のヒント</div>
+                <div class="detail-text" id="myLucky">--</div>
+              </div>
+            </div>
+          </div>
+          <button class="share-btn" onclick="shareResult('my')" style="width: 100%; justify-content: center; margin-top: 2rem;">📤 この結果をコピーする</button>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="btn-group mt-lg">
+          <button class="btn-primary" onclick="navigateTo('oshi')">
+            <span>💖 推しとの相性を見る</span>
+            <span>→</span>
+          </button>
+
+        </div>
       </div>
     </div>
-  </main>
+    <footer class="site-footer">
+      <p class="footer-copy">© 2024 キャラナビ診断（動物占い）</p>
+    </footer>
+  </div>
 
   <!-- ============================================================
-   * ⚙️ 設定用モーダル（APIキー保存）
-   * ============================================================ -->
-  <div class="modal" id="settingsModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">⚙️ API連携設定</h3>
-        <button class="close-btn" id="closeSettings">×</button>
+       PAGE: OSHI COMPATIBILITY
+       ============================================================ -->
+  <div class="page" id="page-oshi">
+    <div class="container">
+      <div class="col-header">
+        <span class="col-num">04</span>
+        <div class="col-divider"></div>
+        <span class="col-label">RELATIONSHIP</span>
       </div>
-      <form id="settingsForm">
-        <div class="modal-body">
-          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
-            本システムはプライベートAPI接続を利用します。APIキーはお使いのブラウザの保護領域（localStorage）またはGASの環境にのみ安全に保存され、直接AIプロバイダー（OpenAI / Google）への通信にのみ使用されます。
+
+      <h2 class="section-title">推しとの<span class="marker-highlight">相性チェック</span></h2>
+
+      <!-- Quote -->
+      <div class="oshi-quote" style="margin-bottom: 2rem;">
+        <blockquote class="pull-quote">
+          <p>
+            推しを見てると、<br>
+            <span class="quote-accent">"なんでこんなに惹かれるんだろう？"</span><br>
+            って思うこと、ない？
           </p>
-          
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <label class="form-label">🔑 OpenAI APIキー (sk-...)</label>
-              <div id="openaiIndicator" style="font-size: 11px;"></div>
-            </div>
-            <input type="password" class="form-input" id="openaiKeyInput" placeholder="キーを入力して保存（空欄のままで既存のキーを維持）">
-          </div>
-          
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <label class="form-label">🔑 Gemini APIキー</label>
-              <div id="geminiIndicator" style="font-size: 11px;"></div>
-            </div>
-            <input type="password" class="form-input" id="geminiKeyInput" placeholder="キーを入力して保存（空欄のままで既存のキーを維持）">
-          </div>
-          
-          <button type="submit" class="form-submit-btn">APIキーを安全に保存</button>
+        </blockquote>
+      </div>
+
+      <!-- User not diagnosed message -->
+      <div class="glass-card text-center hidden" id="oshiNeedDiagnosis" style="margin-bottom: 2rem;">
+        <p style="margin-bottom:16px; font-family: var(--font-hand);">まずはあなた自身のキャラクターを先に診断してくださいね 🔮</p>
+        <button class="btn-primary" onclick="navigateTo('diagnosis')">
+          <span>診断ページへ</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Oshi Input Form -->
+      <div class="glass-card hidden" id="oshiForm" style="margin-bottom: 2rem;">
+        <div class="form-group">
+          <label class="form-label">💖 推しの名前（任意）</label>
+          <input type="text" id="oshiName" class="text-input" placeholder="例：廉くん">
         </div>
-      </form>
+        <div class="form-group">
+          <label class="form-label">📅 推しの生年月日</label>
+          <div class="date-inputs">
+            <div class="date-field">
+              <input type="number" id="oshiYear" class="date-input" placeholder="1999" min="1920" max="2026">
+              <span class="date-unit">年</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiMonth" class="date-input" placeholder="1" min="1" max="12">
+              <span class="date-unit">月</span>
+            </div>
+            <div class="date-field">
+              <input type="number" id="oshiDay" class="date-input" placeholder="23" min="1" max="31">
+              <span class="date-unit">日</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runOshiDiagnosis()">
+          <span>相性を診断する</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Oshi Result -->
+      <div class="result-area hidden" id="oshiResult">
+        <!-- Oshi Character Card -->
+        <div class="result-card" id="oshiResultCard" style="margin-bottom: 2rem;">
+          <div class="result-label" id="oshiResultLabel">推しのキャラ</div>
+          <div class="result-header" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div class="char-number" id="oshiCharNumber">No.--</div>
+            <div class="char-group-badge" id="oshiGroupBadge">--</div>
+          </div>
+          <div class="char-animal-icon" id="oshiAnimalIcon">✦</div>
+          <div class="char-name" id="oshiCharName">--</div>
+          <div class="char-animal-name" id="oshiAnimalName">--</div>
+          <div class="char-keyword" id="oshiKeyword" style="margin-bottom: 2rem;">--</div>
+          <div class="char-details">
+            <div class="detail-item">
+              <span class="detail-icon">💬</span>
+              <div>
+                <div class="detail-label">PERSONALITY — 性格傾向</div>
+                <div class="detail-text" id="oshiPersonality">--</div>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🎤</span>
+              <div>
+                <div class="detail-label">OSHI-KATSU — 推し活ポイント</div>
+                <div class="detail-text" id="oshiOshiText">--</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compatibility Card -->
+        <div class="compat-card" id="compatCard">
+          <div class="compat-title" style="font-family: var(--font-serif); font-weight: 700;">あなたと推しの相性</div>
+          
+          <div class="compat-vs-display">
+            <div class="compat-person">
+              <div class="compat-person-emoji" id="compatMyEmoji">🪞</div>
+              <div class="compat-person-name" style="font-family: var(--font-hand);">あなた</div>
+              <div class="compat-person-group" id="compatMyGroup">--</div>
+            </div>
+            <div class="compat-heart">✦</div>
+            <div class="compat-person">
+              <div class="compat-person-emoji" id="compatOshiEmoji">🌟</div>
+              <div class="compat-person-name" id="compatOshiName" style="font-family: var(--font-hand);">推し</div>
+              <div class="compat-person-group" id="compatOshiGroup">--</div>
+            </div>
+          </div>
+
+          <!-- Score -->
+          <div class="compat-score-section">
+            <div class="compat-score" id="compatScore">0</div>
+            <div class="compat-score-label" id="compatLabel" style="background: var(--brown) !important; font-family: var(--font-serif);">--</div>
+          </div>
+
+          <!-- Radar Chart Canvas -->
+          <div class="radar-chart-wrap">
+            <canvas id="radarChart" width="560" height="560"></canvas>
+          </div>
+
+          <!-- 3-Axis Scores -->
+          <div class="axis-scores">
+            <div class="axis-score-item">
+              <div class="axis-score-value" id="axisAtmosphere" style="color: var(--brown) !important;">0</div>
+              <div class="axis-score-name">空気感</div>
+            </div>
+            <div class="axis-score-item">
+              <div class="axis-score-value" id="axisRole" style="color: var(--brown) !important;">0</div>
+              <div class="axis-score-name">役割バランス</div>
+            </div>
+            <div class="axis-score-item">
+              <div class="axis-score-value" id="axisEmotion" style="color: var(--brown) !important;">0</div>
+              <div class="axis-score-name">感情相性</div>
+            </div>
+          </div>
+
+          <!-- Detail Blocks -->
+          <div id="compatDetails" style="display: flex; flex-direction: column; gap: 10px;"></div>
+
+          <!-- Tip -->
+          <div class="tip-box" id="compatTipBox" style="background: rgba(200, 185, 160, 0.15); border-left-color: var(--brown);">
+            <div class="tip-box-title" style="color: var(--brown-dark); font-family: var(--font-serif);">📝 攻略のヒント</div>
+            <div class="tip-box-text" id="compatTip" style="font-family: var(--font-hand);"></div>
+          </div>
+
+          <button class="share-btn" onclick="shareResult('oshi')" style="margin-top:20px; width: 100%; justify-content: center;">📤 相性結果をコピーする</button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="btn-group mt-lg">
+          <button class="btn-primary" onclick="navigateTo('gpts')">
+            <span>💬 公式LINEでさらに考察</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
     </div>
+    <footer class="site-footer">
+      <p class="footer-copy">© 2024 キャラナビ診断（動物占い）</p>
+    </footer>
+  </div>
+
+
+
+  <!-- ============================================================
+       PAGE: LINE（公式LINE誘導）
+       ============================================================ -->
+  <div class="page" id="page-gpts">
+    <div class="container">
+      <div class="gpts-page" style="min-height: calc(100vh - 160px); padding-top: 2rem;">
+        <div class="col-header" style="justify-content: center; width: 100%;">
+          <span class="col-num">✦</span>
+          <div class="col-divider" style="width: 20px;"></div>
+          <span class="col-label">SECRET EDITORIAL ROOM</span>
+          <div class="col-divider" style="width: 20px;"></div>
+          <span class="col-num">✦</span>
+        </div>
+
+        <h2 class="gpts-title" style="font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.6; margin-top: 1rem;">
+          秘密の編集部で、<br>
+          <span class="marker-highlight">もっと深い考察を。</span>
+        </h2>
+        <p class="gpts-desc" style="font-family: var(--font-hand); line-height: 1.8; margin-bottom: 2rem; color: var(--text-primary);">
+          公式LINEを「秘密の編集部」として、<br>
+          推し×あなたの詳細な関係性コラムや<br>
+          限定の感情アーカイブを配信します。
+        </p>
+
+        <!-- Benefits -->
+        <div class="summary-card" id="lineBenefits" style="margin-bottom: 1.5rem;">
+          <div class="summary-item">
+            <span class="summary-item-icon">📚</span>
+            <div>
+              <div class="summary-item-label">特典 1</div>
+              <div class="summary-item-value">推しグループ関係性図鑑</div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <span class="summary-item-icon">🧪</span>
+            <div>
+              <div class="summary-item-label">特典 2</div>
+              <div class="summary-item-value">チーム作りに 関係性ラボ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diagnosis Summary (JS will populate if diagnosed) -->
+        <div class="summary-card hidden" id="gptsSummary" style="margin-bottom: 2rem;">
+          <div class="summary-item" id="gptsSummaryMy">
+            <span class="summary-item-icon">🔮</span>
+            <div>
+              <div class="summary-item-label">あなたの診断タイプ</div>
+              <div class="summary-item-value" id="gptsMySummary">未診断</div>
+            </div>
+          </div>
+          <div class="summary-item hidden" id="gptsSummaryOshi">
+            <span class="summary-item-icon">💖</span>
+            <div>
+              <div class="summary-item-label">推しの診断タイプ</div>
+              <div class="summary-item-value" id="gptsOshiSummary">未診断</div>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://lin.ee/TeuD3GD" target="_blank" rel="noopener noreferrer" class="btn-line" id="btnLine" style="width: 100%; justify-content: center; gap: 8px;">
+          <span>LINEで続きを読む</span>
+        </a>
+        <p class="gpts-note" style="font-family: var(--font-hand); color: var(--text-muted); opacity: 0.8; margin-top: 1rem;">
+          ※ 編集部からの配信は週1〜2回程度です。<br>
+          いつでも解除・ブロックできます。
+        </p>
+
+        <!-- Closing message -->
+        <div class="closing-message-block" style="margin-top: 4rem; text-align: center; border-top: 1px dashed rgba(123,102,88,0.2); padding-top: 2rem; width: 100%;">
+          <p style="font-family: var(--font-serif); font-size: 0.95rem; line-height: 2; color: var(--text-primary); font-style: italic;">
+            「推しを見ているつもりで、<br>
+            ほんとは自分の感情を<br>
+            見ていたのかもしれない。」
+          </p>
+        </div>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <p class="footer-copy">© 2024 キャラナビ診断（動物占い）</p>
+    </footer>
   </div>
 
   <!-- ============================================================
-   * 👥 メンバー（お相手）登録用モーダル
-   * ============================================================ -->
-  <div class="modal" id="addMemberModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">👤 相性診断相手を登録</h3>
-        <button class="close-btn" id="closeAddMember">×</button>
-      </div>
-      <form id="addMemberForm">
-        <div class="modal-body">
-          <!-- 🔒 完全プライバシー・安全シールドラベル -->
-          <div class="privacy-shield-banner">
-            <span class="shield-icon">🛡️</span>
-            <span class="shield-text">生年月日データは一切保存されません。ブラウザ上で特性コードのみに変換され、完全に匿名化された状態で安全に同期されます。</span>
-          </div>
+       BOTTOM NAVIGATION
+       ============================================================ -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item active" data-page="top" onclick="navigateTo('top')">
+      <span class="nav-icon">🏠</span>
+      <span>TOP</span>
+    </button>
+    <button class="nav-item" data-page="diagnosis" onclick="navigateTo('diagnosis')">
+      <span class="nav-icon">🔮</span>
+      <span>自己診断</span>
+    </button>
+    <button class="nav-item" data-page="oshi" onclick="navigateTo('oshi')">
+      <span class="nav-icon">💖</span>
+      <span>推し相性</span>
+    </button>
 
-          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 12px; font-weight: 600;">
-            👤 あなたの情報（相性計算用・ブラウザにのみ保存されます）
-          </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">あなたの生年月日</label>
-              <input type="date" class="form-input" id="myBirthDate" required>
-            </div>
-          </div>
+    <button class="nav-item" data-page="gpts" onclick="navigateTo('gpts')">
+      <span class="nav-icon">💬</span>
+      <span>秘密の部屋</span>
+    </button>
+  </nav>
 
-          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 12px;">
-            💜 お相手・推しの情報
-          </div>
-          <div class="form-group">
-            <label class="form-label">お相手のお名前 (仮名やイニシャルでの登録を推奨)</label>
-            <input type="text" class="form-input" id="newName" placeholder="例: メンバーX, 推しメンA" required>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">お相手の生年月日</label>
-            <input type="date" class="form-input" id="newBirthDate" required>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">お相手との関係性やメモ（AIの提案に反映されます）</label>
-            <textarea class="form-input" id="newMemo" rows="3" placeholder="例: ファンとして応援しているアーティスト。ライブでのファンサやSNSでのコメントでどうすれば印象に残るか知りたい。" style="resize: none;"></textarea>
-          </div>
-          
-          <button type="submit" class="form-submit-btn" style="background: var(--grad-primary); border: none;">お相手を安全に登録して診断</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ============================================================
-   * 👥 グループ（チーム・推し）登録用モーダル
-   * ============================================================ -->
-  <div class="modal" id="addGroupModal">
-    <div class="modal-content" style="max-width: 600px;">
-      <div class="modal-header">
-        <h3 class="modal-title">👥 グループ診断相手を登録</h3>
-        <button class="close-btn" id="closeAddGroup">×</button>
-      </div>
-      <form id="addGroupForm">
-        <div class="modal-body">
-          <!-- 🔒 安全シールドラベル -->
-          <div class="privacy-shield-banner">
-            <span class="shield-icon">🛡️</span>
-            <span class="shield-text">生年月日は不要です。アニマル気質の本質番号（1〜60）のみで完全に匿名化された状態でグループを診断・管理します。</span>
-          </div>
-
-          <div class="form-row" style="margin-top: 12px;">
-            <div class="form-group" style="flex: 1.5;">
-              <label class="form-label">グループ名 / チーム名</label>
-              <input type="text" class="form-input" id="newGroupName" placeholder="例: 推しナビ５, 開発チーム, 〇〇家" required>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label class="form-label">診断タイプ</label>
-              <select class="form-input" id="newGroupType" required>
-                <option value="oshi">👑 推しグループ診断</option>
-                <option value="team">💼 家族/友人/職場/チーム診断</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 16px; font-weight: 600; border-top: 1px solid var(--border-fine); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-            <span>👥 メンバーリスト (最低2名必要)</span>
-            <button type="button" class="footer-btn" id="addMemberRowBtn" style="padding: 4px 8px; font-size: 11px; background: var(--border-fine); cursor: pointer;">＋ メンバーを追加</button>
-          </div>
-
-          <!-- メンバー追加用の動的行コンテナ -->
-          <div id="groupMembersContainer" style="max-height: 250px; overflow-y: auto; margin-top: 8px; padding-right: 4px;">
-            <!-- JSで初期メンバー行を動的に生成します -->
-          </div>
-
-          <button type="submit" class="form-submit-btn" style="background: var(--grad-primary); border: none; margin-top: 16px;">グループを安全に登録して診断</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- 外部JavaScript（ローカル開発用） -->
+  <!-- Scripts -->
   <script src="js/data.js"></script>
+  <script src="js/oshi.js"></script>
+
   <script src="js/main.js"></script>
 </body>
 </html>
