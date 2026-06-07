@@ -339,9 +339,9 @@ function getCompatDetail(myGroup, theirGroup) {
 
 // ---- 診断関数 ----
 function getCharacterNumber(year, month, day) {
-  const base = new Date(1926, 0, 1);
-  const target = new Date(year, month - 1, day);
-  const diffMs = target.getTime() - base.getTime();
+  const base = Date.UTC(1926, 0, 1);
+  const target = Date.UTC(year, month - 1, day);
+  const diffMs = target - base;
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
   const idx0 = ((26 + diffDays) % 60 + 60) % 60;
   return idx0 + 1;
