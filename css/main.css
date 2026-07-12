@@ -2127,3 +2127,175 @@ input, select { font-family: inherit; }
 .btn-line:hover {
   background: var(--brown-dark) !important;
 }
+
+/* ============================================================
+   ZUKAN — 12タイプ図鑑
+   ============================================================ */
+.zukan-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.zukan-tab {
+  flex: 1;
+  min-width: 70px;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(123, 102, 88, 0.15);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  transition: var(--transition-fast);
+}
+
+.zukan-tab:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+}
+
+.zukan-tab.active {
+  background: var(--brown);
+  border-color: var(--brown);
+  color: var(--bg-deep);
+}
+
+.zukan-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.zukan-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(123, 102, 88, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.04);
+  padding: var(--space-lg);
+  transition: var(--transition-smooth);
+}
+
+.zukan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 8px 28px rgba(0, 0, 0, 0.07);
+}
+
+.zukan-card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  right: 12%;
+  width: 48px;
+  height: 13px;
+  background: var(--tape-color);
+  transform: rotate(2deg);
+  border-radius: 1px;
+}
+
+.zukan-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-md);
+}
+
+.zukan-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.08));
+}
+
+.zukan-head-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.zukan-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.zukan-keyword {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: var(--space-sm);
+}
+
+.zukan-text {
+  font-family: var(--font-hand);
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--text-primary);
+}
+
+.zukan-oshi {
+  margin-top: var(--space-md);
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.45);
+  border-left: 3px solid var(--accent);
+}
+
+.zukan-oshi-label {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brown);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.zukan-nums {
+  margin-top: var(--space-md);
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   Polish — アクセシビリティ & 微調整
+   ============================================================ */
+
+/* キーボード操作時のフォーカスリング */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* 動きを減らす設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ナビ5項目でも窮屈にならないように */
+.nav-item { min-width: 0; }
+.nav-item span:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

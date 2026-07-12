@@ -11,6 +11,8 @@ window.oshiDiagnosisResult = null;
 document.addEventListener('DOMContentLoaded', () => {
   setupParticles();
   setupScrollReveal();
+  renderZukan();
+  restoreSavedDiagnosis();
   handleHashRoute();
   window.addEventListener('hashchange', handleHashRoute);
 });
@@ -22,7 +24,7 @@ function navigateTo(pageId) {
 
 function handleHashRoute() {
   const hash = window.location.hash.replace('#', '') || 'top';
-  const validPages = ['top', 'diagnosis', 'oshi', 'gpts'];
+  const validPages = ['top', 'diagnosis', 'oshi', 'zukan', 'gpts'];
   const targetPage = validPages.includes(hash) ? hash : 'top';
 
   // ページ表示切り替え
@@ -103,6 +105,7 @@ function runMyDiagnosis() {
 
   setTimeout(() => {
     window.myDiagnosisResult = diagnose(year, month, day);
+    saveDiagnosis(year, month, day);
     showMyResult(window.myDiagnosisResult);
     hideLoading();
     document.getElementById('myResult').classList.remove('hidden');
@@ -111,6 +114,32 @@ function runMyDiagnosis() {
     }, 100);
     updateGptsSummary();
   }, 800);
+}
+
+// ---- 診断結果の保存・復元（localStorage） ----
+const STORAGE_KEY = 'charanavi_my_birthday';
+
+function saveDiagnosis(year, month, day) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ year, month, day }));
+  } catch (e) { /* プライベートモード等では保存しない */ }
+}
+
+function restoreSavedDiagnosis() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  } catch (e) { return; }
+  if (!saved || !validateDate(saved.year, saved.month, saved.day)) return;
+
+  document.getElementById('myYear').value = saved.year;
+  document.getElementById('myMonth').value = saved.month;
+  document.getElementById('myDay').value = saved.day;
+
+  window.myDiagnosisResult = diagnose(saved.year, saved.month, saved.day);
+  showMyResult(window.myDiagnosisResult);
+  document.getElementById('myResult').classList.remove('hidden');
+  updateGptsSummary();
 }
 
 // ---- 自分の結果表示 ----
@@ -208,10 +237,65 @@ function shareResult(type) {
 
   if (!text) return;
 
+  const url = 'https://chainonjoli.github.io/animal_navi/';
+
+  // モバイル等ではOSのシェアシートを開く
+  if (navigator.share) {
+    navigator.share({ text, url }).catch((err) => {
+      if (err && err.name !== 'AbortError') copyShareText(text + url + '\n');
+    });
+    return;
+  }
+  copyShareText(text + url + '\n');
+}
+
+function copyShareText(text) {
   navigator.clipboard.writeText(text).then(() => {
     showToast('コピーしました！SNSでシェアしてね 📤');
   }).catch(() => {
     prompt('結果をコピーしてシェアしてください：', text);
+  });
+}
+
+// ---- 図鑑ページ ----
+function renderZukan() {
+  const list = document.getElementById('zukanList');
+  if (!list) return;
+
+  // グループ順（月 → 地球 → 太陽）で、GROUPS.membersの並びに従って表示
+  const order = ['MOON', 'EARTH', 'SUN'].flatMap(gid => GROUPS[gid].members);
+
+  list.innerHTML = order.map(animal => {
+    const p = ANIMAL_PROFILES[animal];
+    const g = GROUPS[p.group];
+    const nums = p.subTypes.map(n => `No.${n}`).join(' / ');
+    return `
+      <article class="zukan-card" data-group="${p.group}">
+        <div class="zukan-card-head">
+          <span class="zukan-emoji">${p.emoji}</span>
+          <div class="zukan-head-text">
+            <h3 class="zukan-name">${animal}</h3>
+            <span class="char-group-badge ${g.cssClass}">${g.emoji} ${g.name}</span>
+          </div>
+        </div>
+        <p class="zukan-keyword">✦ ${p.keyword}</p>
+        <p class="zukan-text">${p.personality}</p>
+        <div class="zukan-oshi">
+          <span class="zukan-oshi-label">🎤 推し活ポイント</span>
+          <p class="zukan-text">${p.oshiText}</p>
+        </div>
+        <p class="zukan-nums">収録キャラ: ${nums}</p>
+      </article>
+    `;
+  }).join('');
+}
+
+function filterZukan(groupId) {
+  document.querySelectorAll('.zukan-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.group === groupId);
+  });
+  document.querySelectorAll('.zukan-card').forEach(card => {
+    card.classList.toggle('hidden', groupId !== 'ALL' && card.dataset.group !== groupId);
   });
 }
 

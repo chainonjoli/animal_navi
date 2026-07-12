@@ -6,6 +6,40 @@
   <title>キャラナビ診断 Vol.01 | 推しを知ると、自分もわかる。</title>
   <meta name="description" content="12のアニマル気質の動物タイプで、推しへの感情を整理する。大人のための推し活考察アーカイブ。">
   <meta name="theme-color" content="#F6F1EA">
+  <link rel="canonical" href="https://chainonjoli.github.io/animal_navi/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="キャラナビ診断">
+  <meta property="og:title" content="キャラナビ診断 Vol.01 | 推しを知ると、自分もわかる。">
+  <meta property="og:description" content="生年月日から12のアニマル気質の動物タイプを診断。推しとの相性や、なぜ惹かれるのかをやさしく整理する感情アーカイブ。">
+  <meta property="og:url" content="https://chainonjoli.github.io/animal_navi/">
+  <meta property="og:image" content="https://chainonjoli.github.io/animal_navi/assets/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="キャラナビ診断 Vol.01 | 推しを知ると、自分もわかる。">
+  <meta name="twitter:description" content="生年月日から12のアニマル気質の動物タイプを診断。推しとの相性を3軸で可視化する感情アーカイブ。">
+  <meta name="twitter:image" content="https://chainonjoli.github.io/animal_navi/assets/ogp.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "キャラナビ診断",
+    "url": "https://chainonjoli.github.io/animal_navi/",
+    "description": "生年月日から12のアニマル気質の動物タイプを診断し、推しとの相性を整理する推し活考察ツール。",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "ja",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Klee+One:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
@@ -133,6 +167,13 @@
             <div class="feature-desc">空気感・役割バランス・感情相性の3軸で、推しとの関係性を可視化。</div>
           </div>
         </div>
+        <div class="feature-card" onclick="navigateTo('zukan')" style="cursor: pointer;">
+          <div class="feature-step">03</div>
+          <div>
+            <div class="feature-title">📖 12タイプ図鑑をめくる</div>
+            <div class="feature-desc">全12タイプの性格と推し活ポイントを収録。推しのタイプを探してみて。</div>
+          </div>
+        </div>
 
       </div>
     </section>
@@ -144,7 +185,7 @@
         12のアニマル気質に基づいた大人のための考察ツールです。<br>
         自分の心と推しの尊さを整理する時間をお楽しみください。
       </p>
-      <p class="footer-copy">© 2024 キャラナビ診断</p>
+      <p class="footer-copy">© 2026 キャラナビ診断</p>
     </footer>
   </div>
 
@@ -243,7 +284,7 @@
       </div>
     </div>
     <footer class="site-footer">
-      <p class="footer-copy">© 2024 キャラナビ診断</p>
+      <p class="footer-copy">© 2026 キャラナビ診断</p>
     </footer>
   </div>
 
@@ -407,7 +448,7 @@
       </div>
     </div>
     <footer class="site-footer">
-      <p class="footer-copy">© 2024 キャラナビ診断</p>
+      <p class="footer-copy">© 2026 キャラナビ診断</p>
     </footer>
   </div>
 
@@ -492,7 +533,37 @@
       </div>
     </div>
     <footer class="site-footer">
-      <p class="footer-copy">© 2024 キャラナビ診断</p>
+      <p class="footer-copy">© 2026 キャラナビ診断</p>
+    </footer>
+  </div>
+
+  <!-- ============================================================
+       PAGE: ZUKAN（12タイプ図鑑）
+       ============================================================ -->
+  <div class="page" id="page-zukan">
+    <div class="container">
+      <div class="col-header">
+        <span class="col-num">05</span>
+        <div class="col-divider"></div>
+        <span class="col-label">ARCHIVE</span>
+      </div>
+
+      <h2 class="section-title"><span class="marker-highlight">12タイプ</span>図鑑</h2>
+      <p class="section-desc" style="margin-bottom: 2rem;">12のアニマル気質、ぜんぶ見せます。<br>推しのタイプを探すもよし、友達を思い浮かべるもよし。</p>
+
+      <!-- Group tabs -->
+      <div class="zukan-tabs" role="tablist" aria-label="グループで絞り込み">
+        <button class="zukan-tab active" data-group="ALL" onclick="filterZukan('ALL')">すべて</button>
+        <button class="zukan-tab" data-group="MOON" onclick="filterZukan('MOON')">🌙 月</button>
+        <button class="zukan-tab" data-group="EARTH" onclick="filterZukan('EARTH')">🌍 地球</button>
+        <button class="zukan-tab" data-group="SUN" onclick="filterZukan('SUN')">☀️ 太陽</button>
+      </div>
+
+      <!-- JS renders animal cards here -->
+      <div id="zukanList" class="zukan-list"></div>
+    </div>
+    <footer class="site-footer">
+      <p class="footer-copy">© 2026 キャラナビ診断</p>
     </footer>
   </div>
 
@@ -512,7 +583,10 @@
       <span class="nav-icon">💖</span>
       <span>推し相性</span>
     </button>
-
+    <button class="nav-item" data-page="zukan" onclick="navigateTo('zukan')">
+      <span class="nav-icon">📖</span>
+      <span>図鑑</span>
+    </button>
     <button class="nav-item" data-page="gpts" onclick="navigateTo('gpts')">
       <span class="nav-icon">💬</span>
       <span>秘密の部屋</span>

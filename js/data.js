@@ -48,7 +48,7 @@ const CHARACTER_TABLE = [
   { n:13, animal:'狼',      group:'EARTH', name:'ネアカの狼',                   spell:'太陽', jui:'胎' },
   { n:14, animal:'ひつじ',  group:'MOON',  name:'協調性のないひつじ',           spell:'ろうそく', jui:'墓' },
   { n:15, animal:'猿',      group:'EARTH', name:'どっしりとした猿',             spell:'山',   jui:'長生' },
-  { n:16, animal:'子守熊',  group:'EARTH', name:'コアラのなかの子守熊',         spell:'大地', jui:'病' },
+  { n:16, animal:'子守熊',  group:'EARTH', name:'コアラのなかのコアラ',         spell:'大地', jui:'病' },
   { n:17, animal:'こじか',  group:'MOON',  name:'強い意志をもったこじか',       spell:'金属', jui:'養' },
   { n:18, animal:'ゾウ',    group:'SUN',   name:'デリケートなゾウ',             spell:'宝石', jui:'死' },
   { n:19, animal:'狼',      group:'EARTH', name:'放浪の狼',                     spell:'海',   jui:'胎' },
