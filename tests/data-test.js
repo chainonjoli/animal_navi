@@ -9,8 +9,8 @@ const ctx = {};
 vm.createContext(ctx);
 const source = fs.readFileSync(path.join(__dirname, '../js/data.js'), 'utf8');
 // const宣言はコンテキストに載らないため、評価結果として取り出す
-const { CHARACTER_TABLE, ANIMAL_PROFILES, GROUPS, getCharacterNumber, diagnose, getGroupCompatibility } =
-  vm.runInContext(source + '\n;({ CHARACTER_TABLE, ANIMAL_PROFILES, GROUPS, getCharacterNumber, diagnose, getGroupCompatibility });', ctx);
+const { CHARACTER_TABLE, ANIMAL_PROFILES, GROUPS, CHAR_DETAILS, getCharacterNumber, diagnose, getGroupCompatibility, getRoleChemistry } =
+  vm.runInContext(source + '\n;({ CHARACTER_TABLE, ANIMAL_PROFILES, GROUPS, CHAR_DETAILS, getCharacterNumber, diagnose, getGroupCompatibility, getRoleChemistry });', ctx);
 
 let failures = 0;
 function assert(cond, msg) {
@@ -57,6 +57,20 @@ for (const [y, m, d] of [[1920, 1, 1], [1999, 12, 31], [2026, 7, 12]]) {
 }
 const r = diagnose(1995, 4, 1);
 assert(r.profile && r.groupData && r.name, 'diagnose() が完全な結果を返す');
+
+console.log('▼ キャラクター個別解説');
+assert(Object.keys(CHAR_DETAILS).length === 60, 'CHAR_DETAILSは60件');
+assert(CHARACTER_TABLE.every(c => CHAR_DETAILS[c.n]), '全キャラに解説がある');
+assert(Object.values(CHAR_DETAILS).every(d => d.desc && d.desc.length >= 20), '全キャラのdescが20文字以上');
+assert(Object.values(CHAR_DETAILS).every(d => d.oshiHint && d.oshiHint.length >= 15), '全キャラのoshiHintが15文字以上');
+
+console.log('▼ 役割ケミストリー');
+const wolf = ANIMAL_PROFILES['狼'];
+const lion = ANIMAL_PROFILES['ライオン'];
+// ライオンはleader:10とcharisma:10の同点 → 定義順でリーダーが最強ロールになる
+assert(getRoleChemistry(wolf, lion, '推し').includes('リーダー'), 'ライオンの最強ロールはリーダー');
+assert(getRoleChemistry(wolf, wolf, '推し').includes('似た者同士'), '同ロール同士は「似た者同士」の文言');
+assert(typeof getRoleChemistry(lion, wolf, 'テスト') === 'string' && getRoleChemistry(lion, wolf, 'テスト').includes('テスト'), '推しの名前が文中に入る');
 
 console.log('▼ 相性ロジック');
 assert(getGroupCompatibility('MOON', 'MOON').score === 95, '同グループは95点');

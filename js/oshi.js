@@ -51,8 +51,17 @@ function showOshiResult(res, oshiName) {
   document.getElementById('oshiCharName').textContent = res.name;
   document.getElementById('oshiAnimalName').textContent = `${res.animal}タイプ`;
   document.getElementById('oshiKeyword').textContent = `✨ 「${res.profile.keyword}」`;
+  const charDetail = CHAR_DETAILS[res.number];
+  document.getElementById('oshiCharDesc').textContent = `${charDetail.desc} ${charDetail.oshiHint}`;
   document.getElementById('oshiPersonality').textContent = res.profile.personality;
   document.getElementById('oshiOshiText').textContent = res.profile.oshiText;
+}
+
+// ---- HTMLエスケープ（innerHTMLに入力値を差し込む際に使用） ----
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, ch => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
 }
 
 // ---- 相性計算と表示 ----
@@ -100,6 +109,10 @@ function calculateAndShowCompatibility(my, oshi, oshiName) {
     <div class="compat-detail-block">
       <div class="compat-detail-title">💗 感情相性</div>
       <div class="compat-detail-text">${detail.emotionalFit}</div>
+    </div>
+    <div class="compat-detail-block">
+      <div class="compat-detail-title">🎭 役割ケミストリー</div>
+      <div class="compat-detail-text">${escapeHtml(getRoleChemistry(my.profile, oshi.profile, oshiName))}</div>
     </div>
     <div class="compat-detail-block" style="border-left-color: var(--pink);">
       <div class="compat-detail-title" style="color: var(--brown);">🎤 推し活的に刺さるポイント</div>

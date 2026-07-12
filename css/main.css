@@ -2299,3 +2299,75 @@ input:focus:not(:focus-visible) {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+/* 図鑑 — 収録キャラの開閉リスト */
+.zukan-chars {
+  margin-top: var(--space-md);
+  border-top: 1px dashed rgba(123, 102, 88, 0.2);
+  padding-top: 12px;
+}
+
+.zukan-chars summary {
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--brown);
+  letter-spacing: 0.05em;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zukan-chars summary::-webkit-details-marker { display: none; }
+
+.zukan-chars summary::before {
+  content: '▸';
+  font-size: 0.7rem;
+  transition: transform 0.25s var(--ease-out-expo);
+}
+
+.zukan-chars[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.zukan-chars summary:hover { color: var(--brown-dark); }
+
+.zukan-char {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 2px;
+  border-bottom: 1px dotted rgba(123, 102, 88, 0.15);
+}
+
+.zukan-char:last-child { border-bottom: none; }
+
+.zukan-char-no {
+  flex-shrink: 0;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--bg-deep);
+  background: var(--brown);
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-top: 3px;
+}
+
+.zukan-char-name {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.zukan-char-desc {
+  font-family: var(--font-hand);
+  font-size: 0.8rem;
+  line-height: 1.75;
+  color: var(--text-primary);
+}

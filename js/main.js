@@ -155,6 +155,7 @@ function showMyResult(res) {
   document.getElementById('myAnimalName').textContent = `${res.animal}タイプ`;
   document.getElementById('myCharSpell').textContent = `✦ 魔力属性: ${res.spell}`;
   document.getElementById('myKeyword').textContent = `✨ 「${res.profile.keyword}」`;
+  document.getElementById('myCharDesc').textContent = CHAR_DETAILS[res.number].desc;
   document.getElementById('myPersonality').textContent = res.profile.personality;
   document.getElementById('myLove').textContent = res.profile.love;
   document.getElementById('myVocation').textContent = res.profile.vocation;
@@ -284,7 +285,21 @@ function renderZukan() {
           <span class="zukan-oshi-label">🎤 推し活ポイント</span>
           <p class="zukan-text">${p.oshiText}</p>
         </div>
-        <p class="zukan-nums">収録キャラ: ${nums}</p>
+        <details class="zukan-chars">
+          <summary>収録キャラ ${p.subTypes.length}体をひらく（${nums}）</summary>
+          ${p.subTypes.map(n => {
+            const c = CHARACTER_TABLE[n - 1];
+            return `
+              <div class="zukan-char">
+                <span class="zukan-char-no">No.${n}</span>
+                <div>
+                  <p class="zukan-char-name">${c.name}</p>
+                  <p class="zukan-char-desc">${CHAR_DETAILS[n].desc}</p>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </details>
       </article>
     `;
   }).join('');
